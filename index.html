@@ -315,7 +315,13 @@
       agua: { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
       bebida_energetica: { icon: "⚡", bubble: "#f2ecff", bubbleBorder: "#d4c0ff", refBg: "#f5eeff", refBorder: "#d9c7ff" },
       colas: { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
-      isotonica: { icon: "🧴", bubble: "#eef5ff", bubbleBorder: "#c6dafb", refBg: "#edf5ff", refBorder: "#c7daf8" },
+      isotonica: { 
+  icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png",
+  bubble: "#eef5ff", 
+  bubbleBorder: "#c6dafb", 
+  refBg: "#edf5ff", 
+  refBorder: "#c7daf8" 
+},
       jugos: { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
       multicategorias: { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
       sabores: { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
@@ -409,7 +415,9 @@
       return `<div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
         <div class="cat-row">
           <div class="cat-main">
-            <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">${visual.icon}</div>
+          <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
+  ${visual.icon.includes('http') ? `<img src="${visual.icon}" style="width:42px;height:42px;object-fit:contain;">` : visual.icon}
+</div>
             <div>
               <div class="cat-name">${escapeHtml(cat.label)}</div>
               <div class="cat-sub">🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b></div>
