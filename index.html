@@ -311,6 +311,16 @@
       sabores: "Fanta / Sprite 2 Lts RET x 8 unidades",
       saborizada: "Cepita Fresh 1.5 Lts PET x 6 unidades"
     };
+    const categoryVisualMap = {
+      agua: { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
+      bebida_energetica: { icon: "⚡", bubble: "#f2ecff", bubbleBorder: "#d4c0ff", refBg: "#f5eeff", refBorder: "#d9c7ff" },
+      colas: { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
+      isotonica: { icon: "🧴", bubble: "#eef5ff", bubbleBorder: "#c6dafb", refBg: "#edf5ff", refBorder: "#c7daf8" },
+      jugos: { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
+      multicategorias: { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
+      sabores: { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
+      saborizada: { icon: "🍋", bubble: "#eefcf1", bubbleBorder: "#bfe4c6", refBg: "#eefcf3", refBorder: "#c0e6ca" }
+    };
     const state = { rows: [], routes: [], clients: [], alerts: [], selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
     function normalizeKey(str){ return (str || '').toString().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase(); }
     function escapeHtml(str){ return (str || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
@@ -389,19 +399,29 @@
       const puntos = cumple ? 5 : 0;
       const badgeClass = getSemaforoBadge(cat.cumplimiento);
       const progressClass = cat.semaforo;
+      const visual = categoryVisualMap[cat.key] || {
+        icon: "📦",
+        bubble: "#f3f4f6",
+        bubbleBorder: "#d7dbe0",
+        refBg: "#f8fafc",
+        refBorder: "#d9dee5"
+      };
       return `<div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
         <div class="cat-row">
-          <div>
-            <div class="cat-name">${escapeHtml(cat.label)}</div>
-            <div class="cat-sub">🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b></div>
+          <div class="cat-main">
+            <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">${visual.icon}</div>
+            <div>
+              <div class="cat-name">${escapeHtml(cat.label)}</div>
+              <div class="cat-sub">🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b></div>
+              <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
+                <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
+                <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
+              </div>
+            </div>
           </div>
           <div class="badge ${badgeClass}">${formatPct(cat.cumplimiento)}</div>
         </div>
         <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
-        <div style="margin-top:8px;padding:8px 10px;border-radius:10px;background:#f3f4f6;font-size:11px;color:#444;">
-          💡 <b>Referencia de cálculo:</b><br>
-          ${referenciaMap[cat.key] || 'Producto base de la categoría'}
-        </div>
         ${cumple ? `<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>` : ''}
       </div>`;
         }).join(''); } goTo('client-detail'); }
