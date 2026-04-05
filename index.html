@@ -296,6 +296,16 @@
       { key: 'sabores', label: 'Sabores' },
       { key: 'saborizada', label: 'Saborizada' }
     ];
+    const referenciaMap = {
+      agua: "Agua 2 Lts x 6 unidades",
+      bebida_energetica: "Monster 473 ml x 6 unidades",
+      colas: "Coca-Cola 2 Lts RET x 8 unidades",
+      isotonica: "Powerade 500 cc x 6 unidades",
+      jugos: "Cepita 1.5 Lts PET x 4 unidades",
+      multicategorias: "Crema 200 cc x 6 unidades",
+      sabores: "Fanta / Sprite 2 Lts RET x 8 unidades",
+      saborizada: "Cepita Fresh 1.5 Lts PET x 6 unidades"
+    };
     const state = { rows: [], routes: [], clients: [], alerts: [], selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
     function normalizeKey(str){ return (str || '').toString().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase(); }
     function escapeHtml(str){ return (str || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
@@ -374,7 +384,21 @@
       const puntos = cumple ? 5 : 0;
       const badgeClass = getSemaforoBadge(cat.cumplimiento);
       const progressClass = cat.semaforo;
-      return `<div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}"><div class="cat-row"><div><div class="cat-name">${escapeHtml(cat.label)}</div><div class="cat-sub">🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b></div></div><div class="badge ${badgeClass}">${formatPct(cat.cumplimiento)}</div></div><div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>${cumple ? `<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>` : ''}</div>`;
+      return `<div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
+        <div class="cat-row">
+          <div>
+            <div class="cat-name">${escapeHtml(cat.label)}</div>
+            <div class="cat-sub">🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b></div>
+          </div>
+          <div class="badge ${badgeClass}">${formatPct(cat.cumplimiento)}</div>
+        </div>
+        <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
+        <div style="margin-top:8px;padding:8px 10px;border-radius:10px;background:#f3f4f6;font-size:11px;color:#444;">
+          💡 <b>Referencia de cálculo:</b><br>
+          ${referenciaMap[cat.key] || 'Producto base de la categoría'}
+        </div>
+        ${cumple ? `<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>` : ''}
+      </div>`;
         }).join(''); } goTo('client-detail'); }
     function backFromClientDetail(){ if(state.clientBackMode === 'route') openRouteDetail(state.selectedRoute); else if(state.clientBackMode === 'home') goTo('home'); else if(state.clientBackMode === 'alertas') goTo('alertas'); else goToClients(); }
     function renderAlerts(){ const q = normalizeKey(document.getElementById('alertSearch').value); const level = document.getElementById('alertLevelFilter').value; const data = state.alerts.filter(a => { const matchesLevel = !level || a.level === level; const matchesText = !q || [a.cliente, a.ruta, a.vendedor, a.categoria, a.numero].some(v => normalizeKey(v).includes(q)); return matchesLevel && matchesText; }); const box = document.getElementById('alertResults'); const empty = document.getElementById('alertEmpty'); if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none'; box.innerHTML = data.map(a => `<div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')"><b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')} · ${escapeHtml(a.vendedor || '-')}<br>${escapeHtml(a.text)}</div>`).join(''); }
