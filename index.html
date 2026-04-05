@@ -22,13 +22,26 @@
       radial-gradient(circle at 10% 72%, rgba(0,0,0,.025) 0 10px, transparent 11px),
       radial-gradient(circle at 15% 80%, rgba(0,0,0,.02) 0 18px, transparent 19px);pointer-events:none;z-index:0}
     .app{position:relative;z-index:1}
-    .hero-header{background:linear-gradient(180deg,#ff1a24 0%, #e30613 60%, #c9000b 100%);color:#fff;padding:18px 18px 42px;position:relative;overflow:hidden}
+    .hero-header{
+  background:linear-gradient(180deg,#ff1a24 0%, #e30613 60%, #c9000b 100%);
+  color:#fff;
+  padding:24px 18px 70px; /* ⬅️ MÁS ESPACIO ABAJO */
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
     .hero-header::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-42px;height:92px;background:linear-gradient(180deg,#ffffff 0%,#f2f2f2 100%);border-top-left-radius:50% 100%;border-top-right-radius:50% 100%;box-shadow:0 -8px 24px rgba(0,0,0,.08) inset}
     .brand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:2}
     .brand-left{display:flex;align-items:flex-start;gap:14px;min-width:0}
     .brand-left img{height:52px;display:block;filter:brightness(0) invert(1)}
     .divider{width:2px;height:58px;background:rgba(255,255,255,.9);border-radius:10px}
-    .brand-copy h1{margin:0;font-size:19px;line-height:1.08;font-weight:800;letter-spacing:.3px}
+    .brand-copy h1{
+  margin:0;
+  font-size:18px;
+  line-height:1.2;
+  font-weight:800;
+  letter-spacing:.2px;
+}
     .brand-copy p{margin:6px 0 0;font-size:11px;opacity:.95}
     .profile-btn{width:46px;height:46px;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:grid;place-items:center;font-size:22px;font-weight:700;background:rgba(255,255,255,.08);flex:0 0 auto}
     .page{display:none;padding:0 16px 16px}.page.active{display:block}
