@@ -347,7 +347,13 @@
       jugos: { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
       multicategorias: { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
       sabores: { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
-      saborizada: { icon: "🍋", bubble: "#eefcf1", bubbleBorder: "#bfe4c6", refBg: "#eefcf3", refBorder: "#c0e6ca" }
+      saborizada: { 
+  icon: "img/aquarius.png",
+  bubble: "#eefcf1",
+  bubbleBorder: "#bfe4c6",
+  refBg: "#eefcf3",
+  refBorder: "#c0e6ca"
+}
     };
     const state = { rows: [], routes: [], clients: [], alerts: [], selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
     function normalizeKey(str){ return (str || '').toString().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase(); }
