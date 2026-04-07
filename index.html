@@ -430,14 +430,6 @@
     function renderClients(){ const q = normalizeKey(document.getElementById('clientSearch').value); const routeFilter = document.getElementById('clientRouteFilter').value; const data = state.clients.filter(c => { const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q)); const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter); return matchesText && matchesRoute; }); const box = document.getElementById('clientResults'); const empty = document.getElementById('clientEmpty'); if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none'; box.innerHTML = data.map(c => `<div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')"><div class="client-head"><div><div class="item-title">${escapeHtml(c.cliente)}</div><div class="item-meta">Número: ${escapeHtml(c.numero || '-')}<br>Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS</div><div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div></div><div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div></div></div>`).join(''); }
     function openClientDetail(key, backMode='clients'){ state.selectedClientKey = key; state.clientBackMode = backMode; const client = state.clients.find(c => c.key === key); if(!client) return; document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente'; document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`; document.getElementById('clientDetailMeta').innerHTML = `<b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br><b>Número:</b> ${escapeHtml(client.numero || '-')}<br><b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br><b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br><b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br><b>Semáforo general:</b> ${client.semaforoText}`;
 
-const maxPuntos = client.categories.length * 5;
-
-document.getElementById('clientDetailSummary').innerHTML = `
-  <div class="box">
-    <div class="t">Objetivo CAJAS FÍSICAS</div>
-    <div class="v">${formatNumber(client.totalObjetivo)}</div>
-  </div>
-
   const maxPuntos = client.categories.length * 5;
 
 document.getElementById('clientDetailSummary').innerHTML = `
