@@ -455,23 +455,8 @@ document.getElementById('clientDetailSummary').innerHTML = `
     </div>
   </div>
 `;
-  <div class="box">
-    <div class="t">Objetivo CAJAS FÍSICAS</div>
-    <div class="v">${formatNumber(client.totalObjetivo)}</div>
-  </div>
-  <div class="box">
-    <div class="t">Avance CAJAS FÍSICAS</div>
-    <div class="v">${formatNumber(client.totalReal)}</div>
-  </div>
-  <div class="box">
-    <div class="t">Avance</div>
-    <div class="v">${formatPct(client.cumplimientoTotal)}</div>
-  </div>
-  <div class="box">
-    <div class="t">Score</div>
-    <div class="v">${client.totalPuntos} / ${maxPuntos}</div>
-  </div>
-`; const cats = document.getElementById('clientCategories'); const catsEmpty = document.getElementById('clientCategoriesEmpty'); if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; } else { catsEmpty.style.display = 'none'; cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
+  
+ const cats = document.getElementById('clientCategories'); const catsEmpty = document.getElementById('clientCategoriesEmpty'); if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; } else { catsEmpty.style.display = 'none'; cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
       const cumple = cat.cumplimiento >= 100;
       const puntos = cumple ? 5 : 0;
       const badgeClass = getSemaforoBadge(cat.cumplimiento);
