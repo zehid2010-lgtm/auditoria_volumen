@@ -438,6 +438,14 @@ document.getElementById('clientDetailSummary').innerHTML = `
     <div class="v">${formatNumber(client.totalObjetivo)}</div>
   </div>
 
+  const maxPuntos = client.categories.length * 5;
+
+document.getElementById('clientDetailSummary').innerHTML = `
+  <div class="box">
+    <div class="t">Objetivo CAJAS FÍSICAS</div>
+    <div class="v">${formatNumber(client.totalObjetivo)}</div>
+  </div>
+
   <div class="box">
     <div class="t">Avance CAJAS FÍSICAS</div>
     <div class="v">${formatNumber(client.totalReal)}</div>
