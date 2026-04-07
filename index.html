@@ -100,6 +100,7 @@
     .alert-box + .alert-box{margin-top:10px}
     .alert-high{background:#fdeeee}.alert-mid{background:#fff4e6}.alert-low{background:#eef7ef}
     .route-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.route-kpi .box:last-child{grid-column:span 3}
     .route-kpi .box{background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:16px;padding:12px 10px;text-align:center}
     .route-kpi .box .t{font-size:11px;color:#666}.route-kpi .box .v{font-size:20px;font-weight:800;margin-top:6px}
     .cat-grid{display:grid;gap:10px;margin-top:14px}
@@ -448,13 +449,21 @@ document.getElementById('clientDetailSummary').innerHTML = `
     <div class="v">${formatPct(client.cumplimientoTotal)}</div>
   </div>
 
-  <div class="box" style="background:#f0fdf4;">
-    <div class="t">Score</div>
-    <div class="v" style="color:#16a34a;">
-      ${client.totalPuntos} / ${maxPuntos}
-    </div>
+  <div class="box" style="
+  background:#f0fdf4;
+  grid-column: span 3;
+  padding:20px 10px;
+  text-align:center;
+">
+  <div class="t" style="font-size:14px;">Score</div>
+  <div class="v" style="
+    color:#16a34a;
+    font-size:34px;
+    font-weight:900;
+  ">
+    ${client.totalPuntos} / ${maxPuntos}
   </div>
-`;
+</div>
   
  const cats = document.getElementById('clientCategories'); const catsEmpty = document.getElementById('clientCategoriesEmpty'); if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; } else { catsEmpty.style.display = 'none'; cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
       const cumple = cat.cumplimiento >= 100;
