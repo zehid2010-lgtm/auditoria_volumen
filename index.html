@@ -17,67 +17,127 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f8f8f8 0%,#efefef 100%);color:var(--text)}
     body{max-width:540px;margin:0 auto;min-height:100vh;padding-bottom:110px;position:relative;overflow-x:hidden}
-    body::before{content:"";position:fixed;inset:0;background:
-      radial-gradient(circle at 92% 18%, rgba(0,0,0,.035) 0 12px, transparent 13px),
-      radial-gradient(circle at 10% 72%, rgba(0,0,0,.025) 0 10px, transparent 11px),
-      radial-gradient(circle at 15% 80%, rgba(0,0,0,.02) 0 18px, transparent 19px);pointer-events:none;z-index:0}
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(circle at 92% 18%, rgba(0,0,0,.035) 0 12px, transparent 13px),
+        radial-gradient(circle at 10% 72%, rgba(0,0,0,.025) 0 10px, transparent 11px),
+        radial-gradient(circle at 15% 80%, rgba(0,0,0,.02) 0 18px, transparent 19px);
+      pointer-events:none;
+      z-index:0
+    }
     .app{position:relative;z-index:1}
     .hero-header{
-  background:linear-gradient(180deg,#ff1a24 0%, #e30613 60%, #c9000b 100%);
-  color:#fff;
-  padding:24px 18px 70px; /* ⬅️ MÁS ESPACIO ABAJO */
-  position:relative;
-  overflow:hidden;
-  box-shadow:0 10px 24px rgba(0,0,0,.18);
-}
-    .hero-header::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-42px;height:92px;background:linear-gradient(180deg,#ffffff 0%,#f2f2f2 100%);border-top-left-radius:50% 100%;border-top-right-radius:50% 100%;box-shadow:0 -8px 24px rgba(0,0,0,.08) inset}
+      background:linear-gradient(180deg,#ff1a24 0%, #e30613 60%, #c9000b 100%);
+      color:#fff;
+      padding:24px 18px 70px;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+    .hero-header::after{
+      content:"";
+      position:absolute;
+      left:-8%;
+      right:-8%;
+      bottom:-42px;
+      height:92px;
+      background:linear-gradient(180deg,#ffffff 0%,#f2f2f2 100%);
+      border-top-left-radius:50% 100%;
+      border-top-right-radius:50% 100%;
+      box-shadow:0 -8px 24px rgba(0,0,0,.08) inset
+    }
     .brand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:2}
     .brand-left{display:flex;align-items:flex-start;gap:14px;min-width:0}
     .brand-left img{height:52px;display:block;filter:brightness(0) invert(1)}
     .divider{width:2px;height:58px;background:rgba(255,255,255,.9);border-radius:10px}
     .brand-copy h1{
-  margin:0;
-  font-size:18px;
-  line-height:1.2;
-  font-weight:800;
-  letter-spacing:.2px;
-}
+      margin:0;
+      font-size:18px;
+      line-height:1.2;
+      font-weight:800;
+      letter-spacing:.2px;
+    }
     .brand-copy p{margin:6px 0 0;font-size:11px;opacity:.95}
-    .profile-btn{width:46px;height:46px;border-radius:50%;border:2px solid rgba(255,255,255,.9);display:grid;place-items:center;font-size:22px;font-weight:700;background:rgba(255,255,255,.08);flex:0 0 auto}
-    .page{display:none;padding:0 16px 16px}.page.active{display:block}
+    .profile-btn{
+      width:46px;height:46px;border-radius:50%;
+      border:2px solid rgba(255,255,255,.9);
+      display:grid;place-items:center;font-size:22px;font-weight:700;
+      background:rgba(255,255,255,.08);flex:0 0 auto
+    }
+    .page{display:none;padding:0 16px 16px}
+    .page.active{display:block}
     .welcome{padding:18px 6px 8px;text-align:center}
     .welcome h2{margin:0;font-size:28px;line-height:1.08;font-weight:800}
     .welcome p{margin:10px 0 0;color:#5f5f5f;font-size:14px}
-    .hero-card{margin-top:18px;border:none;border-radius:30px;color:#fff;padding:22px 18px 18px;min-height:225px;box-shadow:var(--shadow);position:relative;overflow:hidden;text-align:center;background:linear-gradient(180deg,#1a1a1a 0%, #101010 68%, #000000 100%);cursor:pointer;width:100%}
-    .hero-card::before{content:"";position:absolute;right:-6px;top:16px;width:130px;height:170px;opacity:.12;background:radial-gradient(ellipse at center, rgba(255,255,255,.95) 0%, rgba(255,255,255,.35) 45%, transparent 70%);border-radius:55% 45% 42% 58% / 38% 44% 56% 62%;transform:rotate(8deg)}
-    .hero-card::after{content:"";position:absolute;right:14px;bottom:34px;width:88px;height:34px;opacity:.12;border-radius:50%;background:rgba(255,255,255,.9);filter:blur(8px)}
-    .hero-icon{width:112px;height:112px;border-radius:50%;border:2px solid rgba(255,255,255,.75);display:grid;place-items:center;margin:0 auto 22px;font-size:54px;position:relative;z-index:1}
+    .hero-card{
+      margin-top:18px;border:none;border-radius:30px;color:#fff;
+      padding:22px 18px 18px;min-height:225px;box-shadow:var(--shadow);
+      position:relative;overflow:hidden;text-align:center;
+      background:linear-gradient(180deg,#1a1a1a 0%, #101010 68%, #000000 100%);
+      cursor:pointer;width:100%
+    }
+    .hero-card::before{
+      content:"";position:absolute;right:-6px;top:16px;width:130px;height:170px;opacity:.12;
+      background:radial-gradient(ellipse at center, rgba(255,255,255,.95) 0%, rgba(255,255,255,.35) 45%, transparent 70%);
+      border-radius:55% 45% 42% 58% / 38% 44% 56% 62%;transform:rotate(8deg)
+    }
+    .hero-card::after{
+      content:"";position:absolute;right:14px;bottom:34px;width:88px;height:34px;
+      opacity:.12;border-radius:50%;background:rgba(255,255,255,.9);filter:blur(8px)
+    }
+    .hero-icon{
+      width:112px;height:112px;border-radius:50%;
+      border:2px solid rgba(255,255,255,.75);
+      display:grid;place-items:center;margin:0 auto 22px;font-size:54px;position:relative;z-index:1
+    }
     .hero-card h3{margin:0;font-size:26px;font-weight:800;position:relative;z-index:1}
     .hero-card p{margin:14px 0 18px;font-size:14px;line-height:1.35;position:relative;z-index:1}
-    .cta{width:100%;border:none;border-radius:999px;background:#fff;color:#111;padding:14px 16px;font-size:15px;font-weight:800;display:block;position:relative;z-index:1}
-    .panel{background:rgba(255,255,255,.94);border:1px solid rgba(0,0,0,.06);border-radius:24px;box-shadow:var(--shadow);padding:16px;margin-top:18px;backdrop-filter:blur(4px)}
+    .cta{
+      width:100%;border:none;border-radius:999px;background:#fff;color:#111;
+      padding:14px 16px;font-size:15px;font-weight:800;display:block;position:relative;z-index:1
+    }
+    .panel{
+      background:rgba(255,255,255,.94);border:1px solid rgba(0,0,0,.06);
+      border-radius:24px;box-shadow:var(--shadow);padding:16px;margin-top:18px;backdrop-filter:blur(4px)
+    }
     .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
     .panel-head-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
     .panel-head h4{margin:0;font-size:18px;line-height:1.1}
     .panel-head small{color:#777;font-size:12px}
-    .panel-icon{font-size:24px}.date-chip{font-size:12px;color:#777;white-space:nowrap}
+    .panel-icon{font-size:24px}
+    .date-chip{font-size:12px;color:#777;white-space:nowrap}
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
     .stat-card{border-radius:18px;padding:14px 10px;text-align:center;border:1px solid rgba(0,0,0,.05)}
     .stat-card .ico{font-size:28px;display:block;margin-bottom:8px}
     .stat-card .label{font-size:12px;line-height:1.15;min-height:30px}
     .stat-card .num{font-size:24px;font-weight:800;margin-top:10px}
     .stat-card .sub{font-size:11px;color:#555;margin-top:2px}
-    .stat1{background:#edf3fb}.stat2{background:#eef7ef}.stat3{background:#fff4e8}.stat4{background:#fdeeee}
+    .stat1{background:#edf3fb}
+    .stat2{background:#eef7ef}
+    .stat3{background:#fff4e8}
+    .stat4{background:#fdeeee}
     .quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .quick-btn{background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:18px;padding:16px 10px;text-align:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+    .quick-btn{
+      background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:18px;
+      padding:16px 10px;text-align:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.04)
+    }
     .quick-btn .qico{font-size:28px;display:block;margin-bottom:10px}
     .quick-btn .qtxt{font-size:12px;font-weight:700;line-height:1.25}
     .search-box{display:grid;gap:10px;margin-top:2px}
     .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    input,select{width:100%;padding:13px 14px;border-radius:16px;border:1px solid #dfdfdf;background:#fff;font-size:14px;outline:none}
+    input,select{
+      width:100%;padding:13px 14px;border-radius:16px;border:1px solid #dfdfdf;
+      background:#fff;font-size:14px;outline:none
+    }
     input:focus,select:focus{border-color:var(--red)}
     .results{display:grid;gap:10px;margin-top:14px}
-    .item{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .item{
+      background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;
+      padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)
+    }
     .item-title{font-size:15px;font-weight:800;margin:0 0 4px}
     .item-meta{font-size:12px;color:#666;line-height:1.35}
     .badge{padding:8px 10px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}
@@ -92,33 +152,74 @@
     .mini-progress{margin-top:8px;height:8px;background:#ececec;border-radius:999px;overflow:hidden}
     .mini-progress > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff7f11,#2bb673)}
     .empty{padding:24px 10px;text-align:center;color:#777;font-size:14px}
-    .tool-header{padding-top:16px}.tool-title{font-size:24px;font-weight:800;margin:0}.tool-sub{margin:6px 0 0;color:#666;font-size:13px}
-    .back-btn{border:none;background:#fff;border-radius:999px;padding:10px 14px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+    .tool-header{padding-top:16px}
+    .tool-title{font-size:24px;font-weight:800;margin:0}
+    .tool-sub{margin:6px 0 0;color:#666;font-size:13px}
+    .back-btn{
+      border:none;background:#fff;border-radius:999px;padding:10px 14px;font-weight:800;
+      cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.06)
+    }
     .client-card{cursor:pointer}
     .client-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-    .alert-box{border-radius:18px;padding:13px 14px;font-size:13px;line-height:1.35;border:1px solid rgba(0,0,0,.05);background:#fff;cursor:pointer}
+    .alert-box{
+      border-radius:18px;padding:13px 14px;font-size:13px;line-height:1.35;
+      border:1px solid rgba(0,0,0,.05);background:#fff;cursor:pointer
+    }
     .alert-box + .alert-box{margin-top:10px}
-    .alert-high{background:#fdeeee}.alert-mid{background:#fff4e6}.alert-low{background:#eef7ef}
+    .alert-high{background:#fdeeee}
+    .alert-mid{background:#fff4e6}
+    .alert-low{background:#eef7ef}
     .route-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-.route-kpi .box:last-child{grid-column:span 3}
-    .route-kpi .box{background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:16px;padding:12px 10px;text-align:center}
-    .route-kpi .box .t{font-size:11px;color:#666}.route-kpi .box .v{font-size:20px;font-weight:800;margin-top:6px}
+    .route-kpi .box:last-child{grid-column:span 3}
+    .route-kpi .box{
+      background:#fff;border:1px solid rgba(0,0,0,.05);
+      border-radius:16px;padding:12px 10px;text-align:center
+    }
+    .route-kpi .box .t{font-size:11px;color:#666}
+    .route-kpi .box .v{font-size:20px;font-weight:800;margin-top:6px}
     .cat-grid{display:grid;gap:10px;margin-top:14px}
-    .cat-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
+    .cat-card{
+      background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;
+      padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)
+    }
     .cat-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
     .cat-name{font-size:14px;font-weight:800;margin:0}
     .cat-sub{margin-top:6px;color:#666;font-size:12px;line-height:1.5}
-    .legend-box{font-size:12px;color:#666;margin-bottom:12px;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:10px 12px;line-height:1.5}
+    .legend-box{
+      font-size:12px;color:#666;margin-bottom:12px;background:#fafafa;border:1px solid #eee;
+      border-radius:14px;padding:10px 12px;line-height:1.5
+    }
     .watermark{margin:14px auto 6px;text-align:center;color:#b2b2b2;font-style:italic;font-size:30px;opacity:.8}
     .cat-main{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:flex-start}
-    .cat-bottle{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:36px;border:1px solid rgba(0,0,0,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+    .cat-bottle{
+      width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:36px;
+      border:1px solid rgba(0,0,0,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)
+    }
     .cat-ref{margin-top:10px;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.35;border:1px solid}
     .cat-ref-title{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
     .cat-ref-note{font-size:11px;color:#5c6470;margin-top:3px}
-    .bottom-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(500px,calc(100% - 24px));background:linear-gradient(180deg,#ff0e18 0%, #eb000c 100%);border-radius:24px;box-shadow:var(--shadow);padding:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;z-index:50}
-    .nav-btn{border:none;background:transparent;color:#fff;border-radius:18px;padding:12px 6px;cursor:pointer;display:grid;place-items:center;gap:6px;font-size:12px;font-weight:800}
-    .nav-btn.active{background:linear-gradient(180deg,#900009 0%, #6e0007 100%)} .nav-btn .nicon{font-size:24px}
-    @media (max-width:450px){.brand-left img{height:42px}.divider{height:48px}.brand-copy h1{font-size:16px}.stats-grid,.quick-grid{grid-template-columns:1fr 1fr}.route-kpi{grid-template-columns:1fr 1fr 1fr}.hero-card{min-height:210px}}
+    .bottom-nav{
+      position:fixed;left:50%;transform:translateX(-50%);bottom:12px;
+      width:min(500px,calc(100% - 24px));
+      background:linear-gradient(180deg,#ff0e18 0%, #eb000c 100%);
+      border-radius:24px;box-shadow:var(--shadow);padding:10px;display:grid;
+      grid-template-columns:repeat(4,1fr);gap:8px;z-index:50
+    }
+    .nav-btn{
+      border:none;background:transparent;color:#fff;border-radius:18px;padding:12px 6px;
+      cursor:pointer;display:grid;place-items:center;gap:6px;font-size:12px;font-weight:800
+    }
+    .nav-btn.active{background:linear-gradient(180deg,#900009 0%, #6e0007 100%)}
+    .nav-btn .nicon{font-size:24px}
+
+    @media (max-width:450px){
+      .brand-left img{height:42px}
+      .divider{height:48px}
+      .brand-copy h1{font-size:16px}
+      .stats-grid,.quick-grid{grid-template-columns:1fr 1fr}
+      .route-kpi{grid-template-columns:1fr 1fr 1fr}
+      .hero-card{min-height:210px}
+    }
   </style>
 </head>
 <body>
@@ -126,11 +227,10 @@
     <header class="hero-header">
       <div class="brand-row">
         <div class="brand-left">
-  <div class="brand-left">
-  <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png"
-       style="height:36px; width:auto;"
-       alt="Coca-Cola">
-  <div class="divider"></div>
+          <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png"
+               style="height:36px; width:auto;"
+               alt="Coca-Cola">
+          <div class="divider"></div>
           <div class="brand-copy">
             <h1>GESTIÓN VOLUMEN PDV 2026</h1>
             <p>Objetivo, vendido y avance por ruta, cliente y categoría.</p>
@@ -146,12 +246,14 @@
           <h2>¡Bienvenido!</h2>
           <p>Seguimiento ejecutivo de volumen con foco en objetivo y avance</p>
         </div>
+
         <button class="hero-card" onclick="goToRoutes()">
           <div class="hero-icon">📦</div>
           <h3>Volumen</h3>
           <p>Entrá al tablero y revisá objetivo, vendido y avance por ruta y por cliente.</p>
           <span class="cta">IR AL DASHBOARD ❯</span>
         </button>
+
         <section class="panel">
           <div class="panel-head">
             <div class="panel-head-left">
@@ -167,6 +269,7 @@
             <div class="stat-card stat4"><span class="ico">🚨</span><div class="label">Alertas críticas</div><div class="num" id="kpiDesvios">0</div><div class="sub">detectadas</div></div>
           </div>
         </section>
+
         <section class="panel">
           <div class="panel-head" style="margin-bottom:10px;">
             <div class="panel-head-left">
@@ -181,6 +284,7 @@
             <button class="quick-btn" onclick="loadData(true)"><span class="qico">☁️</span><span class="qtxt">Sincronizar</span></button>
           </div>
         </section>
+
         <section class="panel">
           <div class="panel-head">
             <div class="panel-head-left">
@@ -191,10 +295,11 @@
           <div class="legend-box">
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
             📦 <b>Avance:</b> volumen real cargado en las columnas <b>_avance</b>.<br>
-            📊 <b>Avance:</b> porcentaje automático = <b>Vendido / Objetivo</b>.<br>
+            📊 <b>Avance %:</b> cálculo automático = <b>Vendido / Objetivo</b>.<br>
             🚦 <b>Semáforo:</b> Verde ≥ 80% · Amarillo 50% a 79% · Rojo &lt; 50%.
           </div>
         </section>
+
         <section class="panel">
           <div class="panel-head">
             <div class="panel-head-left">
@@ -204,6 +309,7 @@
           </div>
           <div id="homeAlerts"></div>
         </section>
+
         <div class="watermark">Coca-Cola</div>
       </section>
 
@@ -261,8 +367,24 @@
             <div class="box"><div class="t">Avance</div><div class="v" id="rdAvance">0%</div></div>
           </div>
         </div>
-        <div class="panel"><div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div><div id="routeAlerts"></div></div>
-        <div class="panel"><div class="panel-head"><div class="panel-head-left"><div class="panel-icon">👥</div><div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div></div></div><div id="routeClients"></div></div>
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <div class="panel-icon">⚠️</div>
+              <div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div>
+            </div>
+          </div>
+          <div id="routeAlerts"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <div class="panel-icon">👥</div>
+              <div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div>
+            </div>
+          </div>
+          <div id="routeClients"></div>
+        </div>
       </section>
 
       <section id="page-client-detail" class="page">
@@ -271,10 +393,24 @@
           <h2 class="tool-title" id="clientDetailTitle" style="margin-top:14px;">Cliente</h2>
           <p class="tool-sub" id="clientDetailSub">Detalle por categoría.</p>
         </div>
-        <div class="panel"><div class="item-meta" id="clientDetailMeta"></div><div class="route-kpi" id="clientDetailSummary" style="margin-top:14px;"></div></div>
+
         <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">📦</div><div><h4>Categorías del cliente</h4><small>Objetivo, vendido, avance y semáforo por categoría.</small></div></div></div>
-          <div class="legend-box">🎯 <b>Objetivo:</b> lo que tiene que vender.<br>📦 <b>Avance:</b> lo que ya se cargó en el Excel.<br>📊 <b>Avance:</b> porcentaje automático de cumplimiento.</div>
+          <div class="item-meta" id="clientDetailMeta"></div>
+          <div class="route-kpi" id="clientDetailSummary" style="margin-top:14px;"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <div class="panel-icon">📦</div>
+              <div><h4>Categorías del cliente</h4><small>Objetivo, vendido, avance y semáforo por categoría.</small></div>
+            </div>
+          </div>
+          <div class="legend-box">
+            🎯 <b>Objetivo:</b> lo que tiene que vender.<br>
+            📦 <b>Avance:</b> lo que ya se cargó en el Excel.<br>
+            📊 <b>Avance %:</b> porcentaje automático de cumplimiento.
+          </div>
           <div id="clientCategories" class="cat-grid"></div>
           <div id="clientCategoriesEmpty" class="empty" style="display:none;">No hay categorías para mostrar.</div>
         </div>
@@ -288,7 +424,12 @@
         <div class="panel">
           <div class="search-box">
             <div class="row-2">
-              <select id="alertLevelFilter"><option value="">Todos los niveles</option><option value="critico">Crítico</option><option value="medio">Medio</option><option value="controlado">Controlado</option></select>
+              <select id="alertLevelFilter">
+                <option value="">Todos los niveles</option>
+                <option value="critico">Crítico</option>
+                <option value="medio">Medio</option>
+                <option value="controlado">Controlado</option>
+              </select>
               <input id="alertSearch" type="text" placeholder="Buscar cliente, ruta o vendedor">
             </div>
           </div>
@@ -308,6 +449,7 @@
 
   <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQvqI0eiCVoe9HB5VvdA41X0G0xLGdXIDEEJ6_ebjDFmlLSrJGGJOg4qzOg6QP__Q/pub?gid=715832062&single=true&output=csv';
+
     const CATEGORY_CONFIG = [
       { key: 'agua', label: 'Agua' },
       { key: 'bebida_energetica', label: 'Bebida Energética' },
@@ -318,6 +460,7 @@
       { key: 'sabores', label: 'Sabores' },
       { key: 'saborizada', label: 'Saborizada' }
     ];
+
     const referenciaMap = {
       agua: "Agua 2 Lts x 6 unidades",
       bebida_energetica: "Monster 473 ml x 6 unidades",
@@ -328,47 +471,190 @@
       sabores: "Fanta / Sprite 2 Lts RET x 8 unidades",
       saborizada: "Aquarius 1.5 Lts PET x 6 unidades"
     };
+
     const categoryVisualMap = {
-      agua: { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
-      bebida_energetica: { 
-  icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png",
-  bubble: "#f2ecff",
-  bubbleBorder: "#d4c0ff",
-  refBg: "#f5eeff",
-  refBorder: "#d9c7ff"
-},
-      colas: { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
-      isotonica: { 
-  icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png",
-  bubble: "#eef5ff", 
-  bubbleBorder: "#c6dafb", 
-  refBg: "#edf5ff", 
-  refBorder: "#c7daf8" 
-},
-      jugos: { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
-      multicategorias: { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
-      sabores: { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
-      saborizada: { 
-  icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png",
-  bubble: "#eefcf1",
-  bubbleBorder: "#bfe4c6",
-  refBg: "#eefcf3",
-  refBorder: "#c0e6ca"
-}
+      agua: {
+        icon: "💧",
+        bubble: "#eaf4ff",
+        bubbleBorder: "#b7d8ff",
+        refBg: "#eef6ff",
+        refBorder: "#bfdcff"
+      },
+      bebida_energetica: {
+        icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png",
+        bubble: "#f2ecff",
+        bubbleBorder: "#d4c0ff",
+        refBg: "#f5eeff",
+        refBorder: "#d9c7ff"
+      },
+      colas: {
+        icon: "🥤",
+        bubble: "#eef9f1",
+        bubbleBorder: "#bfe3c7",
+        refBg: "#ecf8ef",
+        refBorder: "#bee2c4"
+      },
+      isotonica: {
+        icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png",
+        bubble: "#eef5ff",
+        bubbleBorder: "#c6dafb",
+        refBg: "#edf5ff",
+        refBorder: "#c7daf8"
+      },
+      jugos: {
+        icon: "🧃",
+        bubble: "#fff7e8",
+        bubbleBorder: "#f2d59f",
+        refBg: "#fff8e9",
+        refBorder: "#efd59b"
+      },
+      multicategorias: {
+        icon: "🧺",
+        bubble: "#fff7e7",
+        bubbleBorder: "#f1d188",
+        refBg: "#fff8ea",
+        refBorder: "#f0d28e"
+      },
+      sabores: {
+        icon: "🍊",
+        bubble: "#fff3e8",
+        bubbleBorder: "#f2c8aa",
+        refBg: "#fff3ea",
+        refBorder: "#efc7aa"
+      },
+      saborizada: {
+        icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png",
+        bubble: "#eefcf1",
+        bubbleBorder: "#bfe4c6",
+        refBg: "#eefcf3",
+        refBorder: "#c0e6ca"
+      }
     };
-    const state = { rows: [], routes: [], clients: [], alerts: [], selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
-    function normalizeKey(str){ return (str || '').toString().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase(); }
-    function escapeHtml(str){ return (str || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-    function toNumber(value){ if(value === null || value === undefined || value === '') return 0; const clean = String(value).replace(/\s/g,'').replace(/\./g,'').replace(',', '.'); const n = parseFloat(clean); return isNaN(n) ? 0 : n; }
-    function formatNumber(n){ return Number(n || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 }); }
-    function formatPct(n){ return `${Math.round(Number(n || 0))}%`; }
-    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-    function getSemaforo(cumplimiento){ if(cumplimiento >= 80) return 'green'; if(cumplimiento >= 50) return 'yellow'; return 'red'; }
-    function getSemaforoBadge(cumplimiento){ if(cumplimiento >= 80) return 'ok'; if(cumplimiento >= 50) return 'warn'; return 'bad'; }
-    function getSemaforoText(cumplimiento){ if(cumplimiento >= 80) return 'VERDE'; if(cumplimiento >= 50) return 'AMARILLO'; return 'ROJO'; }
-    function csvToObjects(text){ const rows=[]; let row=[]; let cell=''; let inQuotes=false; for(let i=0;i<text.length;i++){ const char=text[i], next=text[i+1]; if(char === '"'){ if(inQuotes && next === '"'){ cell += '"'; i++; } else inQuotes = !inQuotes; } else if(char === ',' && !inQuotes){ row.push(cell); cell = ''; } else if((char === '\n' || char === '\r') && !inQuotes){ if(char === '\r' && next === '\n') i++; row.push(cell); if(row.some(v => v !== '')) rows.push(row); row = []; cell = ''; } else { cell += char; } } if(cell.length || row.length){ row.push(cell); if(row.some(v => v !== '')) rows.push(row); } if(!rows.length) return []; const headers = rows[0].map(h => String(h || '').trim()); return rows.slice(1).map(cols => { const obj = {}; headers.forEach((h,idx) => obj[h] = (cols[idx] || '').trim()); return obj; }); }
-    async function fetchCSV(url){ const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now()); if(!res.ok) throw new Error('No se pudo cargar el archivo CSV'); return csvToObjects(await res.text()); }
-    function getCell(row, key){ if(row[key] !== undefined) return row[key]; const found = Object.keys(row).find(k => normalizeKey(k) === normalizeKey(key)); return found ? row[found] : ''; }
+
+    const state = {
+      rows: [],
+      routes: [],
+      clients: [],
+      alerts: [],
+      selectedRoute: '',
+      selectedClientKey: '',
+      clientBackMode: 'clients'
+    };
+
+    function normalizeKey(str){
+      return (str || '')
+        .toString()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .toUpperCase();
+    }
+
+    function escapeHtml(str){
+      return (str || '')
+        .toString()
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
+
+    function toNumber(value){
+      if(value === null || value === undefined || value === '') return 0;
+      const clean = String(value).replace(/\s/g,'').replace(/\./g,'').replace(',', '.');
+      const n = parseFloat(clean);
+      return isNaN(n) ? 0 : n;
+    }
+
+    function formatNumber(n){
+      return Number(n || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 });
+    }
+
+    function formatPct(n){
+      return `${Math.round(Number(n || 0))}%`;
+    }
+
+    function clamp(n, min, max){
+      return Math.max(min, Math.min(max, n));
+    }
+
+    function getSemaforo(cumplimiento){
+      if(cumplimiento >= 80) return 'green';
+      if(cumplimiento >= 50) return 'yellow';
+      return 'red';
+    }
+
+    function getSemaforoBadge(cumplimiento){
+      if(cumplimiento >= 80) return 'ok';
+      if(cumplimiento >= 50) return 'warn';
+      return 'bad';
+    }
+
+    function getSemaforoText(cumplimiento){
+      if(cumplimiento >= 80) return 'VERDE';
+      if(cumplimiento >= 50) return 'AMARILLO';
+      return 'ROJO';
+    }
+
+    function csvToObjects(text){
+      const rows = [];
+      let row = [];
+      let cell = '';
+      let inQuotes = false;
+
+      for(let i = 0; i < text.length; i++){
+        const char = text[i];
+        const next = text[i + 1];
+
+        if(char === '"'){
+          if(inQuotes && next === '"'){
+            cell += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if(char === ',' && !inQuotes){
+          row.push(cell);
+          cell = '';
+        } else if((char === '\n' || char === '\r') && !inQuotes){
+          if(char === '\r' && next === '\n') i++;
+          row.push(cell);
+          if(row.some(v => v !== '')) rows.push(row);
+          row = [];
+          cell = '';
+        } else {
+          cell += char;
+        }
+      }
+
+      if(cell.length || row.length){
+        row.push(cell);
+        if(row.some(v => v !== '')) rows.push(row);
+      }
+
+      if(!rows.length) return [];
+
+      const headers = rows[0].map(h => String(h || '').trim());
+      return rows.slice(1).map(cols => {
+        const obj = {};
+        headers.forEach((h, idx) => obj[h] = (cols[idx] || '').trim());
+        return obj;
+      });
+    }
+
+    async function fetchCSV(url){
+      const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now());
+      if(!res.ok) throw new Error('No se pudo cargar el archivo CSV');
+      return csvToObjects(await res.text());
+    }
+
+    function getCell(row, key){
+      if(row[key] !== undefined) return row[key];
+      const found = Object.keys(row).find(k => normalizeKey(k) === normalizeKey(key));
+      return found ? row[found] : '';
+    }
+
     function detectObjectiveValue(row, baseKey){
       const candidates = [`${baseKey}_objetivo`, `${baseKey} objetivo`, baseKey];
       for(const c of candidates){
@@ -377,6 +663,7 @@
       }
       return 0;
     }
+
     function detectAdvanceValue(row, baseKey){
       const candidates = [`${baseKey}_avance`, `${baseKey} avance`, `${baseKey}_real`, `${baseKey} real`];
       for(const c of candidates){
@@ -385,6 +672,7 @@
       }
       return 0;
     }
+
     function detectPointsValue(row, baseKey, objetivo, real){
       const candidates = [`${baseKey}_puntos`, `${baseKey} puntos`];
       for(const c of candidates){
@@ -393,6 +681,7 @@
       }
       return real >= objetivo && objetivo > 0 ? 5 : 0;
     }
+
     function buildData(rawRows){
       state.rows = rawRows.map(r => {
         const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
@@ -400,110 +689,491 @@
         const ruta = getCell(r,'ru') || getCell(r,'RU') || getCell(r,'ruta') || getCell(r,'RUTA') || '';
         const vendedor = getCell(r,'vendedor') || getCell(r,'VENDEDOR') || '';
         const repositor = getCell(r,'repositor') || getCell(r,'REPOSITOR') || '';
+
         const categories = CATEGORY_CONFIG.map(cat => {
           const objetivo = detectObjectiveValue(r, cat.key);
           const real = detectAdvanceValue(r, cat.key);
           const puntos = detectPointsValue(r, cat.key, objetivo, real);
           const cumplimiento = objetivo > 0 ? (real / objetivo) * 100 : 0;
           const desvio = objetivo - real;
-          return { key: cat.key, label: cat.label, objetivo, real, puntos, cumplimiento, desvio, semaforo: getSemaforo(cumplimiento), semaforoText: getSemaforoText(cumplimiento) };
+          return {
+            key: cat.key,
+            label: cat.label,
+            objetivo,
+            real,
+            puntos,
+            cumplimiento,
+            desvio,
+            semaforo: getSemaforo(cumplimiento),
+            semaforoText: getSemaforoText(cumplimiento)
+          };
         }).filter(c => c.objetivo > 0 || c.real > 0);
+
         const totalObjetivo = categories.reduce((a,c)=>a+c.objetivo,0);
         const totalReal = categories.reduce((a,c)=>a+c.real,0);
         const totalPuntos = categories.reduce((a,c)=>a+c.puntos,0);
         const cumplimientoTotal = totalObjetivo > 0 ? (totalReal / totalObjetivo) * 100 : 0;
         const desvioTotal = totalObjetivo - totalReal;
-        return { key: `${numero}|${cliente}`, numero, cliente, ruta: String(ruta), vendedor, repositor, categories, totalObjetivo, totalReal, totalPuntos, cumplimientoTotal, desvioTotal, semaforo: getSemaforo(cumplimientoTotal), semaforoText: getSemaforoText(cumplimientoTotal) };
+
+        return {
+          key: `${numero}|${cliente}`,
+          numero,
+          cliente,
+          ruta: String(ruta),
+          vendedor,
+          repositor,
+          categories,
+          totalObjetivo,
+          totalReal,
+          totalPuntos,
+          cumplimientoTotal,
+          desvioTotal,
+          semaforo: getSemaforo(cumplimientoTotal),
+          semaforoText: getSemaforoText(cumplimientoTotal)
+        };
       }).filter(r => r.numero || r.cliente);
-      buildRoutes(); buildClients(); buildAlerts();
+
+      buildRoutes();
+      buildClients();
+      buildAlerts();
     }
-    function buildRoutes(){ const map = new Map(); state.rows.forEach(r => { const key = r.ruta || 'Sin ruta'; if(!map.has(key)){ map.set(key, { ruta: key, vendedor: r.vendedor || '', clients: 0, objetivo: 0, real: 0, desvio: 0, cumplimiento: 0, rows: [] }); } const route = map.get(key); route.clients += 1; route.objetivo += r.totalObjetivo; route.real += r.totalReal; route.desvio += r.desvioTotal; if(!route.vendedor && r.vendedor) route.vendedor = r.vendedor; route.rows.push(r); }); state.routes = [...map.values()].map(r => { r.cumplimiento = r.objetivo > 0 ? (r.real / r.objetivo) * 100 : 0; r.semaforo = getSemaforo(r.cumplimiento); r.semaforoText = getSemaforoText(r.cumplimiento); return r; }); }
-    function buildClients(){ state.clients = [...state.rows].sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente))); }
-    function buildAlerts(){ const alerts = []; state.rows.forEach(client => { client.categories.forEach(cat => { alerts.push({ ruta: client.ruta, vendedor: client.vendedor, cliente: client.cliente, numero: client.numero, categoria: cat.label, objetivo: cat.objetivo, real: cat.real, desvio: cat.desvio, cumplimiento: cat.cumplimiento, level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado', text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS (${formatPct(cat.cumplimiento)})`, refKey: client.key }); }); }); state.alerts = alerts.sort((a,b) => { const rank = {critico:0, medio:1, controlado:2}; if(rank[a.level] !== rank[b.level]) return rank[a.level] - rank[b.level]; return (b.desvio || 0) - (a.desvio || 0); }); }
-    function updateHomeKPIs(){ document.getElementById('kpiRoutes').textContent = state.routes.length; document.getElementById('kpiClients').textContent = state.clients.length; document.getElementById('kpiObjetivo').textContent = formatNumber(state.rows.reduce((a,r)=>a+r.totalObjetivo,0)); document.getElementById('kpiDesvios').textContent = state.alerts.filter(a => a.level === 'critico').length; renderHomeAlerts(); }
-    function severityText(level){ if(level === 'critico') return 'CRÍTICO'; if(level === 'medio') return 'MEDIO'; return 'CONTROLADO'; }
-    function renderHomeAlerts(){ const box = document.getElementById('homeAlerts'); const top = state.alerts.slice(0,5); if(!top.length){ box.innerHTML = `<div class="empty">No hay alertas para mostrar.</div>`; return; } box.innerHTML = top.map(a => `<div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','home')"><b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')}<br>${escapeHtml(a.text)}</div>`).join(''); }
-    function goTo(page){ document.querySelectorAll('.page').forEach(p => p.classList.remove('active')); document.getElementById('page-' + page).classList.add('active'); document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); const nav = document.getElementById('nav-' + page); if(nav) nav.classList.add('active'); window.scrollTo({top:0, behavior:'smooth'}); if(page === 'alertas') renderAlerts(); }
-    function goToRoutes(){ goTo('routes'); document.getElementById('nav-routes').classList.add('active'); renderRoutes(); }
-    function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
-    function renderRoutes(){ const q = normalizeKey(document.getElementById('routeSearch').value); const sort = document.getElementById('routeSort').value; let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q))); if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo); else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients); else if(sort === 'ruta') data.sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta))); else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento); else data.sort((a,b)=> b.desvio - a.desvio); const box = document.getElementById('routeResults'); const empty = document.getElementById('routeEmpty'); if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none'; box.innerHTML = data.map(r => `<div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')"><div class="client-head"><div><div class="item-title">Ruta ${escapeHtml(r.ruta)}</div><div class="item-meta">Vendedor: ${escapeHtml(r.vendedor || '-')}<br>🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS</div><div class="mini-progress"><span style="width:${clamp(r.cumplimiento,0,100)}%"></span></div></div><div class="badge ${getSemaforoBadge(r.cumplimiento)}">${formatPct(r.cumplimiento)}</div></div></div>`).join(''); }
-    function openRouteDetail(ruta){ state.selectedRoute = ruta; const route = state.routes.find(r => String(r.ruta) === String(ruta)); if(!route) return; document.getElementById('routeDetailTitle').textContent = `Ruta ${route.ruta}`; document.getElementById('routeDetailSub').textContent = `Vendedor: ${route.vendedor || '-'} · Seguimiento ejecutivo de volumen`; document.getElementById('routeDetailMeta').innerHTML = `<b>Ruta:</b> ${escapeHtml(route.ruta)}<br><b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br><b>Semáforo:</b> ${route.semaforoText}`; document.getElementById('rdClients').textContent = formatNumber(route.clients); document.getElementById('rdObjetivo').textContent = formatNumber(route.objetivo); document.getElementById('rdAvance').textContent = formatPct(route.cumplimiento); const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8); const alertBox = document.getElementById('routeAlerts'); alertBox.innerHTML = routeAlerts.length ? routeAlerts.map(c => `<div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')"><b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 📊 Avance: ${formatPct(c.cumplimientoTotal)}</div>`).join('') : `<div class="empty">No hay alertas para esta ruta.</div>`; const routeClients = document.getElementById('routeClients'); routeClients.innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente))).map(c => `<div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')"><div class="client-head"><div><div class="item-title">${escapeHtml(c.cliente)}</div><div class="item-meta">Número: ${escapeHtml(c.numero || '-')}<br>🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS</div><div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div></div><div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div></div></div>`).join(''); goTo('route-detail'); }
-    function renderClients(){ const q = normalizeKey(document.getElementById('clientSearch').value); const routeFilter = document.getElementById('clientRouteFilter').value; const data = state.clients.filter(c => { const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q)); const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter); return matchesText && matchesRoute; }); const box = document.getElementById('clientResults'); const empty = document.getElementById('clientEmpty'); if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none'; box.innerHTML = data.map(c => `<div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')"><div class="client-head"><div><div class="item-title">${escapeHtml(c.cliente)}</div><div class="item-meta">Número: ${escapeHtml(c.numero || '-')}<br>Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS</div><div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div></div><div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div></div></div>`).join(''); }
-    function openClientDetail(key, backMode='clients'){ state.selectedClientKey = key; state.clientBackMode = backMode; const client = state.clients.find(c => c.key === key); if(!client) return; document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente'; document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`; document.getElementById('clientDetailMeta').innerHTML = `<b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br><b>Número:</b> ${escapeHtml(client.numero || '-')}<br><b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br><b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br><b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br><b>Semáforo general:</b> ${client.semaforoText}`;
 
-  const maxPuntos = client.categories.length * 5;
+    function buildRoutes(){
+      const map = new Map();
 
-document.getElementById('clientDetailSummary').innerHTML = `
-  <div class="box">
-    <div class="t">Objetivo CAJAS FÍSICAS</div>
-    <div class="v">${formatNumber(client.totalObjetivo)}</div>
-  </div>
+      state.rows.forEach(r => {
+        const key = r.ruta || 'Sin ruta';
 
-  <div class="box">
-    <div class="t">Avance CAJAS FÍSICAS</div>
-    <div class="v">${formatNumber(client.totalReal)}</div>
-  </div>
+        if(!map.has(key)){
+          map.set(key, {
+            ruta: key,
+            vendedor: r.vendedor || '',
+            clients: 0,
+            objetivo: 0,
+            real: 0,
+            desvio: 0,
+            cumplimiento: 0,
+            rows: []
+          });
+        }
 
-  <div class="box">
-    <div class="t">Avance</div>
-    <div class="v">${formatPct(client.cumplimientoTotal)}</div>
-  </div>
+        const route = map.get(key);
+        route.clients += 1;
+        route.objetivo += r.totalObjetivo;
+        route.real += r.totalReal;
+        route.desvio += r.desvioTotal;
+        if(!route.vendedor && r.vendedor) route.vendedor = r.vendedor;
+        route.rows.push(r);
+      });
 
-  <div class="box" style="
-  background:#f0fdf4;
-  grid-column: span 3;
-  padding:20px 10px;
-  text-align:center;
-">
-  <div class="t" style="font-size:14px;">Score</div>
-  <div class="v" style="
-    color:#16a34a;
-    font-size:34px;
-    font-weight:900;
-  ">
-    ${client.totalPuntos} / ${maxPuntos}
-  </div>
-</div>
-  
- const cats = document.getElementById('clientCategories'); const catsEmpty = document.getElementById('clientCategoriesEmpty'); if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; } else { catsEmpty.style.display = 'none'; cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
-      const cumple = cat.cumplimiento >= 100;
-      const puntos = cumple ? 5 : 0;
-      const badgeClass = getSemaforoBadge(cat.cumplimiento);
-      const progressClass = cat.semaforo;
-      const visual = categoryVisualMap[cat.key] || {
-        icon: "📦",
-        bubble: "#f3f4f6",
-        bubbleBorder: "#d7dbe0",
-        refBg: "#f8fafc",
-        refBorder: "#d9dee5"
-      };
-      return `<div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
-        <div class="cat-row">
-          <div class="cat-main">
-          <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
-  ${visual.icon.includes('http') ? `<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">` : visual.icon}
-</div>
+      state.routes = [...map.values()].map(r => {
+        r.cumplimiento = r.objetivo > 0 ? (r.real / r.objetivo) * 100 : 0;
+        r.semaforo = getSemaforo(r.cumplimiento);
+        r.semaforoText = getSemaforoText(r.cumplimiento);
+        return r;
+      });
+    }
+
+    function buildClients(){
+      state.clients = [...state.rows].sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente)));
+    }
+
+    function buildAlerts(){
+      const alerts = [];
+      state.rows.forEach(client => {
+        client.categories.forEach(cat => {
+          alerts.push({
+            ruta: client.ruta,
+            vendedor: client.vendedor,
+            cliente: client.cliente,
+            numero: client.numero,
+            categoria: cat.label,
+            objetivo: cat.objetivo,
+            real: cat.real,
+            desvio: cat.desvio,
+            cumplimiento: cat.cumplimiento,
+            level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado',
+            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS (${formatPct(cat.cumplimiento)})`,
+            refKey: client.key
+          });
+        });
+      });
+
+      state.alerts = alerts.sort((a,b) => {
+        const rank = {critico:0, medio:1, controlado:2};
+        if(rank[a.level] !== rank[b.level]) return rank[a.level] - rank[b.level];
+        return (b.desvio || 0) - (a.desvio || 0);
+      });
+    }
+
+    function updateHomeKPIs(){
+      document.getElementById('kpiRoutes').textContent = state.routes.length;
+      document.getElementById('kpiClients').textContent = state.clients.length;
+      document.getElementById('kpiObjetivo').textContent = formatNumber(state.rows.reduce((a,r)=>a+r.totalObjetivo,0));
+      document.getElementById('kpiDesvios').textContent = state.alerts.filter(a => a.level === 'critico').length;
+      renderHomeAlerts();
+    }
+
+    function severityText(level){
+      if(level === 'critico') return 'CRÍTICO';
+      if(level === 'medio') return 'MEDIO';
+      return 'CONTROLADO';
+    }
+
+    function renderHomeAlerts(){
+      const box = document.getElementById('homeAlerts');
+      const top = state.alerts.slice(0,5);
+
+      if(!top.length){
+        box.innerHTML = `<div class="empty">No hay alertas para mostrar.</div>`;
+        return;
+      }
+
+      box.innerHTML = top.map(a => `
+        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}"
+             onclick="openClientDetail('${escapeHtml(a.refKey)}','home')">
+          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')}<br>
+          ${escapeHtml(a.text)}
+        </div>
+      `).join('');
+    }
+
+    function goTo(page){
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const nav = document.getElementById('nav-' + page);
+      if(nav) nav.classList.add('active');
+
+      window.scrollTo({top:0, behavior:'smooth'});
+      if(page === 'alertas') renderAlerts();
+    }
+
+    function goToRoutes(){
+      goTo('routes');
+      document.getElementById('nav-routes').classList.add('active');
+      renderRoutes();
+    }
+
+    function goToClients(){
+      goTo('clients');
+      document.getElementById('nav-clients').classList.add('active');
+      renderClients();
+    }
+
+    function renderRoutes(){
+      const q = normalizeKey(document.getElementById('routeSearch').value);
+      const sort = document.getElementById('routeSort').value;
+
+      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
+
+      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
+      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
+      else if(sort === 'ruta') data.sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta)));
+      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
+      else data.sort((a,b)=> b.desvio - a.desvio);
+
+      const box = document.getElementById('routeResults');
+      const empty = document.getElementById('routeEmpty');
+
+      if(!data.length){
+        box.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      box.innerHTML = data.map(r => `
+        <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
+          <div class="client-head">
             <div>
-              <div class="cat-name">${escapeHtml(cat.label)}</div>
-              <div class="cat-sub">🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b></div>
-              <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
-                <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
-                <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
+              <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
+              <div class="item-meta">
+                Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
+                🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS ·
+                📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS
               </div>
+              <div class="mini-progress"><span style="width:${clamp(r.cumplimiento,0,100)}%"></span></div>
+            </div>
+            <div class="badge ${getSemaforoBadge(r.cumplimiento)}">${formatPct(r.cumplimiento)}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openRouteDetail(ruta){
+      state.selectedRoute = ruta;
+      const route = state.routes.find(r => String(r.ruta) === String(ruta));
+      if(!route) return;
+
+      document.getElementById('routeDetailTitle').textContent = `Ruta ${route.ruta}`;
+      document.getElementById('routeDetailSub').textContent = `Vendedor: ${route.vendedor || '-'} · Seguimiento ejecutivo de volumen`;
+      document.getElementById('routeDetailMeta').innerHTML = `
+        <b>Ruta:</b> ${escapeHtml(route.ruta)}<br>
+        <b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br>
+        <b>Semáforo:</b> ${route.semaforoText}
+      `;
+      document.getElementById('rdClients').textContent = formatNumber(route.clients);
+      document.getElementById('rdObjetivo').textContent = formatNumber(route.objetivo);
+      document.getElementById('rdAvance').textContent = formatPct(route.cumplimiento);
+
+      const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
+      const alertBox = document.getElementById('routeAlerts');
+      alertBox.innerHTML = routeAlerts.length
+        ? routeAlerts.map(c => `
+            <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}"
+                 onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+              <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
+              🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
+              📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS ·
+              📊 Avance: ${formatPct(c.cumplimientoTotal)}
+            </div>
+          `).join('')
+        : `<div class="empty">No hay alertas para esta ruta.</div>`;
+
+      const routeClients = document.getElementById('routeClients');
+      routeClients.innerHTML = route.rows
+        .slice()
+        .sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente)))
+        .map(c => `
+          <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+            <div class="client-head">
+              <div>
+                <div class="item-title">${escapeHtml(c.cliente)}</div>
+                <div class="item-meta">
+                  Número: ${escapeHtml(c.numero || '-')}<br>
+                  🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
+                  📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+                </div>
+                <div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div>
+              </div>
+              <div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div>
             </div>
           </div>
-          <div class="badge ${badgeClass}">${formatPct(cat.cumplimiento)}</div>
+        `).join('');
+
+      goTo('route-detail');
+    }
+
+    function renderClients(){
+      const q = normalizeKey(document.getElementById('clientSearch').value);
+      const routeFilter = document.getElementById('clientRouteFilter').value;
+
+      const data = state.clients.filter(c => {
+        const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q));
+        const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter);
+        return matchesText && matchesRoute;
+      });
+
+      const box = document.getElementById('clientResults');
+      const empty = document.getElementById('clientEmpty');
+
+      if(!data.length){
+        box.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      box.innerHTML = data.map(c => `
+        <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
+          <div class="client-head">
+            <div>
+              <div class="item-title">${escapeHtml(c.cliente)}</div>
+              <div class="item-meta">
+                Número: ${escapeHtml(c.numero || '-')}<br>
+                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
+                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
+                📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+              </div>
+              <div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div>
+            </div>
+            <div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div>
+          </div>
         </div>
-        <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
-        ${cumple ? `<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>` : ''}
-      </div>`;
-        }).join(''); } goTo('client-detail'); }
-    function backFromClientDetail(){ if(state.clientBackMode === 'route') openRouteDetail(state.selectedRoute); else if(state.clientBackMode === 'home') goTo('home'); else if(state.clientBackMode === 'alertas') goTo('alertas'); else goToClients(); }
-    function renderAlerts(){ const q = normalizeKey(document.getElementById('alertSearch').value); const level = document.getElementById('alertLevelFilter').value; const data = state.alerts.filter(a => { const matchesLevel = !level || a.level === level; const matchesText = !q || [a.cliente, a.ruta, a.vendedor, a.categoria, a.numero].some(v => normalizeKey(v).includes(q)); return matchesLevel && matchesText; }); const box = document.getElementById('alertResults'); const empty = document.getElementById('alertEmpty'); if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none'; box.innerHTML = data.map(a => `<div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')"><b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')} · ${escapeHtml(a.vendedor || '-')}<br>${escapeHtml(a.text)}</div>`).join(''); }
-    function fillRouteFilter(){ const select = document.getElementById('clientRouteFilter'); const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b)=> String(a).localeCompare(String(b))); select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join(''); }
-    async function loadData(showAlert=false){ try{ const raw = await fetchCSV(CSV_URL); buildData(raw); fillRouteFilter(); updateHomeKPIs(); renderRoutes(); renderClients(); renderAlerts(); if(showAlert) alert('Datos sincronizados correctamente'); } catch(err){ console.error(err); if(showAlert) alert('No se pudieron cargar los datos. Revisá que el HTML y el CSV estén en la misma carpeta.'); } }
-    function bind(){ document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'}); document.getElementById('routeSearch').addEventListener('input', renderRoutes); document.getElementById('routeSort').addEventListener('change', renderRoutes); document.getElementById('clientSearch').addEventListener('input', renderClients); document.getElementById('clientRouteFilter').addEventListener('change', renderClients); document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts); document.getElementById('alertSearch').addEventListener('input', renderAlerts); }
-    bind(); loadData(false);
+      `).join('');
+    }
+
+    function openClientDetail(key, backMode='clients'){
+      state.selectedClientKey = key;
+      state.clientBackMode = backMode;
+
+      const client = state.clients.find(c => c.key === key);
+      if(!client) return;
+
+      document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente';
+      document.getElementById('clientDetailSub').textContent =
+        `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
+
+      document.getElementById('clientDetailMeta').innerHTML = `
+        <b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br>
+        <b>Número:</b> ${escapeHtml(client.numero || '-')}<br>
+        <b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br>
+        <b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br>
+        <b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br>
+        <b>Semáforo general:</b> ${client.semaforoText}
+      `;
+
+      const maxPuntos = client.categories.length * 5;
+
+      document.getElementById('clientDetailSummary').innerHTML = `
+        <div class="box">
+          <div class="t">Objetivo CAJAS FÍSICAS</div>
+          <div class="v">${formatNumber(client.totalObjetivo)}</div>
+        </div>
+
+        <div class="box">
+          <div class="t">Avance CAJAS FÍSICAS</div>
+          <div class="v">${formatNumber(client.totalReal)}</div>
+        </div>
+
+        <div class="box">
+          <div class="t">Avance</div>
+          <div class="v">${formatPct(client.cumplimientoTotal)}</div>
+        </div>
+
+        <div class="box" style="background:#f0fdf4; grid-column:span 3; padding:20px 10px; text-align:center;">
+          <div class="t" style="font-size:14px;">Score</div>
+          <div class="v" style="color:#16a34a; font-size:34px; font-weight:900;">
+            ${client.totalPuntos} / ${maxPuntos}
+          </div>
+        </div>
+      `;
+
+      const cats = document.getElementById('clientCategories');
+      const catsEmpty = document.getElementById('clientCategoriesEmpty');
+
+      if(!client.categories.length){
+        cats.innerHTML = '';
+        catsEmpty.style.display = 'block';
+      } else {
+        catsEmpty.style.display = 'none';
+        cats.innerHTML = client.categories
+          .slice()
+          .sort((a,b)=> b.objetivo - a.objetivo)
+          .map(cat => {
+            const cumple = cat.cumplimiento >= 100;
+            const puntos = cumple ? 5 : 0;
+            const badgeClass = getSemaforoBadge(cat.cumplimiento);
+            const progressClass = cat.semaforo;
+            const visual = categoryVisualMap[cat.key] || {
+              icon: "📦",
+              bubble: "#f3f4f6",
+              bubbleBorder: "#d7dbe0",
+              refBg: "#f8fafc",
+              refBorder: "#d9dee5"
+            };
+
+            return `
+              <div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
+                <div class="cat-row">
+                  <div class="cat-main">
+                    <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
+                      ${String(visual.icon).includes('http')
+                        ? `<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">`
+                        : visual.icon}
+                    </div>
+                    <div>
+                      <div class="cat-name">${escapeHtml(cat.label)}</div>
+                      <div class="cat-sub">
+                        🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
+                        📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
+                        📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
+                        🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
+                      </div>
+                      <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
+                        <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
+                        <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="badge ${badgeClass}">${formatPct(cat.cumplimiento)}</div>
+                </div>
+                <div class="progress ${progressClass}" style="height:12px;">
+                  <span style="width:${clamp(cat.cumplimiento,0,100)}%"></span>
+                </div>
+                ${cumple ? `<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>` : ''}
+              </div>
+            `;
+          }).join('');
+      }
+
+      goTo('client-detail');
+    }
+
+    function backFromClientDetail(){
+      if(state.clientBackMode === 'route') openRouteDetail(state.selectedRoute);
+      else if(state.clientBackMode === 'home') goTo('home');
+      else if(state.clientBackMode === 'alertas') goTo('alertas');
+      else goToClients();
+    }
+
+    function renderAlerts(){
+      const q = normalizeKey(document.getElementById('alertSearch').value);
+      const level = document.getElementById('alertLevelFilter').value;
+
+      const data = state.alerts.filter(a => {
+        const matchesLevel = !level || a.level === level;
+        const matchesText = !q || [a.cliente, a.ruta, a.vendedor, a.categoria, a.numero].some(v => normalizeKey(v).includes(q));
+        return matchesLevel && matchesText;
+      });
+
+      const box = document.getElementById('alertResults');
+      const empty = document.getElementById('alertEmpty');
+
+      if(!data.length){
+        box.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      box.innerHTML = data.map(a => `
+        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}"
+             onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')">
+          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')} · ${escapeHtml(a.vendedor || '-')}<br>
+          ${escapeHtml(a.text)}
+        </div>
+      `).join('');
+    }
+
+    function fillRouteFilter(){
+      const select = document.getElementById('clientRouteFilter');
+      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b)=> String(a).localeCompare(String(b)));
+      select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+    }
+
+    async function loadData(showAlert=false){
+      try{
+        const raw = await fetchCSV(CSV_URL);
+        buildData(raw);
+        fillRouteFilter();
+        updateHomeKPIs();
+        renderRoutes();
+        renderClients();
+        renderAlerts();
+        if(showAlert) alert('Datos sincronizados correctamente');
+      } catch(err){
+        console.error(err);
+        if(showAlert) alert('No se pudieron cargar los datos. Revisá el link del CSV publicado.');
+      }
+    }
+
+    function bind(){
+      document.getElementById('todayChip').textContent =
+        new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
+
+      document.getElementById('routeSearch').addEventListener('input', renderRoutes);
+      document.getElementById('routeSort').addEventListener('change', renderRoutes);
+      document.getElementById('clientSearch').addEventListener('input', renderClients);
+      document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
+      document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
+      document.getElementById('alertSearch').addEventListener('input', renderAlerts);
+    }
+
+    bind();
+    loadData(false);
   </script>
 </body>
 </html>
