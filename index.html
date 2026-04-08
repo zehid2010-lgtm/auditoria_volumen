@@ -197,7 +197,6 @@
     }
     .cat-ref{margin-top:10px;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.35;border:1px solid}
     .cat-ref-title{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-    .cat-ref-note{font-size:11px;color:#5c6470;margin-top:3px}
     .bottom-nav{
       position:fixed;left:50%;transform:translateX(-50%);bottom:12px;
       width:min(500px,calc(100% - 24px));
@@ -227,9 +226,7 @@
     <header class="hero-header">
       <div class="brand-row">
         <div class="brand-left">
-          <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png"
-               style="height:36px; width:auto;"
-               alt="Coca-Cola">
+          <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" style="height:36px; width:auto;" alt="Coca-Cola">
           <div class="divider"></div>
           <div class="brand-copy">
             <h1>GESTIÓN VOLUMEN PDV 2026</h1>
@@ -295,8 +292,8 @@
           <div class="legend-box">
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
             📦 <b>Avance:</b> volumen real cargado en las columnas <b>_avance</b>.<br>
-            📊 <b>Avance %:</b> cálculo automático = <b>Vendido / Objetivo</b>.<br>
-            🚦 <b>Semáforo:</b> Verde ≥ 80% · Amarillo 50% a 79% · Rojo &lt; 50%.
+            🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
+            🚦 <b>Semáforo:</b> Verde si cumple · Amarillo desde 60% · Rojo por debajo de 60%.
           </div>
         </section>
 
@@ -418,7 +415,7 @@
           <div class="legend-box">
             🎯 <b>Objetivo:</b> lo que tiene que vender.<br>
             📦 <b>Avance:</b> lo que ya se cargó en el Excel.<br>
-            📊 <b>Avance %:</b> porcentaje automático de cumplimiento.
+            🏆 <b>Puntos:</b> 5 por cada categoría cumplida.
           </div>
           <div id="clientCategories" class="cat-grid"></div>
           <div id="clientCategoriesEmpty" class="empty" style="display:none;">No hay categorías para mostrar.</div>
@@ -482,62 +479,14 @@
     };
 
     const categoryVisualMap = {
-      agua: {
-        icon: "💧",
-        bubble: "#eaf4ff",
-        bubbleBorder: "#b7d8ff",
-        refBg: "#eef6ff",
-        refBorder: "#bfdcff"
-      },
-      bebida_energetica: {
-        icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png",
-        bubble: "#f2ecff",
-        bubbleBorder: "#d4c0ff",
-        refBg: "#f5eeff",
-        refBorder: "#d9c7ff"
-      },
-      colas: {
-        icon: "🥤",
-        bubble: "#eef9f1",
-        bubbleBorder: "#bfe3c7",
-        refBg: "#ecf8ef",
-        refBorder: "#bee2c4"
-      },
-      isotonica: {
-        icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png",
-        bubble: "#eef5ff",
-        bubbleBorder: "#c6dafb",
-        refBg: "#edf5ff",
-        refBorder: "#c7daf8"
-      },
-      jugos: {
-        icon: "🧃",
-        bubble: "#fff7e8",
-        bubbleBorder: "#f2d59f",
-        refBg: "#fff8e9",
-        refBorder: "#efd59b"
-      },
-      multicategorias: {
-        icon: "🧺",
-        bubble: "#fff7e7",
-        bubbleBorder: "#f1d188",
-        refBg: "#fff8ea",
-        refBorder: "#f0d28e"
-      },
-      sabores: {
-        icon: "🍊",
-        bubble: "#fff3e8",
-        bubbleBorder: "#f2c8aa",
-        refBg: "#fff3ea",
-        refBorder: "#efc7aa"
-      },
-      saborizada: {
-        icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png",
-        bubble: "#eefcf1",
-        bubbleBorder: "#bfe4c6",
-        refBg: "#eefcf3",
-        refBorder: "#c0e6ca"
-      }
+      agua: { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
+      bebida_energetica: { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png", bubble: "#f2ecff", bubbleBorder: "#d4c0ff", refBg: "#f5eeff", refBorder: "#d9c7ff" },
+      colas: { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
+      isotonica: { icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png", bubble: "#eef5ff", bubbleBorder: "#c6dafb", refBg: "#edf5ff", refBorder: "#c7daf8" },
+      jugos: { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
+      multicategorias: { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
+      sabores: { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
+      saborizada: { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png", bubble: "#eefcf1", bubbleBorder: "#bfe4c6", refBg: "#eefcf3", refBorder: "#c0e6ca" }
     };
 
     const state = {
@@ -551,17 +500,11 @@
     };
 
     function normalizeKey(str){
-      return (str || '')
-        .toString()
-        .trim()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g,'')
-        .toUpperCase();
+      return (str || '').toString().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
     }
 
     function escapeHtml(str){
-      return (str || '')
-        .toString()
+      return (str || '').toString()
         .replace(/&/g,'&amp;')
         .replace(/</g,'&lt;')
         .replace(/>/g,'&gt;')
@@ -589,21 +532,36 @@
     }
 
     function getSemaforo(cumplimiento){
-      if(cumplimiento >= 80) return 'green';
-      if(cumplimiento >= 50) return 'yellow';
+      if(cumplimiento >= 100) return 'green';
+      if(cumplimiento >= 60) return 'yellow';
       return 'red';
     }
 
     function getSemaforoBadge(cumplimiento){
-      if(cumplimiento >= 80) return 'ok';
-      if(cumplimiento >= 50) return 'warn';
+      if(cumplimiento >= 100) return 'ok';
+      if(cumplimiento >= 60) return 'warn';
       return 'bad';
     }
 
     function getSemaforoText(cumplimiento){
-      if(cumplimiento >= 80) return 'VERDE';
-      if(cumplimiento >= 50) return 'AMARILLO';
+      if(cumplimiento >= 100) return 'VERDE';
+      if(cumplimiento >= 60) return 'AMARILLO';
       return 'ROJO';
+    }
+
+    function getRoutePointsBadgeClass(points){
+      if(points >= 40) return 'ok';
+      if(points >= 24) return 'warn';
+      return 'bad';
+    }
+
+    function getBadgePointsClass(client){
+      const cumplimiento = Number(client?.cumplimientoTotal || 0);
+      return getSemaforoBadge(cumplimiento);
+    }
+
+    function getPointsText(client){
+      return `${Number(client?.totalPuntos || 0)} / 40 pts`;
     }
 
     function csvToObjects(text){
@@ -801,8 +759,8 @@
             real: cat.real,
             desvio: cat.desvio,
             cumplimiento: cat.cumplimiento,
-            level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado',
-            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS (${formatPct(cat.cumplimiento)})`,
+            level: cat.cumplimiento < 60 ? 'critico' : cat.cumplimiento < 100 ? 'medio' : 'controlado',
+            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS (${formatNumber(cat.puntos)} pts)`,
             refKey: client.key
           });
         });
@@ -875,7 +833,9 @@
       const q = normalizeKey(document.getElementById('routeSearch').value);
       const sort = document.getElementById('routeSort').value;
 
-      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
+      let data = state.routes.filter(r =>
+        !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q))
+      );
 
       if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
       else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
@@ -893,22 +853,36 @@
       }
 
       empty.style.display = 'none';
-      box.innerHTML = data.map(r => `
-        <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
-          <div class="client-head">
-            <div>
-              <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
-              <div class="item-meta">
-                Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS ·
-                📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS
+
+      box.innerHTML = data.map(r => {
+        const puntosRuta = r.clients > 0
+          ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients
+          : 0;
+
+        const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
+
+        return `
+          <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
+            <div class="client-head">
+              <div>
+                <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
+                <div class="item-meta">
+                  Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
+                  🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS ·
+                  📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
+                  ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
+                </div>
+                <div class="mini-progress">
+                  <span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span>
+                </div>
               </div>
-              <div class="mini-progress"><span style="width:${clamp(r.cumplimiento,0,100)}%"></span></div>
+              <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">
+                ${Math.round(puntosRuta)} / 40 pts
+              </div>
             </div>
-            <div class="badge ${getSemaforoBadge(r.cumplimiento)}">${formatPct(r.cumplimiento)}</div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function openRouteDetail(ruta){
@@ -929,8 +903,8 @@
       const ratio = totalClientes > 0 ? (clientesCumplen40 / totalClientes) * 100 : 0;
 
       let color = "#dc2626";
-      if (ratio >= 70) color = "#16a34a";
-      else if (ratio >= 40) color = "#f59e0b";
+      if (ratio >= 100 || clientesCumplen40 === totalClientes) color = "#16a34a";
+      else if (ratio >= 60) color = "#f59e0b";
 
       document.getElementById('rdClients').textContent = formatNumber(route.clients);
       document.getElementById('rdObjetivo').textContent = formatNumber(route.objetivo);
@@ -939,7 +913,7 @@
       el.textContent = `${clientesCumplen40} / ${totalClientes}`;
       el.style.color = color;
       el.style.fontWeight = "900";
-      el.style.background = ratio >= 70 ? "#ecfdf5" : ratio >= 40 ? "#fffbeb" : "#fef2f2";
+      el.style.background = (ratio >= 100 || clientesCumplen40 === totalClientes) ? "#ecfdf5" : ratio >= 60 ? "#fffbeb" : "#fef2f2";
       el.style.borderRadius = "12px";
       el.style.padding = "6px 10px";
       el.style.display = "inline-block";
@@ -948,12 +922,12 @@
       const alertBox = document.getElementById('routeAlerts');
       alertBox.innerHTML = routeAlerts.length
         ? routeAlerts.map(c => `
-            <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}"
+            <div class="alert-box ${c.cumplimientoTotal < 60 ? 'alert-high' : c.cumplimientoTotal < 100 ? 'alert-mid' : 'alert-low'}"
                  onclick="openClientDetail('${escapeHtml(c.key)}','route')">
               <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
               🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
               📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS ·
-              📊 Avance: ${formatPct(c.cumplimientoTotal)}
+              🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
             </div>
           `).join('')
         : `<div class="empty">No hay alertas para esta ruta.</div>`;
@@ -974,7 +948,7 @@
                 </div>
                 <div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div>
               </div>
-              <div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div>
+              <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
             </div>
           </div>
         `).join('');
@@ -1015,7 +989,7 @@
               </div>
               <div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div>
             </div>
-            <div class="badge ${getSemaforoBadge(c.cumplimientoTotal)}">${formatPct(c.cumplimientoTotal)}</div>
+            <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
         </div>
       `).join('');
@@ -1055,8 +1029,8 @@
         </div>
 
         <div class="box">
-          <div class="t">Avance</div>
-          <div class="v">${formatPct(client.cumplimientoTotal)}</div>
+          <div class="t">Puntos</div>
+          <div class="v">${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
         </div>
 
         <div class="box" style="background:#f0fdf4; grid-column:span 3; padding:20px 10px; text-align:center;">
@@ -1105,7 +1079,6 @@
                       <div class="cat-sub">
                         🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
                         📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
-                        📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
                         🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
                       </div>
                       <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
@@ -1114,7 +1087,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="badge ${badgeClass}">${formatPct(cat.cumplimiento)}</div>
+                  <div class="badge ${badgeClass}">${puntos} pts</div>
                 </div>
                 <div class="progress ${progressClass}" style="height:12px;">
                   <span style="width:${clamp(cat.cumplimiento,0,100)}%"></span>
