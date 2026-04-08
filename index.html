@@ -180,7 +180,10 @@
     .progress.red > span{background:linear-gradient(90deg,#ff8a8a,#dc2626)}
 
     .mini-progress{margin-top:8px;height:8px;background:#ececec;border-radius:999px;overflow:hidden}
-    .mini-progress > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#ff7f11,#2bb673)}
+    .mini-progress > span{display:block;height:100%;border-radius:999px}
+    .mini-progress.green > span{background:linear-gradient(90deg,#3cbf67,#159947)}
+    .mini-progress.yellow > span{background:linear-gradient(90deg,#ffcf4d,#f59e0b)}
+    .mini-progress.red > span{background:linear-gradient(90deg,#ff8a8a,#dc2626)}
 
     .empty{padding:24px 10px;text-align:center;color:#777;font-size:14px}
     .tool-header{padding-top:16px}
@@ -314,6 +317,26 @@
 
     .cat-ref{margin-top:10px;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.35;border:1px solid}
     .cat-ref-title{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+
+    .score-card{
+      grid-column:span 3;
+      padding:20px 10px !important;
+      text-align:center;
+      border-radius:20px !important;
+      transition:.25s ease;
+    }
+    .score-value{
+      font-size:34px;
+      font-weight:900;
+      line-height:1;
+      margin-top:6px;
+    }
+    .score-sub{
+      font-size:12px;
+      margin-top:8px;
+      font-weight:700;
+      opacity:.9;
+    }
 
     .bottom-nav{
       position:fixed;left:50%;transform:translateX(-50%);bottom:12px;
@@ -692,6 +715,37 @@
       return `${Number(client?.totalPuntos || 0)} / 40 pts`;
     }
 
+    function getPointsProgressClass(points){
+      if(points >= 40) return 'green';
+      if(points >= 30) return 'yellow';
+      return 'red';
+    }
+
+    function getScoreStyle(points){
+      if(points >= 40){
+        return {
+          bg: 'linear-gradient(180deg,#dcfce7,#bbf7d0)',
+          border: '#86efac',
+          color: '#15803d',
+          sub: 'Score completo'
+        };
+      }
+      if(points >= 30){
+        return {
+          bg: 'linear-gradient(180deg,#fef3c7,#fde68a)',
+          border: '#fcd34d',
+          color: '#b45309',
+          sub: 'Score intermedio'
+        };
+      }
+      return {
+        bg: 'linear-gradient(180deg,#fee2e2,#fecaca)',
+        border: '#fca5a5',
+        color: '#dc2626',
+        sub: 'Score bajo'
+      };
+    }
+
     function csvToObjects(text){
       const rows = [];
       let row = [];
@@ -887,8 +941,9 @@
             real: cat.real,
             desvio: cat.desvio,
             cumplimiento: cat.cumplimiento,
+            puntosCliente: client.totalPuntos,
             level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado',
-            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS (${formatNumber(cat.puntos)} pts)`,
+            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS · ${client.totalPuntos}/40 pts`,
             refKey: client.key
           });
         });
@@ -988,6 +1043,11 @@
           : 0;
 
         const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
+        const progressClass = getRoutePointsBadgeClass(puntosRuta) === 'ok'
+          ? 'green'
+          : getRoutePointsBadgeClass(puntosRuta) === 'warn'
+          ? 'yellow'
+          : 'red';
 
         return `
           <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
@@ -1000,7 +1060,7 @@
                   📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
                   ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
                 </div>
-                <div class="mini-progress">
+                <div class="mini-progress ${progressClass}">
                   <span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span>
                 </div>
               </div>
@@ -1061,11 +1121,7 @@
       el.textContent = `${clientesCumplen40} / ${totalClientes}`;
       el.style.color = valueColor;
 
-      sub.textContent = isGreen
-        ? "Todos los clientes cumplen"
-        : isYellow
-        ? "Cumplimiento intermedio"
-        : "Bajo cumplimiento";
+      sub.textContent = `${formatPct(ratio)} cumplimiento clientes`;
 
       box.style.background = bgColor;
       box.style.border = `1px solid ${borderColor}`;
@@ -1089,22 +1145,26 @@
       routeClients.innerHTML = route.rows
         .slice()
         .sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente)))
-        .map(c => `
-          <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-            <div class="client-head">
-              <div>
-                <div class="item-title">${escapeHtml(c.cliente)}</div>
-                <div class="item-meta">
-                  Número: ${escapeHtml(c.numero || '-')}<br>
-                  🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
-                  📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+        .map(c => {
+          const progressClass = getPointsProgressClass(c.totalPuntos);
+          return `
+            <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+              <div class="client-head">
+                <div>
+                  <div class="item-title">${escapeHtml(c.cliente)}</div>
+                  <div class="item-meta">
+                    Número: ${escapeHtml(c.numero || '-')}<br>
+                    Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
+                    🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
+                    📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+                  </div>
+                  <div class="mini-progress ${progressClass}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
                 </div>
-                <div class="mini-progress"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
+                <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
               </div>
-              <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
             </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
 
       goTo('route-detail');
     }
@@ -1140,7 +1200,7 @@
                 🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
                 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
-              <div class="mini-progress"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
+              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
             </div>
             <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
@@ -1169,6 +1229,7 @@
       `;
 
       const maxPuntos = client.categories.length * 5;
+      const scoreStyle = getScoreStyle(client.totalPuntos);
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box">
@@ -1186,10 +1247,13 @@
           <div class="v">${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
         </div>
 
-        <div class="box" style="background:#f0fdf4; grid-column:span 3; padding:20px 10px; text-align:center;">
+        <div class="box score-card" style="background:${scoreStyle.bg}; border:1px solid ${scoreStyle.border};">
           <div class="t" style="font-size:14px;">Score</div>
-          <div class="v" style="color:#16a34a; font-size:34px; font-weight:900;">
+          <div class="score-value" style="color:${scoreStyle.color};">
             ${client.totalPuntos} / ${maxPuntos}
+          </div>
+          <div class="score-sub" style="color:${scoreStyle.color};">
+            ${scoreStyle.sub}
           </div>
         </div>
       `;
@@ -1232,6 +1296,7 @@
                       <div class="cat-sub">
                         🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
                         📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
+                        📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
                         🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
                       </div>
                       <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
