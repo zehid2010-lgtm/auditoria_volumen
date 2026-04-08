@@ -293,7 +293,7 @@
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
             📦 <b>Avance:</b> volumen real cargado en las columnas <b>_avance</b>.<br>
             🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
-            🚦 <b>Semáforo:</b> Verde si cumple · Amarillo desde 60% · Rojo por debajo de 60%.
+            🚦 <b>Badge de puntos:</b> Verde = 40 pts · Amarillo = 30 a 39 pts · Rojo = menos de 30 pts.
           </div>
         </section>
 
@@ -532,32 +532,34 @@
     }
 
     function getSemaforo(cumplimiento){
-      if(cumplimiento >= 100) return 'green';
-      if(cumplimiento >= 60) return 'yellow';
+      if(cumplimiento >= 80) return 'green';
+      if(cumplimiento >= 50) return 'yellow';
       return 'red';
     }
 
     function getSemaforoBadge(cumplimiento){
-      if(cumplimiento >= 100) return 'ok';
-      if(cumplimiento >= 60) return 'warn';
+      if(cumplimiento >= 80) return 'ok';
+      if(cumplimiento >= 50) return 'warn';
       return 'bad';
     }
 
     function getSemaforoText(cumplimiento){
-      if(cumplimiento >= 100) return 'VERDE';
-      if(cumplimiento >= 60) return 'AMARILLO';
+      if(cumplimiento >= 80) return 'VERDE';
+      if(cumplimiento >= 50) return 'AMARILLO';
       return 'ROJO';
     }
 
     function getRoutePointsBadgeClass(points){
       if(points >= 40) return 'ok';
-      if(points >= 24) return 'warn';
+      if(points >= 30) return 'warn';
       return 'bad';
     }
 
     function getBadgePointsClass(client){
-      const cumplimiento = Number(client?.cumplimientoTotal || 0);
-      return getSemaforoBadge(cumplimiento);
+      const puntos = Number(client?.totalPuntos || 0);
+      if (puntos >= 40) return 'ok';
+      if (puntos >= 30) return 'warn';
+      return 'bad';
     }
 
     function getPointsText(client){
@@ -759,7 +761,7 @@
             real: cat.real,
             desvio: cat.desvio,
             cumplimiento: cat.cumplimiento,
-            level: cat.cumplimiento < 60 ? 'critico' : cat.cumplimiento < 100 ? 'medio' : 'controlado',
+            level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado',
             text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS (${formatNumber(cat.puntos)} pts)`,
             refKey: client.key
           });
@@ -922,7 +924,7 @@
       const alertBox = document.getElementById('routeAlerts');
       alertBox.innerHTML = routeAlerts.length
         ? routeAlerts.map(c => `
-            <div class="alert-box ${c.cumplimientoTotal < 60 ? 'alert-high' : c.cumplimientoTotal < 100 ? 'alert-mid' : 'alert-low'}"
+            <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}"
                  onclick="openClientDetail('${escapeHtml(c.key)}','route')">
               <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
               🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
@@ -946,7 +948,7 @@
                   🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
                   📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
                 </div>
-                <div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div>
+                <div class="mini-progress"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
               </div>
               <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
             </div>
@@ -987,7 +989,7 @@
                 🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
                 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
-              <div class="mini-progress"><span style="width:${clamp(c.cumplimientoTotal,0,100)}%"></span></div>
+              <div class="mini-progress"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
             </div>
             <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
