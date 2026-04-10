@@ -1430,19 +1430,26 @@
    async function loadData(showAlert=false){
   try{
     const raw = await fetchCSV(CSV_URL);
-   
-        buildData(raw);
-        fillRouteFilter();
-        updateHomeKPIs();
-        renderRoutes();
-        renderClients();
-        renderAlerts();
-        if(showAlert) alert('Datos sincronizados correctamente');
-      } catch(err){
-        console.error(err);
-        if(showAlert) alert('No se pudieron cargar los datos. Revisá los links de Google Sheets.');
-      }
+
+    if(!raw || !raw.length){
+      throw new Error('El CSV llegó vacío');
     }
+
+    buildData(raw);
+    fillRouteFilter();
+    updateHomeKPIs();
+    renderRoutes();
+    renderClients();
+    renderAlerts();
+
+    console.log('Filas cargadas:', raw.length);
+
+    if(showAlert) alert('Datos sincronizados correctamente');
+  } catch(err){
+    console.error('Error real al cargar:', err);
+    alert('No se pudieron cargar los datos. Revisá permisos de Google Sheets o el link CSV.');
+  }
+}
 
     function bind(){
       document.getElementById('todayChip').textContent =
