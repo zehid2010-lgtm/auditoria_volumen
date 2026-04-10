@@ -828,21 +828,21 @@
     }
 
     function detectAdvanceValue(row, baseKey){
-      const candidates = [
-        `${baseKey}_REAL`,
-        `${baseKey} REAL`,
-        `${baseKey}_avance`,
-        `${baseKey} avance`,
-        `${baseKey}_real`,
-        `${baseKey} real`,
-        `${baseKey}_CF_REAL`
-      ];
-      for(const c of candidates){
-        const value = getCell(row, c);
-        if(value !== '' && value !== undefined) return toNumber(value);
-      }
-      return 0;
-    }
+  const candidates = [
+    `${baseKey}_CF_REAL`,   // 👈 ESTE ES EL CORRECTO
+    `${baseKey}_REAL`,
+    `${baseKey} REAL`,
+    `${baseKey}_avance`,
+    `${baseKey} avance`,
+    `${baseKey}_real`,
+    `${baseKey} real`
+  ];
+  for(const c of candidates){
+    const value = getCell(row, c);
+    if(value !== '' && value !== undefined) return toNumber(value);
+  }
+  return 0;
+}
 
     function detectPointsValue(row, baseKey, objetivo, real){
       const candidates = [
