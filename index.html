@@ -603,8 +603,7 @@
   </div>
 
   <script>
-    // SI LA APP NO TRAE LOS CLIENTES NUEVOS, CAMBIÁ ESTA URL
-    // por el CSV publicado de la hoja correcta.
+    // CAMBIÁ ESTA URL SI TU HOJA PUBLICADA CORRECTA ES OTRA
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQvqI0eiCVoe9HB5VvdA41X0G0xLGdXIDEEJ6_ebjDFmlLSrJGGJOg4qzOg6QP__Q/pub?gid=715832062&single=true&output=csv';
 
     const CATEGORY_CONFIG = [
@@ -862,7 +861,17 @@
       state.rows = rawRows.map(r => {
         const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
         const cliente = getCell(r,'cliente') || getCell(r,'CLIENTE') || '';
-        const ruta = getCell(r,'ru') || getCell(r,'RU') || getCell(r,'ruta') || getCell(r,'RUTA') || '';
+        const ruta = (
+          getCell(r,'RU') ||
+          getCell(r,'ru') ||
+          getCell(r,'Ruta') ||
+          getCell(r,'ruta') ||
+          getCell(r,'RUTA') ||
+          getCell(r,'COD_RUTA') ||
+          getCell(r,'CODIGO_RUTA') ||
+          ''
+        ).toString().trim();
+
         const vendedor = getCell(r,'vendedor') || getCell(r,'VENDEDOR') || '';
         const repositor = getCell(r,'repositor') || getCell(r,'REPOSITOR') || '';
 
@@ -895,7 +904,7 @@
           key: `${numero}|${cliente}`,
           numero,
           cliente,
-          ruta: String(ruta),
+          ruta,
           vendedor,
           repositor,
           categories,
@@ -918,7 +927,7 @@
       const map = new Map();
 
       state.rows.forEach(r => {
-        const key = r.ruta || 'Sin ruta';
+        const key = (r.ruta && String(r.ruta).trim()) ? String(r.ruta).trim() : 'Sin ruta';
 
         if(!map.has(key)){
           map.set(key, {
@@ -947,7 +956,7 @@
         r.semaforo = getSemaforo(r.cumplimiento);
         r.semaforoText = getSemaforoText(r.cumplimiento);
         return r;
-      });
+      }).sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta), 'es'));
     }
 
     function buildClients(){
@@ -1049,7 +1058,7 @@
 
       if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
       else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
-      else if(sort === 'ruta') data.sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta)));
+      else if(sort === 'ruta') data.sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta), 'es'));
       else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
       else data.sort((a,b)=> b.desvio - a.desvio);
 
@@ -1171,7 +1180,7 @@
       const routeClients = document.getElementById('routeClients');
       routeClients.innerHTML = route.rows
         .slice()
-        .sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente)))
+        .sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es'))
         .map(c => {
           const progressClass = getPointsProgressClass(c.totalPuntos);
           return `
@@ -1384,7 +1393,7 @@
 
     function fillRouteFilter(){
       const select = document.getElementById('clientRouteFilter');
-      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b)=> String(a).localeCompare(String(b)));
+      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b)=> String(a).localeCompare(String(b), 'es'));
       select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
     }
 
