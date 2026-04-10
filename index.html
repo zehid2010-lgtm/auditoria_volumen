@@ -1075,11 +1075,23 @@
         !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q))
       );
 
-      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
-      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
-      else if(sort === 'ruta') data.sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta), 'es'));
-      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
-      else data.sort((a,b)=> b.desvio - a.desvio);
+      if(sort === 'objetivo') {
+  data.sort((a,b)=> b.objetivo - a.objetivo);
+} else if(sort === 'clientes') {
+  data.sort((a,b)=> b.clients - a.clients);
+} else if(sort === 'ruta') {
+  data.sort((a,b)=> {
+    const ar = Number(a.ruta);
+    const br = Number(b.ruta);
+
+    if(!isNaN(ar) && !isNaN(br)) return ar - br;
+    return String(a.ruta).localeCompare(String(b.ruta), 'es');
+  });
+} else if(sort === 'avance') {
+  data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
+} else {
+  data.sort((a,b)=> b.desvio - a.desvio);
+}
 
       const box = document.getElementById('routeResults');
       const empty = document.getElementById('routeEmpty');
