@@ -434,7 +434,7 @@
           </div>
           <div class="legend-box">
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
-            📦 <b>Avance:</b> volumen real cargado en las columnas <b>_REAL</b>.<br>
+            📦 <b>Avance:</b> volumen real cargado en columnas tipo <b>_REAL</b> o <b>_avance</b>.<br>
             🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
             🚦 <b>Badge de puntos:</b> Verde = 40 pts · Amarillo = 30 a 39 pts · Rojo = menos de 30 pts.
           </div>
@@ -603,8 +603,11 @@
   </div>
 
   <script>
-    // CAMBIÁ ESTA URL SI TU HOJA PUBLICADA CORRECTA ES OTRA
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/1Pd7VLvyVUAPe_tGx_9FdkdvmqNXJkpXJ/gviz/tq?tqx=out:csv&gid=1601254234';
+    // DOS HOJAS
+    const CSV_URLS = [
+      'https://docs.google.com/spreadsheets/d/1Pd7VLvyVUAPe_tGx_9FdkdvmqNXJkpXJ/gviz/tq?tqx=out:csv&gid=1601254234',
+      'https://docs.google.com/spreadsheets/d/1Pd7VLvyVUAPe_tGx_9FdkdvmqNXJkpXJ/gviz/tq?tqx=out:csv&gid=715832062'
+    ];
 
     const CATEGORY_CONFIG = [
       { key: 'Agua', label: 'Agua' },
@@ -801,9 +804,21 @@
     }
 
     async function fetchCSV(url){
-      const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now());
+      const res = await fetch(url + '&t=' + Date.now());
       if(!res.ok) throw new Error('No se pudo cargar el archivo CSV');
       return csvToObjects(await res.text());
+    }
+
+    async function fetchAllCSVs(urls){
+      const results = await Promise.all(urls.map(async url => {
+        try {
+          return await fetchCSV(url);
+        } catch (e) {
+          console.error('Error leyendo:', url, e);
+          return [];
+        }
+      }));
+      return results.flat();
     }
 
     function getCell(row, key){
@@ -857,24 +872,36 @@
       return real >= objetivo && objetivo > 0 ? 5 : 0;
     }
 
-    function buildData(rawRows){
-      state.rows = rawRows.map(r => {
+    function dedupeRows(rows){
+      const map = new Map();
+      rows.forEach(r => {
         const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
         const cliente = getCell(r,'cliente') || getCell(r,'CLIENTE') || '';
-       const ruta = (
-  getCell(r,'RU') ||
-  getCell(r,'ru') ||
-  getCell(r,'Ruta') ||
-  getCell(r,'ruta') ||
-  getCell(r,'RUTA') ||
+        const ruta = getCell(r,'RU') || getCell(r,'ru') || getCell(r,'Ruta') || getCell(r,'ruta') || getCell(r,'RUTA') || '';
+        const key = `${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
+        if(key !== '||') map.set(key, r);
+      });
+      return [...map.values()];
+    }
 
-  // 👇 AGREGAMOS ESTO PARA TU EXCEL
-  getCell(r,'ZONA') ||
-  getCell(r,'Zona') ||
-  getCell(r,'COD_RUTA') ||
+    function buildData(rawRows){
+      const uniqueRows = dedupeRows(rawRows);
 
-  ''
-).toString().trim();
+      state.rows = uniqueRows.map(r => {
+        const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
+        const cliente = getCell(r,'cliente') || getCell(r,'CLIENTE') || '';
+        const ruta = (
+          getCell(r,'RU') ||
+          getCell(r,'ru') ||
+          getCell(r,'Ruta') ||
+          getCell(r,'ruta') ||
+          getCell(r,'RUTA') ||
+          getCell(r,'COD_RUTA') ||
+          getCell(r,'CODIGO_RUTA') ||
+          getCell(r,'ZONA') ||
+          getCell(r,'Zona') ||
+          ''
+        ).toString().trim();
 
         const vendedor = getCell(r,'vendedor') || getCell(r,'VENDEDOR') || '';
         const repositor = getCell(r,'repositor') || getCell(r,'REPOSITOR') || '';
@@ -905,7 +932,7 @@
         const desvioTotal = totalObjetivo - totalReal;
 
         return {
-          key: `${numero}|${cliente}`,
+          key: `${numero}|${cliente}|${ruta}`,
           numero,
           cliente,
           ruta,
@@ -932,8 +959,8 @@
 
       state.rows.forEach(r => {
         const key = (r.ruta && String(r.ruta).trim() !== '')
-  ? String(r.ruta).trim()
-  : 'SIN ASIGNAR';
+          ? String(r.ruta).trim()
+          : 'SIN ASIGNAR';
 
         if(!map.has(key)){
           map.set(key, {
@@ -966,7 +993,7 @@
     }
 
     function buildClients(){
-      state.clients = [...state.rows].sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente)));
+      state.clients = [...state.rows].sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es'));
     }
 
     function buildAlerts(){
@@ -1405,7 +1432,7 @@
 
     async function loadData(showAlert=false){
       try{
-        const raw = await fetchCSV(CSV_URL);
+        const raw = await fetchAllCSVs(CSV_URLS);
         buildData(raw);
         fillRouteFilter();
         updateHomeKPIs();
@@ -1415,7 +1442,7 @@
         if(showAlert) alert('Datos sincronizados correctamente');
       } catch(err){
         console.error(err);
-        if(showAlert) alert('No se pudieron cargar los datos. Revisá el link del CSV publicado.');
+        if(showAlert) alert('No se pudieron cargar los datos. Revisá los links de Google Sheets.');
       }
     }
 
