@@ -975,11 +975,11 @@
         r.semaforo = getSemaforo(r.cumplimiento);
         r.semaforoText = getSemaforoText(r.cumplimiento);
         return r;
-      }).sort((a,b)=> String(a.ruta).localeCompare(String(b.ruta), 'es'));
+      }).sort((a,b)=> Number(a.ruta) - Number(b.ruta));
     }
 
     function buildClients(){
-      state.clients = [...state.rows].sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es'));
+      state.clients = [...state.rows].sort((a,b)=> Number(a.ruta) - Number(b.ruta));
     }
 
     function buildAlerts(){
