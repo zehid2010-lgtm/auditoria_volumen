@@ -434,7 +434,7 @@
           </div>
           <div class="legend-box">
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
-            📦 <b>Avance:</b> volumen real cargado en las columnas <b>_avance</b>.<br>
+            📦 <b>Avance:</b> volumen real cargado en las columnas <b>_REAL</b>.<br>
             🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
             🚦 <b>Badge de puntos:</b> Verde = 40 pts · Amarillo = 30 a 39 pts · Rojo = menos de 30 pts.
           </div>
@@ -603,39 +603,41 @@
   </div>
 
   <script>
+    // SI LA APP NO TRAE LOS CLIENTES NUEVOS, CAMBIÁ ESTA URL
+    // por el CSV publicado de la hoja correcta.
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQvqI0eiCVoe9HB5VvdA41X0G0xLGdXIDEEJ6_ebjDFmlLSrJGGJOg4qzOg6QP__Q/pub?gid=715832062&single=true&output=csv';
 
     const CATEGORY_CONFIG = [
-      { key: 'agua', label: 'Agua' },
-      { key: 'bebida_energetica', label: 'Bebida Energética' },
-      { key: 'colas', label: 'Colas' },
-      { key: 'isotonica', label: 'Isotónica' },
-      { key: 'jugos', label: 'Jugos' },
-      { key: 'multicategorias', label: 'Multicategoría' },
-      { key: 'sabores', label: 'Sabores' },
-      { key: 'saborizada', label: 'Saborizada' }
+      { key: 'Agua', label: 'Agua' },
+      { key: 'Bebida energética', label: 'Bebida Energética' },
+      { key: 'Colas', label: 'Colas' },
+      { key: 'Isotónica', label: 'Isotónica' },
+      { key: 'Jugos', label: 'Jugos' },
+      { key: 'Multicategorías', label: 'Multicategoría' },
+      { key: 'Sabores', label: 'Sabores' },
+      { key: 'Saborizada', label: 'Saborizada' }
     ];
 
     const referenciaMap = {
-      agua: "Agua 2 Lts x 6 unidades",
-      bebida_energetica: "Monster 473 ml x 6 unidades",
-      colas: "Coca-Cola 2 Lts RET x 8 unidades",
-      isotonica: "Powerade 500 cc x 6 unidades",
-      jugos: "Cepita 1.5 Lts PET x 4 unidades",
-      multicategorias: "Leche L3N 1 Litro x 12 unidad",
-      sabores: "Fanta / Sprite 2 Lts RET x 8 unidades",
-      saborizada: "Aquarius 1.5 Lts PET x 6 unidades"
+      'Agua': "Agua 2 Lts x 6 unidades",
+      'Bebida energética': "Monster 473 ml x 6 unidades",
+      'Colas': "Coca-Cola 2 Lts RET x 8 unidades",
+      'Isotónica': "Powerade 500 cc x 6 unidades",
+      'Jugos': "Cepita 1.5 Lts PET x 4 unidades",
+      'Multicategorías': "Leche L3N 1 Litro x 12 unidad",
+      'Sabores': "Fanta / Sprite 2 Lts RET x 8 unidades",
+      'Saborizada': "Aquarius 1.5 Lts PET x 6 unidades"
     };
 
     const categoryVisualMap = {
-      agua: { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
-      bebida_energetica: { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png", bubble: "#f2ecff", bubbleBorder: "#d4c0ff", refBg: "#f5eeff", refBorder: "#d9c7ff" },
-      colas: { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
-      isotonica: { icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png", bubble: "#eef5ff", bubbleBorder: "#c6dafb", refBg: "#edf5ff", refBorder: "#c7daf8" },
-      jugos: { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
-      multicategorias: { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
-      sabores: { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
-      saborizada: { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png", bubble: "#eefcf1", bubbleBorder: "#bfe4c6", refBg: "#eefcf3", refBorder: "#c0e6ca" }
+      'Agua': { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
+      'Bebida energética': { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png", bubble: "#f2ecff", bubbleBorder: "#d4c0ff", refBg: "#f5eeff", refBorder: "#d9c7ff" },
+      'Colas': { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
+      'Isotónica': { icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png", bubble: "#eef5ff", bubbleBorder: "#c6dafb", refBg: "#edf5ff", refBorder: "#c7daf8" },
+      'Jugos': { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
+      'Multicategorías': { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
+      'Sabores': { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
+      'Saborizada': { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png", bubble: "#eefcf1", bubbleBorder: "#bfe4c6", refBg: "#eefcf3", refBorder: "#c0e6ca" }
     };
 
     const state = {
@@ -649,7 +651,14 @@
     };
 
     function normalizeKey(str){
-      return (str || '').toString().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase();
+      return (str || '')
+        .toString()
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .replace(/\s+/g,' ')
+        .replace(/_/g,' ')
+        .toUpperCase();
     }
 
     function escapeHtml(str){
@@ -805,7 +814,13 @@
     }
 
     function detectObjectiveValue(row, baseKey){
-      const candidates = [`${baseKey}_objetivo`, `${baseKey} objetivo`, baseKey];
+      const candidates = [
+        `${baseKey}_OBJ`,
+        `${baseKey} OBJ`,
+        `${baseKey}_objetivo`,
+        `${baseKey} objetivo`,
+        baseKey
+      ];
       for(const c of candidates){
         const value = getCell(row, c);
         if(value !== '' && value !== undefined) return toNumber(value);
@@ -814,7 +829,14 @@
     }
 
     function detectAdvanceValue(row, baseKey){
-      const candidates = [`${baseKey}_avance`, `${baseKey} avance`, `${baseKey}_real`, `${baseKey} real`];
+      const candidates = [
+        `${baseKey}_REAL`,
+        `${baseKey} REAL`,
+        `${baseKey}_avance`,
+        `${baseKey} avance`,
+        `${baseKey}_real`,
+        `${baseKey} real`
+      ];
       for(const c of candidates){
         const value = getCell(row, c);
         if(value !== '' && value !== undefined) return toNumber(value);
@@ -823,7 +845,12 @@
     }
 
     function detectPointsValue(row, baseKey, objetivo, real){
-      const candidates = [`${baseKey}_puntos`, `${baseKey} puntos`];
+      const candidates = [
+        `${baseKey}_PUNTOS`,
+        `${baseKey} PUNTOS`,
+        `${baseKey}_puntos`,
+        `${baseKey} puntos`
+      ];
       for(const c of candidates){
         const value = getCell(row, c);
         if(value !== '' && value !== undefined) return toNumber(value);
