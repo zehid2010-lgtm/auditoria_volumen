@@ -861,16 +861,20 @@
       state.rows = rawRows.map(r => {
         const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
         const cliente = getCell(r,'cliente') || getCell(r,'CLIENTE') || '';
-        const ruta = (
-          getCell(r,'RU') ||
-          getCell(r,'ru') ||
-          getCell(r,'Ruta') ||
-          getCell(r,'ruta') ||
-          getCell(r,'RUTA') ||
-          getCell(r,'COD_RUTA') ||
-          getCell(r,'CODIGO_RUTA') ||
-          ''
-        ).toString().trim();
+       const ruta = (
+  getCell(r,'RU') ||
+  getCell(r,'ru') ||
+  getCell(r,'Ruta') ||
+  getCell(r,'ruta') ||
+  getCell(r,'RUTA') ||
+
+  // 👇 AGREGAMOS ESTO PARA TU EXCEL
+  getCell(r,'ZONA') ||
+  getCell(r,'Zona') ||
+  getCell(r,'COD_RUTA') ||
+
+  ''
+).toString().trim();
 
         const vendedor = getCell(r,'vendedor') || getCell(r,'VENDEDOR') || '';
         const repositor = getCell(r,'repositor') || getCell(r,'REPOSITOR') || '';
@@ -927,7 +931,9 @@
       const map = new Map();
 
       state.rows.forEach(r => {
-        const key = (r.ruta && String(r.ruta).trim()) ? String(r.ruta).trim() : 'Sin ruta';
+        const key = (r.ruta && String(r.ruta).trim() !== '')
+  ? String(r.ruta).trim()
+  : 'SIN ASIGNAR';
 
         if(!map.has(key)){
           map.set(key, {
