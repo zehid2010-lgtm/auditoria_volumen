@@ -603,8 +603,7 @@
   </div>
 
   <script>
-    // DOS HOJAS
-   const CSV_URL = 'https://docs.google.com/spreadsheets/d/1FmsskuzyfaTLCPNqN8VhhHizcBFqDK6o/export?format=csv&gid=692823902';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/1FmsskuzyfaTLCPNqN8VhhHizcBFqDK6o/export?format=csv&gid=692823902';
 
     const CATEGORY_CONFIG = [
       { key: 'Agua', label: 'Agua' },
@@ -801,21 +800,9 @@
     }
 
     async function fetchCSV(url){
-      const res = await fetch(url + '&t=' + Date.now());
-      if(!res.ok) throw new Error('No se pudo cargar el archivo CSV');
+      const res = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
+      if(!res.ok) throw new Error(`No se pudo cargar el archivo CSV (${res.status})`);
       return csvToObjects(await res.text());
-    }
-
-    async function fetchAllCSVs(urls){
-      const results = await Promise.all(urls.map(async url => {
-        try {
-          return await fetchCSV(url);
-        } catch (e) {
-          console.error('Error leyendo:', url, e);
-          return [];
-        }
-      }));
-      return results.flat();
     }
 
     function getCell(row, key){
@@ -830,7 +817,8 @@
         `${baseKey} OBJ`,
         `${baseKey}_objetivo`,
         `${baseKey} objetivo`,
-        baseKey
+        `${baseKey}_OBJETIVO`,
+        `${baseKey}`
       ];
       for(const c of candidates){
         const value = getCell(row, c);
@@ -846,7 +834,8 @@
         `${baseKey}_avance`,
         `${baseKey} avance`,
         `${baseKey}_real`,
-        `${baseKey} real`
+        `${baseKey} real`,
+        `${baseKey}_CF_REAL`
       ];
       for(const c of candidates){
         const value = getCell(row, c);
@@ -1427,29 +1416,29 @@
       select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
     }
 
-  async function loadData(showAlert=false){
-  try{
-    const raw = await fetchCSV(CSV_URL);
+    async function loadData(showAlert=false){
+      try{
+        const raw = await fetchCSV(CSV_URL);
 
-    if(!raw || !raw.length){
-      throw new Error('El CSV llegó vacío');
+        if(!raw || !raw.length){
+          throw new Error('El CSV llegó vacío');
+        }
+
+        buildData(raw);
+        fillRouteFilter();
+        updateHomeKPIs();
+        renderRoutes();
+        renderClients();
+        renderAlerts();
+
+        console.log('Filas cargadas:', raw.length);
+
+        if(showAlert) alert('Datos sincronizados correctamente');
+      } catch(err){
+        console.error('Error real al cargar:', err);
+        alert('No se pudieron cargar los datos. Revisá permisos de Google Sheets o el link CSV.');
+      }
     }
-
-    buildData(raw);
-    fillRouteFilter();
-    updateHomeKPIs();
-    renderRoutes();
-    renderClients();
-    renderAlerts();
-
-    console.log('Filas cargadas:', raw.length);
-
-    if(showAlert) alert('Datos sincronizados correctamente');
-  } catch(err){
-    console.error('Error real al cargar:', err);
-    alert('No se pudieron cargar los datos. Revisá permisos de Google Sheets o el link CSV.');
-  }
-}
 
     function bind(){
       document.getElementById('todayChip').textContent =
