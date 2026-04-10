@@ -604,7 +604,7 @@
 
   <script>
     // DOS HOJAS
-   const CSV_URL = 'https://docs.google.com/spreadsheets/d/1FmsskuzyfaTLCPNqN8VhhHizcBFqDK6o/gviz/tq?tqx=out:csv&gid=692823902';
+   const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQSuRpKllI3EgCIHu51oqxUVEVtsDYgt5LFX0iNFndhHeRfsKIy3RyGoLnfobWFw/pub?gid=692823902&single=true&output=csv';
 
     const CATEGORY_CONFIG = [
       { key: 'Agua', label: 'Agua' },
@@ -1427,7 +1427,7 @@
       select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
     }
 
-   async function loadData(showAlert=false){
+  async function loadData(showAlert=false){
   try{
     const raw = await fetchCSV(CSV_URL);
 
