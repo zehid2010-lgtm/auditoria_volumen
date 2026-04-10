@@ -1427,7 +1427,7 @@
       select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
     }
 
-    async function loadData(showAlert=false){
+   async function loadData(showAlert=false){
   try{
     const raw = await fetchCSV(CSV_URL);
     buildData(raw);
