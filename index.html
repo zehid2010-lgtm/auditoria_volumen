@@ -1428,8 +1428,20 @@
     }
 
     async function loadData(showAlert=false){
-      try{
-        const raw = await fetchAllCSVs(CSV_URLS);
+  try{
+    const raw = await fetchCSV(CSV_URL);
+    buildData(raw);
+    fillRouteFilter();
+    updateHomeKPIs();
+    renderRoutes();
+    renderClients();
+    renderAlerts();
+    if(showAlert) alert('Datos sincronizados correctamente');
+  } catch(err){
+    console.error(err);
+    if(showAlert) alert('No se pudieron cargar los datos. Revisá el link de Google Sheets.');
+  }
+}
         buildData(raw);
         fillRouteFilter();
         updateHomeKPIs();
