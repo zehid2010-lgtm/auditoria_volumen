@@ -1546,19 +1546,36 @@
       const cumplimiento = objetivo > 0 ? (avance / objetivo) * 100 : 0;
       const faltante = Math.max(0, objetivo - avance);
 
-      const categoriasCumplidas = client.categories.filter(c => c.real >= c.objetivo && c.objetivo > 0).length;
-      const totalCategorias = client.categories.length;
+      const iconos = {
+        'Colas': '🥤',
+        'Agua': '💧',
+        'Bebida Energética': '⚡',
+        'Bebida energética': '⚡',
+        'Isotónica': '🏃',
+        'Jugos': '🧃',
+        'Sabores': '🍊',
+        'Saborizada': '🍹',
+        'Multicategoría': '🧺',
+        'Multicategorías': '🧺'
+      };
+
+      let detalleCategorias = '';
+
+      client.categories.forEach(cat => {
+        const porcentaje = cat.objetivo > 0 ? (cat.real / cat.objetivo) * 100 : 0;
+        const icono = iconos[cat.label] || '📦';
+        detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
+      });
 
       const mensaje =
 `Hola ${client.cliente} 👋
 
-Te compartimos tu avance actual:
+Te compartimos tu avance por categoría:
 
-🎯 Objetivo: ${formatNumber(objetivo)} cajas físicas
-📦 Avance: ${formatNumber(avance)} cajas físicas
-📊 Cumplimiento: ${formatPct(cumplimiento)}
+${detalleCategorias}
+
+📈 Total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas físicas (${formatPct(cumplimiento)})
 📉 Faltante: ${formatNumber(faltante)} cajas físicas
-🏆 Categorías cumplidas: ${categoriasCumplidas} de ${totalCategorias}
 
 Seguimos trabajando juntos para alcanzar el objetivo.`;
 
