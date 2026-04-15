@@ -195,6 +195,32 @@
       cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.06)
     }
 
+    .wa-btn{
+      width:100%;
+      margin-top:12px;
+      border:none;
+      border-radius:16px;
+      padding:14px 16px;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      color:#fff;
+      background:linear-gradient(180deg,#25D366 0%, #128C7E 100%);
+      box-shadow:0 8px 18px rgba(18,140,126,.22);
+    }
+
+    .wa-btn.small{
+      width:auto;
+      margin-top:10px;
+      padding:10px 14px;
+      border-radius:12px;
+      font-size:13px;
+    }
+
+    .wa-btn:active{
+      transform:scale(.99);
+    }
+
     .client-card{cursor:pointer}
     .client-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 
@@ -891,6 +917,17 @@
 
         const vendedor = getCell(r,'vendedor') || getCell(r,'VENDEDOR') || '';
         const repositor = getCell(r,'repositor') || getCell(r,'REPOSITOR') || '';
+        const telefono =
+          getCell(r,'telefono') ||
+          getCell(r,'TELEFONO') ||
+          getCell(r,'teléfono') ||
+          getCell(r,'Telefono') ||
+          getCell(r,'TELÉFONO') ||
+          getCell(r,'celular') ||
+          getCell(r,'CELULAR') ||
+          getCell(r,'whatsapp') ||
+          getCell(r,'WHATSAPP') ||
+          '';
 
         const categories = CATEGORY_CONFIG.map(cat => {
           const objetivo = detectObjectiveValue(r, cat.key);
@@ -924,6 +961,7 @@
           ruta,
           vendedor,
           repositor,
+          telefono,
           categories,
           totalObjetivo,
           totalReal,
@@ -1292,6 +1330,7 @@
         <b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br>
         <b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br>
         <b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br>
+        <b>Teléfono:</b> ${escapeHtml(client.telefono || '-')}<br>
         <b>Semáforo general:</b> ${client.semaforoText}
       `;
 
@@ -1322,6 +1361,12 @@
           <div class="score-sub" style="color:${scoreStyle.color};">
             ${scoreStyle.sub}
           </div>
+        </div>
+
+        <div class="box" style="grid-column:span 3;">
+          <button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">
+            Enviar objetivo y avance por WhatsApp
+          </button>
         </div>
       `;
 
@@ -1462,6 +1507,63 @@
       document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
       document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
       document.getElementById('alertSearch').addEventListener('input', renderAlerts);
+    }
+
+
+    function normalizarTelefonoAR(raw){
+      let tel = String(raw || '').replace(/\D/g,'');
+      if(!tel) return '';
+
+      if(tel.startsWith('549')) return tel;
+      if(tel.startsWith('54')) return '9' + tel;
+      if(tel.startsWith('9')) return '54' + tel;
+
+      if(tel.startsWith('0')) tel = tel.replace(/^0+/, '');
+
+      return '549' + tel;
+    }
+
+    function enviarWhatsAppCliente(key){
+      const client = state.clients.find(c => c.key === key);
+      if(!client){
+        alert('No se encontró el cliente');
+        return;
+      }
+
+      if(!client.telefono || !String(client.telefono).trim()){
+        alert('Este cliente no tiene teléfono cargado en la base');
+        return;
+      }
+
+      const telefono = normalizarTelefonoAR(client.telefono);
+      if(!telefono){
+        alert('El teléfono del cliente no es válido');
+        return;
+      }
+
+      const objetivo = Number(client.totalObjetivo || 0);
+      const avance = Number(client.totalReal || 0);
+      const cumplimiento = objetivo > 0 ? (avance / objetivo) * 100 : 0;
+      const faltante = Math.max(0, objetivo - avance);
+
+      const categoriasCumplidas = client.categories.filter(c => c.real >= c.objetivo && c.objetivo > 0).length;
+      const totalCategorias = client.categories.length;
+
+      const mensaje =
+`Hola ${client.cliente} 👋
+
+Te compartimos tu avance actual:
+
+🎯 Objetivo: ${formatNumber(objetivo)} cajas físicas
+📦 Avance: ${formatNumber(avance)} cajas físicas
+📊 Cumplimiento: ${formatPct(cumplimiento)}
+📉 Faltante: ${formatNumber(faltante)} cajas físicas
+🏆 Categorías cumplidas: ${categoriasCumplidas} de ${totalCategorias}
+
+Seguimos trabajando juntos para alcanzar el objetivo.`;
+
+      const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
     }
 
     bind();
