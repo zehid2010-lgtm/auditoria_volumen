@@ -779,72 +779,36 @@
     }
 
     function csvToObjects(text){
-      const rows = [];
-      let row = [];
-      let cell = '';
-      let inQuotes = false;
+      const lines = text.split('
+').filter(l => l.trim() !== '');
 
-      for(let i = 0; i < text.length; i++){
-        const char = text[i];
-        const next = text[i + 1];
+      let headerIndex = lines.findIndex(l => l.toUpperCase().includes('CLIENTE'));
 
-        if(char === '"'){
-          if(inQuotes && next === '"'){
-            cell += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
-        } else if(char === ',' && !inQuotes){
-          row.push(cell);
-          cell = '';
-        } else if((char === '
-' || char === '
-') && !inQuotes){
-          if(char === '
-' && next === '
-') i++;
-          row.push(cell);
-          if(row.some(v => String(v || '').trim() !== '')) rows.push(row);
-          row = [];
-          cell = '';
-        } else {
-          cell += char;
-        }
+      if(headerIndex === -1) headerIndex = 2;
+
+      const headers = lines[headerIndex].replace(/
+/g, '').split(',').map(h => h.trim());
+
+      const data = [];
+
+      for(let i = headerIndex + 1; i < lines.length; i++){
+        const cols = lines[i]
+          .replace(/
+/g, '')
+          .replace(/"/g, '')
+          .split(',');
+
+        if(cols.length < 5) continue;
+
+        const obj = {};
+        headers.forEach((h, idx) => {
+          obj[h] = (cols[idx] || '').trim();
+        });
+
+        data.push(obj);
       }
 
-      if(cell.length || row.length){
-        row.push(cell);
-        if(row.some(v => String(v || '').trim() !== '')) rows.push(row);
-      }
-
-      if(!rows.length) return [];
-
-      const normalizedRows = rows.map(r => r.map(c => String(c || '').trim()));
-
-      let headerIndex = normalizedRows.findIndex(r => {
-        const joined = r.map(v => normalizeKey(v)).join('|');
-        return joined.includes('CLIENTE') && (
-          joined.includes('NUMERO') ||
-          joined.includes('RUTA') ||
-          joined.includes('RU') ||
-          joined.includes('TELEFONO')
-        );
-      });
-
-      if(headerIndex < 0) headerIndex = 0;
-
-      const headers = normalizedRows[headerIndex];
-      return normalizedRows
-        .slice(headerIndex + 1)
-        .map(cols => {
-          const obj = {};
-          headers.forEach((h, idx) => {
-            obj[h] = (cols[idx] || '').trim();
-          });
-          return obj;
-        })
-        .filter(obj => Object.values(obj).some(v => String(v || '').trim() !== ''));
+      return data;
     }
 
     async function fetchCSV(url){
