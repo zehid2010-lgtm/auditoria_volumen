@@ -798,8 +798,12 @@
         } else if(char === ',' && !inQuotes){
           row.push(cell);
           cell = '';
-        } else if((char === '\n' || char === '\r') && !inQuotes){
-          if(char === '\r' && next === '\n') i++;
+        } else if((char === '
+' || char === '
+') && !inQuotes){
+          if(char === '
+' && next === '
+') i++;
           row.push(cell);
           if(row.some(v => v !== '')) rows.push(row);
           row = [];
@@ -816,12 +820,20 @@
 
       if(!rows.length) return [];
 
-      const headers = rows[0].map(h => String(h || '').trim());
-      return rows.slice(1).map(cols => {
+      const normalizedRows = rows.map(r => r.map(c => String(c || '').trim()));
+      let headerIndex = normalizedRows.findIndex(r => {
+        const joined = r.map(v => normalizeKey(v)).join('|');
+        return joined.includes('CLIENTE') && (joined.includes('NUMERO') || joined.includes('RUTA') || joined.includes('RU'));
+      });
+
+      if(headerIndex < 0) headerIndex = 0;
+
+      const headers = normalizedRows[headerIndex];
+      return normalizedRows.slice(headerIndex + 1).map(cols => {
         const obj = {};
         headers.forEach((h, idx) => obj[h] = (cols[idx] || '').trim());
         return obj;
-      });
+      }).filter(obj => Object.values(obj).some(v => String(v || '').trim() !== ''));
     }
 
     async function fetchCSV(url){
@@ -1563,16 +1575,16 @@
       client.categories.forEach(cat => {
         const porcentaje = cat.objetivo > 0 ? (cat.real / cat.objetivo) * 100 : 0;
         const icono = iconos[cat.label] || '📦';
-        detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
+        detalleCategorias += `
+${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
       });
 
-const mensaje =
+      const mensaje =
 `Hola ${client.cliente} 👋
 
 Te compartimos tu avance de volumen actual:
 
-📊 Avance por categoría (cajas físicas):
-${detalleCategorias}
+📊 Avance por categoría (cajas físicas):${detalleCategorias}
 
 📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})
 📉 Volumen faltante: ${formatNumber(faltante)} cajas
