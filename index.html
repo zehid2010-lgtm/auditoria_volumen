@@ -829,11 +829,14 @@
       if(headerIndex < 0) headerIndex = 0;
 
       const headers = normalizedRows[headerIndex];
-      return normalizedRows.slice(headerIndex + 1).map(cols => {
-        const obj = {};
-        headers.forEach((h, idx) => obj[h] = (cols[idx] || '').trim());
-        return obj;
-      }).filter(obj => Object.values(obj).some(v => String(v || '').trim() !== ''));
+      return normalizedRows
+        .slice(headerIndex + 1)
+        .map(cols => {
+          const obj = {};
+          headers.forEach((h, idx) => obj[h] = (cols[idx] || '').trim());
+          return obj;
+        })
+        .filter(obj => Object.values(obj).some(v => String(v || '').trim() !== ''));
     }
 
     async function fetchCSV(url){
