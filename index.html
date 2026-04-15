@@ -805,7 +805,7 @@
 ' && next === '
 ') i++;
           row.push(cell);
-          if(row.some(v => v !== '')) rows.push(row);
+          if(row.some(v => String(v || '').trim() !== '')) rows.push(row);
           row = [];
           cell = '';
         } else {
@@ -815,15 +815,21 @@
 
       if(cell.length || row.length){
         row.push(cell);
-        if(row.some(v => v !== '')) rows.push(row);
+        if(row.some(v => String(v || '').trim() !== '')) rows.push(row);
       }
 
       if(!rows.length) return [];
 
       const normalizedRows = rows.map(r => r.map(c => String(c || '').trim()));
+
       let headerIndex = normalizedRows.findIndex(r => {
         const joined = r.map(v => normalizeKey(v)).join('|');
-        return joined.includes('CLIENTE') && (joined.includes('NUMERO') || joined.includes('RUTA') || joined.includes('RU'));
+        return joined.includes('CLIENTE') && (
+          joined.includes('NUMERO') ||
+          joined.includes('RUTA') ||
+          joined.includes('RU') ||
+          joined.includes('TELEFONO')
+        );
       });
 
       if(headerIndex < 0) headerIndex = 0;
@@ -833,16 +839,33 @@
         .slice(headerIndex + 1)
         .map(cols => {
           const obj = {};
-          headers.forEach((h, idx) => obj[h] = (cols[idx] || '').trim());
+          headers.forEach((h, idx) => {
+            obj[h] = (cols[idx] || '').trim();
+          });
           return obj;
         })
         .filter(obj => Object.values(obj).some(v => String(v || '').trim() !== ''));
     }
 
     async function fetchCSV(url){
-      const res = await fetch(url + '&t=' + Date.now(), { cache: 'no-store' });
-      if(!res.ok) throw new Error(`No se pudo cargar el archivo CSV (${res.status})`);
-      return csvToObjects(await res.text());
+      const finalUrl = url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
+      const res = await fetch(finalUrl, {
+        method: 'GET',
+        cache: 'no-store'
+      });
+
+      if(!res.ok){
+        throw new Error(`No se pudo cargar el archivo CSV (${res.status})`);
+      }
+
+      const text = await res.text();
+      const data = csvToObjects(text);
+
+      if(!Array.isArray(data)){
+        throw new Error('No se pudo interpretar el CSV');
+      }
+
+      return data;
     }
 
     function getCell(row, key){
@@ -1492,7 +1515,7 @@
         const raw = await fetchCSV(CSV_URL);
 
         if(!raw || !raw.length){
-          throw new Error('El CSV llegó vacío');
+          throw new Error('El CSV llegó vacío o no se detectó la fila de encabezados');
         }
 
         buildData(raw);
@@ -1507,7 +1530,7 @@
         if(showAlert) alert('Datos sincronizados correctamente');
       } catch(err){
         console.error('Error real al cargar:', err);
-        alert('No se pudieron cargar los datos. Revisá permisos de Google Sheets o el link CSV.');
+        alert('No se pudieron cargar los datos. Revisá el link CSV publicado o la fila de encabezados de la hoja.');
       }
     }
 
