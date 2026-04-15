@@ -1567,17 +1567,18 @@
         detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
       });
 
-      const mensaje =
+const mensaje =
 `Hola ${client.cliente} 👋
 
-Te compartimos tu avance por categoría:
+Te compartimos tu avance de volumen actual:
 
+📊 Avance por categoría (cajas físicas):
 ${detalleCategorias}
 
-📈 Total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas físicas (${formatPct(cumplimiento)})
-📉 Faltante: ${formatNumber(faltante)} cajas físicas
+📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})
+📉 Volumen faltante: ${formatNumber(faltante)} cajas
 
-Seguimos trabajando juntos para alcanzar el objetivo.`;
+Seguimos trabajando juntos para alcanzar el objetivo de volumen 💪`;
 
       const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
