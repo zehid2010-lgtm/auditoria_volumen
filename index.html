@@ -57,7 +57,7 @@
 
     .brand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:2}
     .brand-left{display:flex;align-items:flex-start;gap:14px;min-width:0}
-    .brand-left img{height:52px;display:block;filter:brightness(0) invert(1)}
+    .brand-left img{height:36px;display:block;filter:brightness(0) invert(1)}
     .divider{width:2px;height:58px;background:rgba(255,255,255,.9);border-radius:10px}
 
     .brand-copy h1{
@@ -196,30 +196,13 @@
     }
 
     .wa-btn{
-      width:100%;
-      margin-top:12px;
-      border:none;
-      border-radius:16px;
-      padding:14px 16px;
-      font-size:14px;
-      font-weight:800;
-      cursor:pointer;
-      color:#fff;
+      width:100%;margin-top:12px;border:none;border-radius:16px;padding:14px 16px;
+      font-size:14px;font-weight:800;cursor:pointer;color:#fff;
       background:linear-gradient(180deg,#25D366 0%, #128C7E 100%);
       box-shadow:0 8px 18px rgba(18,140,126,.22);
     }
 
-    .wa-btn.small{
-      width:auto;
-      margin-top:10px;
-      padding:10px 14px;
-      border-radius:12px;
-      font-size:13px;
-    }
-
-    .wa-btn:active{
-      transform:scale(.99);
-    }
+    .wa-btn:active{transform:scale(.99)}
 
     .client-card{cursor:pointer}
     .client-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
@@ -228,7 +211,6 @@
       border-radius:18px;padding:13px 14px;font-size:13px;line-height:1.35;
       border:1px solid rgba(0,0,0,.05);background:#fff;cursor:pointer
     }
-
     .alert-box + .alert-box{margin-top:10px}
     .alert-high{background:#fdeeee}
     .alert-mid{background:#fff4e6}
@@ -243,145 +225,56 @@
     .route-kpi .box .t{font-size:11px;color:#666}
     .route-kpi .box .v{font-size:20px;font-weight:800;margin-top:6px}
 
-    .box-clientes{
-      background: linear-gradient(180deg,#eef6ff,#e0edff);
-      border: 1px solid #c7dcff !important;
-    }
+    .box-clientes{background: linear-gradient(180deg,#eef6ff,#e0edff);border: 1px solid #c7dcff !important;}
     .box-clientes .v{color:#1d4ed8}
-
-    .box-objetivo{
-      background: linear-gradient(180deg,#f0fdf4,#dcfce7);
-      border: 1px solid #bbf7d0 !important;
-    }
+    .box-objetivo{background: linear-gradient(180deg,#f0fdf4,#dcfce7);border: 1px solid #bbf7d0 !important;}
     .box-objetivo .v{color:#15803d}
 
     .box-cumplen-premium{
-      position:relative;
-      overflow:hidden;
-      border-radius:22px !important;
-      padding:18px 14px !important;
-      min-height:120px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      transition:all .25s ease;
+      position:relative;overflow:hidden;border-radius:22px !important;padding:18px 14px !important;
+      min-height:120px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center
     }
-
     .box-cumplen-premium::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.08));
-      pointer-events:none;
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.08));pointer-events:none;
     }
-
     .box-cumplen-premium::after{
-      content:"";
-      position:absolute;
-      width:160px;
-      height:160px;
-      right:-45px;
-      top:-55px;
-      border-radius:50%;
-      background:rgba(255,255,255,.18);
-      pointer-events:none;
+      content:"";position:absolute;width:160px;height:160px;right:-45px;top:-55px;border-radius:50%;
+      background:rgba(255,255,255,.18);pointer-events:none;
     }
-
-    .premium-kpi-title{
-      position:relative;
-      z-index:1;
-      font-size:13px;
-      font-weight:700;
-      opacity:.8;
-      letter-spacing:.2px;
-    }
-
-    .premium-kpi-value{
-      position:relative;
-      z-index:1;
-      margin-top:8px;
-      font-size:34px;
-      line-height:1;
-      font-weight:900;
-      letter-spacing:.5px;
-    }
-
-    .premium-kpi-sub{
-      position:relative;
-      z-index:1;
-      margin-top:8px;
-      font-size:12px;
-      opacity:.78;
-      font-weight:600;
-    }
+    .premium-kpi-title{position:relative;z-index:1;font-size:13px;font-weight:700;opacity:.8;letter-spacing:.2px}
+    .premium-kpi-value{position:relative;z-index:1;margin-top:8px;font-size:34px;line-height:1;font-weight:900;letter-spacing:.5px}
+    .premium-kpi-sub{position:relative;z-index:1;margin-top:8px;font-size:12px;opacity:.78;font-weight:600}
 
     .cat-grid{display:grid;gap:10px;margin-top:14px}
-    .cat-card{
-      background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;
-      padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)
-    }
-
+    .cat-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
     .cat-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
     .cat-name{font-size:14px;font-weight:800;margin:0}
     .cat-sub{margin-top:6px;color:#666;font-size:12px;line-height:1.5}
-
-    .legend-box{
-      font-size:12px;color:#666;margin-bottom:12px;background:#fafafa;border:1px solid #eee;
-      border-radius:14px;padding:10px 12px;line-height:1.5
-    }
-
+    .legend-box{font-size:12px;color:#666;margin-bottom:12px;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:10px 12px;line-height:1.5}
     .watermark{margin:14px auto 6px;text-align:center;color:#b2b2b2;font-style:italic;font-size:30px;opacity:.8}
-
     .cat-main{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:flex-start}
-
-    .cat-bottle{
-      width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:36px;
-      border:1px solid rgba(0,0,0,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)
-    }
-
+    .cat-bottle{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:36px;border:1px solid rgba(0,0,0,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
     .cat-ref{margin-top:10px;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.35;border:1px solid}
     .cat-ref-title{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
 
-    .score-card{
-      grid-column:span 3;
-      padding:20px 10px !important;
-      text-align:center;
-      border-radius:20px !important;
-      transition:.25s ease;
-    }
-    .score-value{
-      font-size:34px;
-      font-weight:900;
-      line-height:1;
-      margin-top:6px;
-    }
-    .score-sub{
-      font-size:12px;
-      margin-top:8px;
-      font-weight:700;
-      opacity:.9;
-    }
+    .score-card{grid-column:span 3;padding:20px 10px !important;text-align:center;border-radius:20px !important}
+    .score-value{font-size:34px;font-weight:900;line-height:1;margin-top:6px}
+    .score-sub{font-size:12px;margin-top:8px;font-weight:700;opacity:.9}
 
     .bottom-nav{
-      position:fixed;left:50%;transform:translateX(-50%);bottom:12px;
-      width:min(500px,calc(100% - 24px));
-      background:linear-gradient(180deg,#ff0e18 0%, #eb000c 100%);
-      border-radius:24px;box-shadow:var(--shadow);padding:10px;display:grid;
-      grid-template-columns:repeat(4,1fr);gap:8px;z-index:50
+      position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(500px,calc(100% - 24px));
+      background:linear-gradient(180deg,#ff0e18 0%, #eb000c 100%);border-radius:24px;box-shadow:var(--shadow);
+      padding:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;z-index:50
     }
-
-    .nav-btn{
-      border:none;background:transparent;color:#fff;border-radius:18px;padding:12px 6px;
-      cursor:pointer;display:grid;place-items:center;gap:6px;font-size:12px;font-weight:800
-    }
-
+    .nav-btn{border:none;background:transparent;color:#fff;border-radius:18px;padding:12px 6px;cursor:pointer;display:grid;place-items:center;gap:6px;font-size:12px;font-weight:800}
     .nav-btn.active{background:linear-gradient(180deg,#900009 0%, #6e0007 100%)}
     .nav-btn .nicon{font-size:24px}
 
+    .status-chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#555}
+
     @media (max-width:450px){
-      .brand-left img{height:42px}
+      .brand-left img{height:32px}
       .divider{height:48px}
       .brand-copy h1{font-size:16px}
       .stats-grid,.quick-grid{grid-template-columns:1fr 1fr}
@@ -395,7 +288,7 @@
     <header class="hero-header">
       <div class="brand-row">
         <div class="brand-left">
-          <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" style="height:36px; width:auto;" alt="Coca-Cola">
+          <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" alt="Coca-Cola">
           <div class="divider"></div>
           <div class="brand-copy">
             <h1>GESTIÓN VOLUMEN PDV 2026</h1>
@@ -411,6 +304,7 @@
         <div class="welcome">
           <h2>¡Bienvenido!</h2>
           <p>Seguimiento ejecutivo de volumen con foco en objetivo y avance</p>
+          <div id="syncStatus" class="status-chip">Cargando datos...</div>
         </div>
 
         <button class="hero-card" onclick="goToRoutes()">
@@ -460,7 +354,7 @@
           </div>
           <div class="legend-box">
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
-            📦 <b>Avance:</b> volumen real cargado en columnas tipo <b>_REAL</b> o <b>_avance</b>.<br>
+            📦 <b>Avance:</b> volumen real cargado en columnas tipo <b>_REAL</b> o <b>_CF_REAL</b>.<br>
             🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
             🚦 <b>Badge de puntos:</b> Verde = 40 pts · Amarillo = 30 a 39 pts · Rojo = menos de 30 pts.
           </div>
@@ -490,9 +384,9 @@
               <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
               <select id="routeSort">
                 <option value="ruta" selected>Ordenar por ruta</option>
-<option value="avance">Ordenar por avance</option>
-<option value="objetivo">Ordenar por objetivo</option>
-<option value="clientes">Ordenar por clientes</option>
+                <option value="avance">Ordenar por avance</option>
+                <option value="objetivo">Ordenar por objetivo</option>
+                <option value="clientes">Ordenar por clientes</option>
               </select>
             </div>
           </div>
@@ -528,41 +422,19 @@
         <div class="panel">
           <div class="item-meta" id="routeDetailMeta"></div>
           <div class="route-kpi">
-            <div class="box box-clientes">
-              <div class="t">👥 Clientes</div>
-              <div class="v" id="rdClients">0</div>
-            </div>
-
-            <div class="box box-objetivo">
-              <div class="t">🎯 Objetivo CAJAS FÍSICAS</div>
-              <div class="v" id="rdObjetivo">0</div>
-            </div>
-
-            <div class="box box-cumplen-premium">
-              <div class="premium-kpi-title">Cumplimiento clientes</div>
-              <div class="premium-kpi-value" id="rdCumplen40">0 / 0</div>
-              <div class="premium-kpi-sub" id="rdCumplen40Sub">Clientes con score completo</div>
-            </div>
+            <div class="box box-clientes"><div class="t">👥 Clientes</div><div class="v" id="rdClients">0</div></div>
+            <div class="box box-objetivo"><div class="t">🎯 Objetivo CAJAS FÍSICAS</div><div class="v" id="rdObjetivo">0</div></div>
+            <div class="box box-cumplen-premium"><div class="premium-kpi-title">Cumplimiento clientes</div><div class="premium-kpi-value" id="rdCumplen40">0 / 0</div><div class="premium-kpi-sub" id="rdCumplen40Sub">Clientes con score completo</div></div>
           </div>
         </div>
 
         <div class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">⚠️</div>
-              <div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div>
-            </div>
-          </div>
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div>
           <div id="routeAlerts"></div>
         </div>
 
         <div class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">👥</div>
-              <div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div>
-            </div>
-          </div>
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">👥</div><div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div></div></div>
           <div id="routeClients"></div>
         </div>
       </section>
@@ -580,12 +452,7 @@
         </div>
 
         <div class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">📦</div>
-              <div><h4>Categorías del cliente</h4><small>Objetivo, vendido, avance y semáforo por categoría.</small></div>
-            </div>
-          </div>
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">📦</div><div><h4>Categorías del cliente</h4><small>Objetivo, vendido, avance y semáforo por categoría.</small></div></div></div>
           <div class="legend-box">
             🎯 <b>Objetivo:</b> lo que tiene que vender.<br>
             📦 <b>Avance:</b> lo que ya se cargó en el Excel.<br>
@@ -628,64 +495,55 @@
   </div>
 
   <script>
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQSuRpKllI3EgCIHu51oqxUVEVtsDYgt5LFX0iNFndhHeRfsKIy3RyGoLnfobWFw/pub?gid=1665268501&single=true&output=csv';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/1FmsskuzyfaTLCPNqN8VhhHizcBFqDK6o/export?format=csv&gid=1339086645';
 
     const CATEGORY_CONFIG = [
-      { key: 'Agua', label: 'Agua' },
-      { key: 'Bebida energética', label: 'Bebida Energética' },
-      { key: 'Colas', label: 'Colas' },
-      { key: 'Isotónica', label: 'Isotónica' },
-      { key: 'Jugos', label: 'Jugos' },
-      { key: 'Multicategorías', label: 'Multicategoría' },
-      { key: 'Sabores', label: 'Sabores' },
-      { key: 'Saborizada', label: 'Saborizada' }
+      { keys: ['Agua'], label: 'Agua' },
+      { keys: ['Bebida energética','Bebida energetica'], label: 'Bebida Energética' },
+      { keys: ['Colas'], label: 'Colas' },
+      { keys: ['Isotónica','Isotonica'], label: 'Isotónica' },
+      { keys: ['Jugos'], label: 'Jugos' },
+      { keys: ['Multicategorías','Multicategorias','Multicategoria','Multicategoría'], label: 'Multicategoría' },
+      { keys: ['Sabores'], label: 'Sabores' },
+      { keys: ['Saborizada'], label: 'Saborizada' }
     ];
 
     const referenciaMap = {
-      'Agua': "Agua 2 Lts x 6 unidades",
-      'Bebida energética': "Monster 473 ml x 6 unidades",
-      'Colas': "Coca-Cola 2 Lts RET x 8 unidades",
-      'Isotónica': "Powerade 500 cc x 6 unidades",
-      'Jugos': "Cepita 1.5 Lts PET x 4 unidades",
-      'Multicategorías': "Leche L3N 1 Litro x 12 unidad",
-      'Sabores': "Fanta / Sprite 2 Lts RET x 8 unidades",
-      'Saborizada': "Aquarius 1.5 Lts PET x 6 unidades"
+      'Agua': 'Agua 2 Lts x 6 unidades',
+      'Bebida Energética': 'Monster 473 ml x 6 unidades',
+      'Colas': 'Coca-Cola 2 Lts RET x 8 unidades',
+      'Isotónica': 'Powerade 500 cc x 6 unidades',
+      'Jugos': 'Cepita 1.5 Lts PET x 4 unidades',
+      'Multicategoría': 'Leche L3N 1 Litro x 12 unidad',
+      'Sabores': 'Fanta / Sprite 2 Lts RET x 8 unidades',
+      'Saborizada': 'Aquarius 1.5 Lts PET x 6 unidades'
     };
 
     const categoryVisualMap = {
-      'Agua': { icon: "💧", bubble: "#eaf4ff", bubbleBorder: "#b7d8ff", refBg: "#eef6ff", refBorder: "#bfdcff" },
-      'Bebida energética': { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png", bubble: "#f2ecff", bubbleBorder: "#d4c0ff", refBg: "#f5eeff", refBorder: "#d9c7ff" },
-      'Colas': { icon: "🥤", bubble: "#eef9f1", bubbleBorder: "#bfe3c7", refBg: "#ecf8ef", refBorder: "#bee2c4" },
-      'Isotónica': { icon: "https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png", bubble: "#eef5ff", bubbleBorder: "#c6dafb", refBg: "#edf5ff", refBorder: "#c7daf8" },
-      'Jugos': { icon: "🧃", bubble: "#fff7e8", bubbleBorder: "#f2d59f", refBg: "#fff8e9", refBorder: "#efd59b" },
-      'Multicategorías': { icon: "🧺", bubble: "#fff7e7", bubbleBorder: "#f1d188", refBg: "#fff8ea", refBorder: "#f0d28e" },
-      'Sabores': { icon: "🍊", bubble: "#fff3e8", bubbleBorder: "#f2c8aa", refBg: "#fff3ea", refBorder: "#efc7aa" },
-      'Saborizada': { icon: "https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png", bubble: "#eefcf1", bubbleBorder: "#bfe4c6", refBg: "#eefcf3", refBorder: "#c0e6ca" }
+      'Agua': { icon: '💧', bubble: '#eaf4ff', bubbleBorder: '#b7d8ff', refBg: '#eef6ff', refBorder: '#bfdcff' },
+      'Bebida Energética': { icon: 'https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png', bubble: '#f2ecff', bubbleBorder: '#d4c0ff', refBg: '#f5eeff', refBorder: '#d9c7ff' },
+      'Colas': { icon: '🥤', bubble: '#eef9f1', bubbleBorder: '#bfe3c7', refBg: '#ecf8ef', refBorder: '#bee2c4' },
+      'Isotónica': { icon: 'https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png', bubble: '#eef5ff', bubbleBorder: '#c6dafb', refBg: '#edf5ff', refBorder: '#c7daf8' },
+      'Jugos': { icon: '🧃', bubble: '#fff7e8', bubbleBorder: '#f2d59f', refBg: '#fff8e9', refBorder: '#efd59b' },
+      'Multicategoría': { icon: '🧺', bubble: '#fff7e7', bubbleBorder: '#f1d188', refBg: '#fff8ea', refBorder: '#f0d28e' },
+      'Sabores': { icon: '🍊', bubble: '#fff3e8', bubbleBorder: '#f2c8aa', refBg: '#fff3ea', refBorder: '#efc7aa' },
+      'Saborizada': { icon: 'https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png', bubble: '#eefcf1', bubbleBorder: '#bfe4c6', refBg: '#eefcf3', refBorder: '#c0e6ca' }
     };
 
-    const state = {
-      rows: [],
-      routes: [],
-      clients: [],
-      alerts: [],
-      selectedRoute: '',
-      selectedClientKey: '',
-      clientBackMode: 'clients'
-    };
+    const state = { rows: [], routes: [], clients: [], alerts: [], selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
 
     function normalizeKey(str){
-      return (str || '')
-        .toString()
+      return String(str || '')
         .trim()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g,'')
+        .replace(/[_\-]+/g,' ')
         .replace(/\s+/g,' ')
-        .replace(/_/g,' ')
         .toUpperCase();
     }
 
     function escapeHtml(str){
-      return (str || '').toString()
+      return String(str || '')
         .replace(/&/g,'&amp;')
         .replace(/</g,'&lt;')
         .replace(/>/g,'&gt;')
@@ -695,191 +553,148 @@
 
     function toNumber(value){
       if(value === null || value === undefined || value === '') return 0;
-      const clean = String(value).replace(/\s/g,'').replace(/\./g,'').replace(',', '.');
-      const n = parseFloat(clean);
-      return isNaN(n) ? 0 : n;
+      let s = String(value).trim().replace(/\s/g, '');
+      if(!s) return 0;
+
+      if(s.includes(',') && s.includes('.')){
+        if(s.lastIndexOf(',') > s.lastIndexOf('.')){
+          s = s.replace(/\./g, '').replace(',', '.');
+        } else {
+          s = s.replace(/,/g, '');
+        }
+      } else if(s.includes(',')) {
+        s = s.replace(',', '.');
+      }
+
+      const n = parseFloat(s);
+      return Number.isFinite(n) ? n : 0;
     }
 
-    function formatNumber(n){
-      return Number(n || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 });
-    }
-
-    function formatPct(n){
-      return `${Math.round(Number(n || 0))}%`;
-    }
-
-    function clamp(n, min, max){
-      return Math.max(min, Math.min(max, n));
-    }
+    function formatNumber(n){ return Number(n || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 }); }
+    function formatPct(n){ return `${Math.round(Number(n || 0))}%`; }
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
     function getSemaforo(cumplimiento){
       if(cumplimiento >= 80) return 'green';
       if(cumplimiento >= 50) return 'yellow';
       return 'red';
     }
-
-    function getSemaforoBadge(cumplimiento){
-      if(cumplimiento >= 80) return 'ok';
-      if(cumplimiento >= 50) return 'warn';
-      return 'bad';
-    }
-
-    function getSemaforoText(cumplimiento){
-      if(cumplimiento >= 80) return 'VERDE';
-      if(cumplimiento >= 50) return 'AMARILLO';
-      return 'ROJO';
-    }
-
-    function getRoutePointsBadgeClass(points){
-      if(points >= 40) return 'ok';
-      if(points >= 30) return 'warn';
-      return 'bad';
-    }
-
-    function getBadgePointsClass(client){
-      const puntos = Number(client?.totalPuntos || 0);
-      if (puntos >= 40) return 'ok';
-      if (puntos >= 30) return 'warn';
-      return 'bad';
-    }
-
-    function getPointsText(client){
-      return `${Number(client?.totalPuntos || 0)} / 40 pts`;
-    }
-
-    function getPointsProgressClass(points){
-      if(points >= 40) return 'green';
-      if(points >= 30) return 'yellow';
-      return 'red';
-    }
+    function getSemaforoBadge(cumplimiento){ return cumplimiento >= 80 ? 'ok' : cumplimiento >= 50 ? 'warn' : 'bad'; }
+    function getSemaforoText(cumplimiento){ return cumplimiento >= 80 ? 'VERDE' : cumplimiento >= 50 ? 'AMARILLO' : 'ROJO'; }
+    function getRoutePointsBadgeClass(points){ return points >= 40 ? 'ok' : points >= 30 ? 'warn' : 'bad'; }
+    function getBadgePointsClass(client){ const p = Number(client?.totalPuntos || 0); return p >= 40 ? 'ok' : p >= 30 ? 'warn' : 'bad'; }
+    function getPointsText(client){ return `${Number(client?.totalPuntos || 0)} / 40 pts`; }
+    function getPointsProgressClass(points){ return points >= 40 ? 'green' : points >= 30 ? 'yellow' : 'red'; }
 
     function getScoreStyle(points){
-      if(points >= 40){
-        return {
-          bg: 'linear-gradient(180deg,#dcfce7,#bbf7d0)',
-          border: '#86efac',
-          color: '#15803d',
-          sub: 'Score completo'
-        };
+      if(points >= 40) return { bg: 'linear-gradient(180deg,#dcfce7,#bbf7d0)', border: '#86efac', color: '#15803d', sub: 'Score completo' };
+      if(points >= 30) return { bg: 'linear-gradient(180deg,#fef3c7,#fde68a)', border: '#fcd34d', color: '#b45309', sub: 'Score intermedio' };
+      return { bg: 'linear-gradient(180deg,#fee2e2,#fecaca)', border: '#fca5a5', color: '#dc2626', sub: 'Score bajo' };
+    }
+
+    function parseCSVLine(line){
+      const out = [];
+      let cur = '';
+      let inQuotes = false;
+      for(let i = 0; i < line.length; i++){
+        const ch = line[i];
+        const next = line[i + 1];
+        if(ch === '"'){
+          if(inQuotes && next === '"'){
+            cur += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if(ch === ',' && !inQuotes) {
+          out.push(cur);
+          cur = '';
+        } else {
+          cur += ch;
+        }
       }
-      if(points >= 30){
-        return {
-          bg: 'linear-gradient(180deg,#fef3c7,#fde68a)',
-          border: '#fcd34d',
-          color: '#b45309',
-          sub: 'Score intermedio'
-        };
-      }
-      return {
-        bg: 'linear-gradient(180deg,#fee2e2,#fecaca)',
-        border: '#fca5a5',
-        color: '#dc2626',
-        sub: 'Score bajo'
-      };
+      out.push(cur);
+      return out.map(v => v.replace(/^\uFEFF/, '').trim());
     }
 
     function csvToObjects(text){
-      const lines = text.split('
-').filter(l => l.trim() !== '');
+      const lines = String(text || '').replace(/\r/g, '').split('\n').filter(l => l.trim() !== '');
+      if(!lines.length) return [];
 
-      let headerIndex = lines.findIndex(l => l.toUpperCase().includes('CLIENTE'));
+      let headerIndex = lines.findIndex(line => {
+        const cells = parseCSVLine(line).map(normalizeKey);
+        return cells.includes('CLIENTE') && (cells.includes('NUMERO') || cells.includes('RU') || cells.includes('VENDEDOR'));
+      });
+      if(headerIndex < 0) headerIndex = 0;
 
-      if(headerIndex === -1) headerIndex = 2;
-
-      const headers = lines[headerIndex].replace(/
-/g, '').split(',').map(h => h.trim());
-
-      const data = [];
-
+      const headers = parseCSVLine(lines[headerIndex]);
+      const objects = [];
       for(let i = headerIndex + 1; i < lines.length; i++){
-        const cols = lines[i]
-          .replace(/
-/g, '')
-          .replace(/"/g, '')
-          .split(',');
-
-        if(cols.length < 5) continue;
-
+        const cols = parseCSVLine(lines[i]);
+        if(cols.every(c => String(c).trim() === '')) continue;
         const obj = {};
-        headers.forEach((h, idx) => {
-          obj[h] = (cols[idx] || '').trim();
-        });
-
-        data.push(obj);
+        headers.forEach((h, idx) => { obj[h] = cols[idx] ?? ''; });
+        objects.push(obj);
       }
-
-      return data;
+      return objects;
     }
 
     async function fetchCSV(url){
-      const finalUrl = url + (url.includes('?') ? '&' : '?') + 't=' + Date.now();
-      const res = await fetch(finalUrl, {
-        method: 'GET',
-        cache: 'no-store'
-      });
-
-      if(!res.ok){
-        throw new Error(`No se pudo cargar el archivo CSV (${res.status})`);
-      }
-
+      const finalUrl = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
+      const res = await fetch(finalUrl, { method: 'GET', cache: 'no-store' });
+      if(!res.ok) throw new Error(`No se pudo cargar el CSV (${res.status})`);
       const text = await res.text();
-      const data = csvToObjects(text);
+      const rows = csvToObjects(text);
+      if(!rows.length) throw new Error('El CSV llegó vacío');
+      return rows;
+    }
 
-      if(!Array.isArray(data)){
-        throw new Error('No se pudo interpretar el CSV');
+    function getCell(row, ...possibleKeys){
+      const map = new Map(Object.keys(row).map(k => [normalizeKey(k), row[k]]));
+      for(const key of possibleKeys){
+        const normalized = normalizeKey(key);
+        if(map.has(normalized)) return map.get(normalized);
       }
-
-      return data;
+      return '';
     }
 
-    function getCell(row, key){
-      if(row[key] !== undefined) return row[key];
-      const found = Object.keys(row).find(k => normalizeKey(k) === normalizeKey(key));
-      return found ? row[found] : '';
-    }
-
-    function detectObjectiveValue(row, baseKey){
-      const candidates = [
-        `${baseKey}_OBJ`,
-        `${baseKey} OBJ`,
-        `${baseKey}_objetivo`,
-        `${baseKey} objetivo`,
-        `${baseKey}_OBJETIVO`,
-        `${baseKey}`
-      ];
-      for(const c of candidates){
-        const value = getCell(row, c);
+    function detectObjectiveValue(row, categoryKeys){
+      const variants = [];
+      categoryKeys.forEach(baseKey => {
+        variants.push(
+          `${baseKey}_OBJ`, `${baseKey} OBJ`, `${baseKey}_OB`, `${baseKey} OB`,
+          `${baseKey}_OBJETIVO`, `${baseKey} OBJETIVO`, `${baseKey}_objetivo`, `${baseKey} objetivo`
+        );
+      });
+      for(const variant of variants){
+        const value = getCell(row, variant);
         if(value !== '' && value !== undefined) return toNumber(value);
       }
       return 0;
     }
 
-    function detectAdvanceValue(row, baseKey){
-  const candidates = [
-    `${baseKey}_CF_REAL`,   // 👈 ESTE ES EL CORRECTO
-    `${baseKey}_REAL`,
-    `${baseKey} REAL`,
-    `${baseKey}_avance`,
-    `${baseKey} avance`,
-    `${baseKey}_real`,
-    `${baseKey} real`
-  ];
-  for(const c of candidates){
-    const value = getCell(row, c);
-    if(value !== '' && value !== undefined) return toNumber(value);
-  }
-  return 0;
-}
+    function detectAdvanceValue(row, categoryKeys){
+      const variants = [];
+      categoryKeys.forEach(baseKey => {
+        variants.push(
+          `${baseKey}_CF_REAL`, `${baseKey} CF REAL`, `${baseKey}_REAL`, `${baseKey} REAL`,
+          `${baseKey}_avance`, `${baseKey} avance`, `${baseKey}_real`, `${baseKey} real`
+        );
+      });
+      for(const variant of variants){
+        const value = getCell(row, variant);
+        if(value !== '' && value !== undefined) return toNumber(value);
+      }
+      return 0;
+    }
 
-    function detectPointsValue(row, baseKey, objetivo, real){
-      const candidates = [
-        `${baseKey}_PUNTOS`,
-        `${baseKey} PUNTOS`,
-        `${baseKey}_puntos`,
-        `${baseKey} puntos`
-      ];
-      for(const c of candidates){
-        const value = getCell(row, c);
+    function detectPointsValue(row, categoryKeys, objetivo, real){
+      const variants = [];
+      categoryKeys.forEach(baseKey => {
+        variants.push(`${baseKey}_PUNTOS`, `${baseKey} PUNTOS`, `${baseKey}_puntos`, `${baseKey} puntos`);
+      });
+      for(const variant of variants){
+        const value = getCell(row, variant);
         if(value !== '' && value !== undefined) return toNumber(value);
       }
       return real >= objetivo && objetivo > 0 ? 5 : 0;
@@ -888,9 +703,9 @@
     function dedupeRows(rows){
       const map = new Map();
       rows.forEach(r => {
-        const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
-        const cliente = getCell(r,'cliente') || getCell(r,'CLIENTE') || '';
-        const ruta = getCell(r,'RU') || getCell(r,'ru') || getCell(r,'Ruta') || getCell(r,'ruta') || getCell(r,'RUTA') || '';
+        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID');
+        const cliente = getCell(r,'CLIENTE');
+        const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
         const key = `${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
         if(key !== '||') map.set(key, r);
       });
@@ -901,74 +716,38 @@
       const uniqueRows = dedupeRows(rawRows);
 
       state.rows = uniqueRows.map(r => {
-        const numero = getCell(r,'numero') || getCell(r,'NUMERO') || getCell(r,'Número') || getCell(r,'ID') || '';
-        const cliente = getCell(r,'cliente') || getCell(r,'CLIENTE') || '';
-        const ruta = (
-          getCell(r,'RU') ||
-          getCell(r,'ru') ||
-          getCell(r,'Ruta') ||
-          getCell(r,'ruta') ||
-          getCell(r,'RUTA') ||
-          getCell(r,'COD_RUTA') ||
-          getCell(r,'CODIGO_RUTA') ||
-          getCell(r,'ZONA') ||
-          getCell(r,'Zona') ||
-          ''
-        ).toString().trim();
-
-        const vendedor = getCell(r,'vendedor') || getCell(r,'VENDEDOR') || '';
-        const repositor = getCell(r,'repositor') || getCell(r,'REPOSITOR') || '';
-        const telefono =
-          getCell(r,'telefono') ||
-          getCell(r,'TELEFONO') ||
-          getCell(r,'teléfono') ||
-          getCell(r,'Telefono') ||
-          getCell(r,'TELÉFONO') ||
-          getCell(r,'celular') ||
-          getCell(r,'CELULAR') ||
-          getCell(r,'whatsapp') ||
-          getCell(r,'WHATSAPP') ||
-          '';
+        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID');
+        const cliente = getCell(r,'CLIENTE');
+        const ruta = String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
+        const vendedor = getCell(r,'VENDEDOR','Vendedor');
+        const repositor = getCell(r,'REPOSITOR','Repositor');
+        const telefono = getCell(r,'TELEFONO','TELÉFONO','Telefono','teléfono','CELULAR','Celular','WHATSAPP','Whatsapp');
 
         const categories = CATEGORY_CONFIG.map(cat => {
-          const objetivo = detectObjectiveValue(r, cat.key);
-          const real = detectAdvanceValue(r, cat.key);
-          const puntos = detectPointsValue(r, cat.key, objetivo, real);
+          const objetivo = detectObjectiveValue(r, cat.keys);
+          const real = detectAdvanceValue(r, cat.keys);
+          const puntos = detectPointsValue(r, cat.keys, objetivo, real);
           const cumplimiento = objetivo > 0 ? (real / objetivo) * 100 : 0;
           const desvio = objetivo - real;
           return {
-            key: cat.key,
+            key: cat.label,
             label: cat.label,
-            objetivo,
-            real,
-            puntos,
-            cumplimiento,
-            desvio,
+            objetivo, real, puntos, cumplimiento, desvio,
             semaforo: getSemaforo(cumplimiento),
             semaforoText: getSemaforoText(cumplimiento)
           };
         }).filter(c => c.objetivo > 0 || c.real > 0);
 
-        const totalObjetivo = categories.reduce((a,c)=>a+c.objetivo,0);
-        const totalReal = categories.reduce((a,c)=>a+c.real,0);
-        const totalPuntos = categories.reduce((a,c)=>a+c.puntos,0);
+        const totalObjetivo = categories.reduce((a,c) => a + c.objetivo, 0);
+        const totalReal = categories.reduce((a,c) => a + c.real, 0);
+        const totalPuntos = categories.reduce((a,c) => a + c.puntos, 0);
         const cumplimientoTotal = totalObjetivo > 0 ? (totalReal / totalObjetivo) * 100 : 0;
         const desvioTotal = totalObjetivo - totalReal;
 
         return {
           key: `${numero}|${cliente}|${ruta}`,
-          numero,
-          cliente,
-          ruta,
-          vendedor,
-          repositor,
-          telefono,
-          categories,
-          totalObjetivo,
-          totalReal,
-          totalPuntos,
-          cumplimientoTotal,
-          desvioTotal,
+          numero, cliente, ruta, vendedor, repositor, telefono, categories,
+          totalObjetivo, totalReal, totalPuntos, cumplimientoTotal, desvioTotal,
           semaforo: getSemaforo(cumplimientoTotal),
           semaforoText: getSemaforoText(cumplimientoTotal)
         };
@@ -981,25 +760,11 @@
 
     function buildRoutes(){
       const map = new Map();
-
       state.rows.forEach(r => {
-        const key = (r.ruta && String(r.ruta).trim() !== '')
-          ? String(r.ruta).trim()
-          : 'SIN ASIGNAR';
-
+        const key = r.ruta || 'SIN ASIGNAR';
         if(!map.has(key)){
-          map.set(key, {
-            ruta: key,
-            vendedor: r.vendedor || '',
-            clients: 0,
-            objetivo: 0,
-            real: 0,
-            desvio: 0,
-            cumplimiento: 0,
-            rows: []
-          });
+          map.set(key, { ruta: key, vendedor: r.vendedor || '', clients: 0, objetivo: 0, real: 0, desvio: 0, cumplimiento: 0, rows: [] });
         }
-
         const route = map.get(key);
         route.clients += 1;
         route.objetivo += r.totalObjetivo;
@@ -1014,11 +779,15 @@
         r.semaforo = getSemaforo(r.cumplimiento);
         r.semaforoText = getSemaforoText(r.cumplimiento);
         return r;
-      }).sort((a,b)=> Number(a.ruta) - Number(b.ruta));
+      }).sort((a,b) => {
+        const ar = Number(a.ruta), br = Number(b.ruta);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a.ruta).localeCompare(String(b.ruta), 'es');
+      });
     }
 
     function buildClients(){
-      state.clients = [...state.rows].sort((a,b)=> Number(a.ruta) - Number(b.ruta));
+      state.clients = [...state.rows].sort((a,b) => String(a.cliente).localeCompare(String(b.cliente), 'es'));
     }
 
     function buildAlerts(){
@@ -1058,24 +827,14 @@
       renderHomeAlerts();
     }
 
-    function severityText(level){
-      if(level === 'critico') return 'CRÍTICO';
-      if(level === 'medio') return 'MEDIO';
-      return 'CONTROLADO';
-    }
+    function severityText(level){ return level === 'critico' ? 'CRÍTICO' : level === 'medio' ? 'MEDIO' : 'CONTROLADO'; }
 
     function renderHomeAlerts(){
       const box = document.getElementById('homeAlerts');
       const top = state.alerts.slice(0,5);
-
-      if(!top.length){
-        box.innerHTML = `<div class="empty">No hay alertas para mostrar.</div>`;
-        return;
-      }
-
+      if(!top.length){ box.innerHTML = '<div class="empty">No hay alertas para mostrar.</div>'; return; }
       box.innerHTML = top.map(a => `
-        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}"
-             onclick="openClientDetail('${escapeHtml(a.refKey)}','home')">
+        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','home')">
           <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')}<br>
           ${escapeHtml(a.text)}
         </div>
@@ -1085,76 +844,40 @@
     function goTo(page){
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + page).classList.add('active');
-
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       const nav = document.getElementById('nav-' + page);
       if(nav) nav.classList.add('active');
-
       window.scrollTo({top:0, behavior:'smooth'});
       if(page === 'alertas') renderAlerts();
     }
 
-    function goToRoutes(){
-      goTo('routes');
-      document.getElementById('nav-routes').classList.add('active');
-      renderRoutes();
-    }
-
-    function goToClients(){
-      goTo('clients');
-      document.getElementById('nav-clients').classList.add('active');
-      renderClients();
-    }
+    function goToRoutes(){ goTo('routes'); document.getElementById('nav-routes').classList.add('active'); renderRoutes(); }
+    function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
     function renderRoutes(){
       const q = normalizeKey(document.getElementById('routeSearch').value);
       const sort = document.getElementById('routeSort').value;
 
-      let data = state.routes.filter(r =>
-        !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q))
-      );
+      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
 
-      if(sort === 'objetivo') {
-  data.sort((a,b)=> b.objetivo - a.objetivo);
-} else if(sort === 'clientes') {
-  data.sort((a,b)=> b.clients - a.clients);
-} else if(sort === 'ruta') {
-  data.sort((a,b)=> {
-    const ar = Number(a.ruta);
-    const br = Number(b.ruta);
-
-    if(!isNaN(ar) && !isNaN(br)) return ar - br;
-    return String(a.ruta).localeCompare(String(b.ruta), 'es');
-  });
-} else if(sort === 'avance') {
-  data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
-} else {
-  data.sort((a,b)=> b.desvio - a.desvio);
-}
+      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
+      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
+      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
+      else data.sort((a,b)=> {
+        const ar = Number(a.ruta), br = Number(b.ruta);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a.ruta).localeCompare(String(b.ruta), 'es');
+      });
 
       const box = document.getElementById('routeResults');
       const empty = document.getElementById('routeEmpty');
-
-      if(!data.length){
-        box.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
       empty.style.display = 'none';
 
       box.innerHTML = data.map(r => {
-        const puntosRuta = r.clients > 0
-          ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients
-          : 0;
-
+        const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0;
         const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
-        const progressClass = getRoutePointsBadgeClass(puntosRuta) === 'ok'
-          ? 'green'
-          : getRoutePointsBadgeClass(puntosRuta) === 'warn'
-          ? 'yellow'
-          : 'red';
-
+        const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
         return `
           <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
             <div class="client-head">
@@ -1162,17 +885,12 @@
                 <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
                 <div class="item-meta">
                   Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
-                  🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS ·
-                  📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
+                  🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
                   ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
                 </div>
-                <div class="mini-progress ${progressClass}">
-                  <span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span>
-                </div>
+                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
               </div>
-              <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">
-                ${Math.round(puntosRuta)} / 40 pts
-              </div>
+              <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
             </div>
           </div>
         `;
@@ -1186,91 +904,53 @@
 
       document.getElementById('routeDetailTitle').textContent = `Ruta ${route.ruta}`;
       document.getElementById('routeDetailSub').textContent = `Vendedor: ${route.vendedor || '-'} · Seguimiento ejecutivo de volumen`;
-      document.getElementById('routeDetailMeta').innerHTML = `
-        <b>Ruta:</b> ${escapeHtml(route.ruta)}<br>
-        <b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br>
-        <b>Semáforo:</b> ${route.semaforoText}
-      `;
+      document.getElementById('routeDetailMeta').innerHTML = `<b>Ruta:</b> ${escapeHtml(route.ruta)}<br><b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br><b>Semáforo:</b> ${route.semaforoText}`;
 
       const clientesCumplen40 = route.rows.filter(c => c.totalPuntos >= 40).length;
       const totalClientes = route.clients;
       const ratio = totalClientes > 0 ? (clientesCumplen40 / totalClientes) * 100 : 0;
-
       const isGreen = (ratio >= 100 || clientesCumplen40 === totalClientes);
       const isYellow = ratio >= 60 && !isGreen;
-
-      const bgColor = isGreen
-        ? "linear-gradient(135deg, #dcfce7, #bbf7d0)"
-        : isYellow
-        ? "linear-gradient(135deg, #fef3c7, #fde68a)"
-        : "linear-gradient(135deg, #fee2e2, #fecaca)";
-
-      const borderColor = isGreen
-        ? "#86efac"
-        : isYellow
-        ? "#fcd34d"
-        : "#fca5a5";
-
-      const valueColor = isGreen
-        ? "#15803d"
-        : isYellow
-        ? "#b45309"
-        : "#dc2626";
+      const bgColor = isGreen ? 'linear-gradient(135deg, #dcfce7, #bbf7d0)' : isYellow ? 'linear-gradient(135deg, #fef3c7, #fde68a)' : 'linear-gradient(135deg, #fee2e2, #fecaca)';
+      const borderColor = isGreen ? '#86efac' : isYellow ? '#fcd34d' : '#fca5a5';
+      const valueColor = isGreen ? '#15803d' : isYellow ? '#b45309' : '#dc2626';
 
       document.getElementById('rdClients').textContent = formatNumber(route.clients);
       document.getElementById('rdObjetivo').textContent = formatNumber(route.objetivo);
-
       const el = document.getElementById('rdCumplen40');
       const sub = document.getElementById('rdCumplen40Sub');
       const box = el.closest('.box');
-
       el.textContent = `${clientesCumplen40} / ${totalClientes}`;
       el.style.color = valueColor;
-
       sub.textContent = `${formatPct(ratio)} cumplimiento clientes`;
-
       box.style.background = bgColor;
       box.style.border = `1px solid ${borderColor}`;
-      box.style.boxShadow = "0 10px 24px rgba(0,0,0,.10)";
+      box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
 
       const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
-      const alertBox = document.getElementById('routeAlerts');
-      alertBox.innerHTML = routeAlerts.length
-        ? routeAlerts.map(c => `
-            <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}"
-                 onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-              <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
-              🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
-              📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS ·
-              🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
-            </div>
-          `).join('')
-        : `<div class="empty">No hay alertas para esta ruta.</div>`;
+      document.getElementById('routeAlerts').innerHTML = routeAlerts.length ? routeAlerts.map(c => `
+        <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+          <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
+          🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
+        </div>
+      `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
 
-      const routeClients = document.getElementById('routeClients');
-      routeClients.innerHTML = route.rows
-        .slice()
-        .sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es'))
-        .map(c => {
-          const progressClass = getPointsProgressClass(c.totalPuntos);
-          return `
-            <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-              <div class="client-head">
-                <div>
-                  <div class="item-title">${escapeHtml(c.cliente)}</div>
-                  <div class="item-meta">
-                    Número: ${escapeHtml(c.numero || '-')}<br>
-                    Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
-                    🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
-                    📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
-                  </div>
-                  <div class="mini-progress ${progressClass}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
-                </div>
-                <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
+      document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
+        <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+          <div class="client-head">
+            <div>
+              <div class="item-title">${escapeHtml(c.cliente)}</div>
+              <div class="item-meta">
+                Número: ${escapeHtml(c.numero || '-')}<br>
+                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
+                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
+              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
             </div>
-          `;
-        }).join('');
+            <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
+          </div>
+        </div>
+      `).join('');
 
       goTo('route-detail');
     }
@@ -1278,7 +958,6 @@
     function renderClients(){
       const q = normalizeKey(document.getElementById('clientSearch').value);
       const routeFilter = document.getElementById('clientRouteFilter').value;
-
       const data = state.clients.filter(c => {
         const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q));
         const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter);
@@ -1287,13 +966,7 @@
 
       const box = document.getElementById('clientResults');
       const empty = document.getElementById('clientEmpty');
-
-      if(!data.length){
-        box.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
       empty.style.display = 'none';
       box.innerHTML = data.map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
@@ -1303,8 +976,7 @@
               <div class="item-meta">
                 Número: ${escapeHtml(c.numero || '-')}<br>
                 Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS ·
-                📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
               <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
             </div>
@@ -1317,14 +989,11 @@
     function openClientDetail(key, backMode='clients'){
       state.selectedClientKey = key;
       state.clientBackMode = backMode;
-
       const client = state.clients.find(c => c.key === key);
       if(!client) return;
 
       document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente';
-      document.getElementById('clientDetailSub').textContent =
-        `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
-
+      document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
       document.getElementById('clientDetailMeta').innerHTML = `
         <b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br>
         <b>Número:</b> ${escapeHtml(client.numero || '-')}<br>
@@ -1337,96 +1006,57 @@
 
       const maxPuntos = client.categories.length * 5;
       const scoreStyle = getScoreStyle(client.totalPuntos);
-
       document.getElementById('clientDetailSummary').innerHTML = `
-        <div class="box">
-          <div class="t">Objetivo CAJAS FÍSICAS</div>
-          <div class="v">${formatNumber(client.totalObjetivo)}</div>
-        </div>
-
-        <div class="box">
-          <div class="t">Avance CAJAS FÍSICAS</div>
-          <div class="v">${formatNumber(client.totalReal)}</div>
-        </div>
-
-        <div class="box">
-          <div class="t">Puntos</div>
-          <div class="v">${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
-        </div>
-
+        <div class="box"><div class="t">Objetivo CAJAS FÍSICAS</div><div class="v">${formatNumber(client.totalObjetivo)}</div></div>
+        <div class="box"><div class="t">Avance CAJAS FÍSICAS</div><div class="v">${formatNumber(client.totalReal)}</div></div>
+        <div class="box"><div class="t">Puntos</div><div class="v">${formatNumber(client.totalPuntos)} / ${maxPuntos}</div></div>
         <div class="box score-card" style="background:${scoreStyle.bg}; border:1px solid ${scoreStyle.border};">
           <div class="t" style="font-size:14px;">Score</div>
-          <div class="score-value" style="color:${scoreStyle.color};">
-            ${client.totalPuntos} / ${maxPuntos}
-          </div>
-          <div class="score-sub" style="color:${scoreStyle.color};">
-            ${scoreStyle.sub}
-          </div>
+          <div class="score-value" style="color:${scoreStyle.color};">${client.totalPuntos} / ${maxPuntos}</div>
+          <div class="score-sub" style="color:${scoreStyle.color};">${scoreStyle.sub}</div>
         </div>
-
-        <div class="box" style="grid-column:span 3;">
-          <button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">
-            Enviar objetivo y avance por WhatsApp
-          </button>
-        </div>
+        <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
       `;
 
       const cats = document.getElementById('clientCategories');
       const catsEmpty = document.getElementById('clientCategoriesEmpty');
-
-      if(!client.categories.length){
-        cats.innerHTML = '';
-        catsEmpty.style.display = 'block';
-      } else {
+      if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; }
+      else {
         catsEmpty.style.display = 'none';
-        cats.innerHTML = client.categories
-          .slice()
-          .sort((a,b)=> b.objetivo - a.objetivo)
-          .map(cat => {
-            const cumple = cat.cumplimiento >= 100;
-            const puntos = cumple ? 5 : 0;
-            const badgeClass = getSemaforoBadge(cat.cumplimiento);
-            const progressClass = cat.semaforo;
-            const visual = categoryVisualMap[cat.key] || {
-              icon: "📦",
-              bubble: "#f3f4f6",
-              bubbleBorder: "#d7dbe0",
-              refBg: "#f8fafc",
-              refBorder: "#d9dee5"
-            };
-
-            return `
-              <div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
-                <div class="cat-row">
-                  <div class="cat-main">
-                    <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
-                      ${String(visual.icon).includes('http')
-                        ? `<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">`
-                        : visual.icon}
+        cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
+          const cumple = cat.cumplimiento >= 100;
+          const puntos = cumple ? 5 : 0;
+          const badgeClass = getSemaforoBadge(cat.cumplimiento);
+          const progressClass = cat.semaforo;
+          const visual = categoryVisualMap[cat.key] || { icon: '📦', bubble: '#f3f4f6', bubbleBorder: '#d7dbe0', refBg: '#f8fafc', refBorder: '#d9dee5' };
+          return `
+            <div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
+              <div class="cat-row">
+                <div class="cat-main">
+                  <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
+                    ${String(visual.icon).includes('http') ? `<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">` : visual.icon}
+                  </div>
+                  <div>
+                    <div class="cat-name">${escapeHtml(cat.label)}</div>
+                    <div class="cat-sub">
+                      🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
+                      📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
+                      📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
+                      🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
                     </div>
-                    <div>
-                      <div class="cat-name">${escapeHtml(cat.label)}</div>
-                      <div class="cat-sub">
-                        🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
-                        📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
-                        📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
-                        🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
-                      </div>
-                      <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
-                        <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
-                        <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
-                      </div>
+                    <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
+                      <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
+                      <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
                     </div>
                   </div>
-                  <div class="badge ${badgeClass}">${puntos} pts</div>
                 </div>
-                <div class="progress ${progressClass}" style="height:12px;">
-                  <span style="width:${clamp(cat.cumplimiento,0,100)}%"></span>
-                </div>
-                ${cumple ? `<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>` : ''}
+                <div class="badge ${badgeClass}">${puntos} pts</div>
               </div>
-            `;
-          }).join('');
+              <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
+              ${cumple ? '<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>' : ''}
+            </div>
+          `;
+        }).join('');
       }
 
       goTo('client-detail');
@@ -1442,7 +1072,6 @@
     function renderAlerts(){
       const q = normalizeKey(document.getElementById('alertSearch').value);
       const level = document.getElementById('alertLevelFilter').value;
-
       const data = state.alerts.filter(a => {
         const matchesLevel = !level || a.level === level;
         const matchesText = !q || [a.cliente, a.ruta, a.vendedor, a.categoria, a.numero].some(v => normalizeKey(v).includes(q));
@@ -1451,17 +1080,10 @@
 
       const box = document.getElementById('alertResults');
       const empty = document.getElementById('alertEmpty');
-
-      if(!data.length){
-        box.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
       empty.style.display = 'none';
       box.innerHTML = data.map(a => `
-        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}"
-             onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')">
+        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')">
           <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')} · ${escapeHtml(a.vendedor || '-')}<br>
           ${escapeHtml(a.text)}
         </div>
@@ -1470,38 +1092,42 @@
 
     function fillRouteFilter(){
       const select = document.getElementById('clientRouteFilter');
-      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b)=> String(a).localeCompare(String(b), 'es'));
-      select.innerHTML = `<option value="">Todas las rutas</option>` + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b) => {
+        const ar = Number(a), br = Number(b);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a).localeCompare(String(b), 'es');
+      });
+      select.innerHTML = '<option value="">Todas las rutas</option>' + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+    }
+
+    function setStatus(text, isError=false){
+      const el = document.getElementById('syncStatus');
+      el.textContent = text;
+      el.style.background = isError ? '#fee2e2' : '#f3f4f6';
+      el.style.color = isError ? '#991b1b' : '#555';
     }
 
     async function loadData(showAlert=false){
       try{
+        setStatus('Cargando datos...');
         const raw = await fetchCSV(CSV_URL);
-
-        if(!raw || !raw.length){
-          throw new Error('El CSV llegó vacío o no se detectó la fila de encabezados');
-        }
-
         buildData(raw);
         fillRouteFilter();
         updateHomeKPIs();
         renderRoutes();
         renderClients();
         renderAlerts();
-
-        console.log('Filas cargadas:', raw.length);
-
+        setStatus(`Datos cargados: ${raw.length} filas`);
         if(showAlert) alert('Datos sincronizados correctamente');
       } catch(err){
-        console.error('Error real al cargar:', err);
-        alert('No se pudieron cargar los datos. Revisá el link CSV publicado o la fila de encabezados de la hoja.');
+        console.error('Error al cargar:', err);
+        setStatus('No se pudieron cargar los datos', true);
+        alert('No se pudieron cargar los datos. Revisá que la hoja esté compartida y que el link CSV sea correcto.');
       }
     }
 
     function bind(){
-      document.getElementById('todayChip').textContent =
-        new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-
+      document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
       document.getElementById('routeSearch').addEventListener('input', renderRoutes);
       document.getElementById('routeSort').addEventListener('change', renderRoutes);
       document.getElementById('clientSearch').addEventListener('input', renderClients);
@@ -1510,37 +1136,22 @@
       document.getElementById('alertSearch').addEventListener('input', renderAlerts);
     }
 
-
     function normalizarTelefonoAR(raw){
       let tel = String(raw || '').replace(/\D/g,'');
       if(!tel) return '';
-
       if(tel.startsWith('549')) return tel;
       if(tel.startsWith('54')) return '9' + tel;
       if(tel.startsWith('9')) return '54' + tel;
-
       if(tel.startsWith('0')) tel = tel.replace(/^0+/, '');
-
       return '549' + tel;
     }
 
     function enviarWhatsAppCliente(key){
       const client = state.clients.find(c => c.key === key);
-      if(!client){
-        alert('No se encontró el cliente');
-        return;
-      }
-
-      if(!client.telefono || !String(client.telefono).trim()){
-        alert('Este cliente no tiene teléfono cargado en la base');
-        return;
-      }
-
+      if(!client){ alert('No se encontró el cliente'); return; }
+      if(!client.telefono || !String(client.telefono).trim()){ alert('Este cliente no tiene teléfono cargado en la base'); return; }
       const telefono = normalizarTelefonoAR(client.telefono);
-      if(!telefono){
-        alert('El teléfono del cliente no es válido');
-        return;
-      }
+      if(!telefono){ alert('El teléfono del cliente no es válido'); return; }
 
       const objetivo = Number(client.totalObjetivo || 0);
       const avance = Number(client.totalReal || 0);
@@ -1548,45 +1159,24 @@
       const faltante = Math.max(0, objetivo - avance);
 
       const iconos = {
-        'Colas': '🥤',
-        'Agua': '💧',
-        'Bebida Energética': '⚡',
-        'Bebida energética': '⚡',
-        'Isotónica': '🏃',
-        'Jugos': '🧃',
-        'Sabores': '🍊',
-        'Saborizada': '🍹',
-        'Multicategoría': '🧺',
-        'Multicategorías': '🧺'
+        'Colas': '🥤', 'Agua': '💧', 'Bebida Energética': '⚡', 'Isotónica': '🏃',
+        'Jugos': '🧃', 'Sabores': '🍊', 'Saborizada': '🍹', 'Multicategoría': '🧺'
       };
 
       let detalleCategorias = '';
-
       client.categories.forEach(cat => {
         const porcentaje = cat.objetivo > 0 ? (cat.real / cat.objetivo) * 100 : 0;
         const icono = iconos[cat.label] || '📦';
-        detalleCategorias += `
-${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
+        detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
       });
 
-      const mensaje =
-`Hola ${client.cliente} 👋
-
-Te compartimos tu avance de volumen actual:
-
-📊 Avance por categoría (cajas físicas):${detalleCategorias}
-
-📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})
-📉 Volumen faltante: ${formatNumber(faltante)} cajas
-
-Seguimos trabajando juntos para alcanzar el objetivo de volumen 💪`;
-
+      const mensaje = `Hola ${client.cliente} 👋\n\nTe compartimos tu avance de volumen actual:\n\n📊 Avance por categoría (cajas físicas):${detalleCategorias}\n\n📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})\n📉 Volumen faltante: ${formatNumber(faltante)} cajas\n\nSeguimos trabajando juntos para cumplir el objetivo. 💪`;
       const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
     }
 
     bind();
-    loadData(false);
+    loadData();
   </script>
 </body>
 </html>
