@@ -191,9 +191,35 @@
     .tool-sub{margin:6px 0 0;color:#666;font-size:13px}
 
     .back-btn{
-      border:none;background:#fff;border-radius:999px;padding:10px 14px;font-weight:800;
-      cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.06)
+      border:none;
+      background:linear-gradient(180deg,#ff1a24 0%, #e30613 65%, #b80009 100%);
+      color:#fff;
+      border-radius:999px;
+      padding:16px 28px;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.2px;
+      cursor:pointer;
+      box-shadow:0 10px 22px rgba(227,6,19,.28);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:1px solid rgba(255,255,255,.35);
     }
+    .back-btn::before{
+      content:'←';
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:#fff;
+      color:#e30613;
+      font-size:20px;
+      line-height:1;
+      box-shadow:0 4px 10px rgba(0,0,0,.12);
+    }
+    .back-btn:active{transform:scale(.99)}
 
     .wa-btn{
       width:100%;margin-top:12px;border:none;border-radius:16px;padding:14px 16px;
@@ -274,6 +300,34 @@
     .status-chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#555}
     .historico-select{margin-top:12px}
     .historico-note{margin-top:10px;font-size:12px;line-height:1.35;color:#666;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:10px}
+    .client-kpi-card{
+      min-height:106px;
+      border-radius:20px !important;
+      padding:16px 12px !important;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+      box-shadow:0 8px 18px rgba(0,0,0,.06);
+    }
+    .client-kpi-card .t{font-size:12px !important;font-weight:900;text-transform:uppercase;letter-spacing:.2px}
+    .client-kpi-card .v{font-size:34px !important;line-height:1;font-weight:900 !important;margin-top:0 !important}
+    .kpi-objetivo{background:linear-gradient(180deg,#fff5f5,#ffe2e2) !important;border:1px solid #ff9b9b !important;color:#e30613}
+    .kpi-avance{background:linear-gradient(180deg,#effdf4,#dcfce7) !important;border:1px solid #86efac !important;color:#16a34a}
+    .kpi-puntos{background:linear-gradient(180deg,#eff6ff,#dbeafe) !important;border:1px solid #93c5fd !important;color:#0b74e5}
+    .historico-panel{
+      grid-column:span 3;
+      border-radius:22px !important;
+      padding:18px 12px !important;
+      text-align:center;
+    }
+    .historico-grid{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:14px;align-items:center;margin-top:12px}
+    .historico-main{border-radius:18px;padding:16px 12px;border:1px solid currentColor;background:rgba(255,255,255,.45)}
+    .historico-legend{background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:12px;text-align:left;font-size:13px;line-height:1.8}
+    .dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+    .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
+    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}}
 
     @media (max-width:450px){
       .brand-left img{height:32px}
@@ -416,7 +470,7 @@
 
       <section id="page-route-detail" class="page">
         <div class="tool-header">
-          <button class="back-btn" onclick="goToRoutes()">← Volver</button>
+          <button class="back-btn" onclick="goToRoutes()">Volver atrás</button>
           <h2 class="tool-title" id="routeDetailTitle" style="margin-top:14px;">Ruta</h2>
           <p class="tool-sub" id="routeDetailSub">Detalle ejecutivo de la ruta.</p>
         </div>
@@ -443,7 +497,7 @@
 
       <section id="page-client-detail" class="page">
         <div class="tool-header">
-          <button class="back-btn" onclick="backFromClientDetail()">← Volver</button>
+          <button class="back-btn" onclick="backFromClientDetail()">Volver atrás</button>
           <h2 class="tool-title" id="clientDetailTitle" style="margin-top:14px;">Cliente</h2>
           <p class="tool-sub" id="clientDetailSub">Detalle por categoría.</p>
         </div>
@@ -718,13 +772,33 @@
       }) || null;
     }
 
-    function getCierreText(points, maxPoints){
+    function getCierreStyle(points){
       const p = Number(points || 0);
-      const max = Number(maxPoints || 100);
-      const pct = max > 0 ? (p / max) * 100 : 0;
-      if(pct >= 100) return '🏆 Cliente cerró Abril con score completo';
-      if(pct >= 75) return '⚠️ Cliente cerró Abril con score parcial';
-      return '🚨 Cliente cerró Abril por debajo del objetivo';
+      if(p >= 80) return {
+        bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)', border:'#86efac', color:'#15803d',
+        sub:'Cierre excelente', tag:'CIERRE EXCELENTE', icon:'✅'
+      };
+      if(p >= 70) return {
+        bg:'linear-gradient(180deg,#ffedd5,#fed7aa)', border:'#fb923c', color:'#ea580c',
+        sub:'Cierre medio', tag:'CIERRE MEDIO', icon:'⚠️'
+      };
+      if(p >= 60) return {
+        bg:'linear-gradient(180deg,#fef9c3,#fde68a)', border:'#facc15', color:'#a16207',
+        sub:'Cierre bajo', tag:'CIERRE BAJO', icon:'⚠️'
+      };
+      return {
+        bg:'linear-gradient(180deg,#fee2e2,#fecaca)', border:'#fca5a5', color:'#dc2626',
+        sub:'Fuera de rango', tag:'FUERA DE RANGO', icon:'🚨'
+      };
+    }
+
+    function getCierreText(points, mes){
+      const p = Number(points || 0);
+      const m = String(mes || 'el mes anterior').replace(/^Cierre\s+/i,'');
+      if(p >= 80) return `Cliente cerró ${m} en verde: 80 puntos o más`;
+      if(p >= 70) return `Cliente cerró ${m} en naranja: 70 a 79 puntos`;
+      if(p >= 60) return `Cliente cerró ${m} en amarillo: 60 a 69 puntos`;
+      return `Cliente cerró ${m} por debajo de 60 puntos`;
     }
 
     async function loadHistorico(){
@@ -1088,13 +1162,10 @@
       const historicoCliente = getHistoricoCliente(client);
       const maxCierre = historicoCliente ? 100 : maxPuntos;
       const puntosCierre = historicoCliente ? historicoCliente.puntos : client.totalPuntos;
-      const objetivoCierre = historicoCliente ? historicoCliente.objetivo : client.totalObjetivo;
-      const avanceCierre = historicoCliente ? historicoCliente.avance : client.totalReal;
-      const cumplimientoCierre = historicoCliente ? historicoCliente.cumplimiento : client.cumplimientoTotal;
-      const scoreStyle = getScoreStyle(puntosCierre, maxCierre);
-      const mesCierre = state.selectedMesHistorico || 'Abril 2026';
-      const cierreTexto = getCierreText(puntosCierre, maxCierre);
-      const mesesOptions = state.mesesHistorico.length ? state.mesesHistorico.map(m => `<option value="${escapeHtml(m)}" ${m === mesCierre ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('') : '<option value="">Sin histórico cargado</option>';
+      const mesCierre = state.selectedMesHistorico || state.mesesHistorico[0] || 'Mes anterior';
+      const cierreStyle = getCierreStyle(puntosCierre);
+      const cierreTexto = getCierreText(puntosCierre, mesCierre);
+      const mesesOptions = (state.mesesHistorico.length ? state.mesesHistorico : [mesCierre]).map(m => `<option value="${escapeHtml(m)}" ${normalizeKey(m) === normalizeKey(mesCierre) ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('');
       const detalleHistorico = historicoCliente ? `
         <div class="historico-note">
           <b>Detalle del cierre:</b><br>
@@ -1109,19 +1180,37 @@
         </div>`;
 
       document.getElementById('clientDetailSummary').innerHTML = `
-        <div class="box"><div class="t">Objetivo CAJAS FÍSICAS</div><div class="v">${formatNumber(client.totalObjetivo)}</div></div>
-        <div class="box"><div class="t">Avance CAJAS FÍSICAS</div><div class="v">${formatNumber(client.totalReal)}</div></div>
-        <div class="box"><div class="t">Puntos actuales</div><div class="v">${formatNumber(client.totalPuntos)} / ${maxPuntos}</div></div>
+        <div class="box client-kpi-card kpi-objetivo">
+          <div class="t">Objetivo CAJAS FÍSICAS</div>
+          <div class="v">🎯 ${formatNumber(client.totalObjetivo)}</div>
+        </div>
+        <div class="box client-kpi-card kpi-avance">
+          <div class="t">Avance CAJAS FÍSICAS</div>
+          <div class="v">📈 ${formatNumber(client.totalReal)}</div>
+        </div>
+        <div class="box client-kpi-card kpi-puntos">
+          <div class="t">Puntos totales</div>
+          <div class="v">🏅 ${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
+        </div>
 
-        <div class="box score-card" style="grid-column:span 3;background:${scoreStyle.bg}; border:1px solid ${scoreStyle.border};">
-          <div class="t" style="font-size:14px;font-weight:800;">CIERRE DE PUNTOS OBTENIDOS</div>
-          <div class="historico-select">
-            <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
+        <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
+          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">CIERRE DE PUNTOS DEL MES ANTERIOR</div>
+          <div class="historico-grid">
+            <div class="historico-select" style="margin:0;">
+              <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
+            </div>
+            <div class="historico-main" style="color:${cierreStyle.color};">
+              <div style="font-size:14px;font-weight:900;">Cierre ${escapeHtml(mesCierre)}</div>
+              <div class="score-value" style="color:${cierreStyle.color};font-size:42px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
+              <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:13px;">${cierreStyle.tag}</div>
+            </div>
+            <div class="historico-legend">
+              <div><span class="dot dot-green"></span>80 o más puntos: Cierre excelente</div>
+              <div><span class="dot dot-orange"></span>70 a 79 puntos: Cierre medio</div>
+              <div><span class="dot dot-yellow"></span>60 a 69 puntos: Cierre bajo</div>
+            </div>
           </div>
-          <div style="margin-top:10px;font-size:13px;font-weight:800;color:${scoreStyle.color};">${historicoCliente ? mesCierre : 'Sin histórico encontrado'}</div>
-          <div class="score-value" style="color:${scoreStyle.color};">${formatNumber(puntosCierre)} / ${maxCierre}</div>
-          <div class="score-sub" style="color:${scoreStyle.color};">${scoreStyle.sub}</div>
-          <div style="margin-top:12px;font-size:13px;font-weight:800;color:${scoreStyle.color};">${cierreTexto}</div>
+          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${cierreStyle.border};font-size:15px;font-weight:900;color:${cierreStyle.color};">${cierreStyle.icon} ${cierreTexto}</div>
           ${detalleHistorico}
         </div>
 
