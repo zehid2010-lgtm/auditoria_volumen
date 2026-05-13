@@ -1,1407 +1,370 @@
+# HTML — Dashboard Volumen Mobile PRO
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Gestión Volumen PDV 2026</title>
-  <meta name="theme-color" content="#e30613" />
-  <style>
-    :root{
-      --red:#e30613; --red-dark:#a1000b; --black:#111111; --white:#ffffff;
-      --bg:#f3f4f6; --text:#1a1a1a; --muted:#6b7280; --line:#e5e7eb;
-      --shadow:0 12px 30px rgba(0,0,0,.10); --radius:24px;
-      --green-bg:#eaf7ee; --green-tx:#157347;
-      --yellow-bg:#fff4db; --yellow-tx:#b26a00;
-      --red-bg:#fdeaea; --red-tx:#c62828;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Volumen PRO</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
 
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#f8f8f8 0%,#efefef 100%);color:var(--text)}
-    body{max-width:540px;margin:0 auto;min-height:100vh;padding-bottom:110px;position:relative;overflow-x:hidden}
+body{
+  background:#f2f2f2;
+  color:#111;
+}
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:
-        radial-gradient(circle at 92% 18%, rgba(0,0,0,.035) 0 12px, transparent 13px),
-        radial-gradient(circle at 10% 72%, rgba(0,0,0,.025) 0 10px, transparent 11px),
-        radial-gradient(circle at 15% 80%, rgba(0,0,0,.02) 0 18px, transparent 19px);
-      pointer-events:none;
-      z-index:0
-    }
+.app{
+  max-width:500px;
+  margin:auto;
+  min-height:100vh;
+  background:#fff;
+}
 
-    .app{position:relative;z-index:1}
+.header{
+  background:linear-gradient(180deg,#e30613,#b80009);
+  color:#fff;
+  padding:22px 18px 80px;
+  border-bottom-left-radius:40px;
+  border-bottom-right-radius:40px;
+}
 
-    .hero-header{
-      background:linear-gradient(180deg,#ff1a24 0%, #e30613 60%, #c9000b 100%);
-      color:#fff;
-      padding:24px 18px 70px;
-      position:relative;
-      overflow:hidden;
-      box-shadow:0 10px 24px rgba(0,0,0,.18);
-    }
+.header h1{
+  font-size:28px;
+  margin-top:14px;
+}
 
-    .hero-header::after{
-      content:"";
-      position:absolute;
-      left:-8%;
-      right:-8%;
-      bottom:-42px;
-      height:92px;
-      background:linear-gradient(180deg,#ffffff 0%,#f2f2f2 100%);
-      border-top-left-radius:50% 100%;
-      border-top-right-radius:50% 100%;
-      box-shadow:0 -8px 24px rgba(0,0,0,.08) inset
-    }
+.header p{
+  opacity:.9;
+  margin-top:6px;
+}
 
-    .brand-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;position:relative;z-index:2}
-    .brand-left{display:flex;align-items:flex-start;gap:14px;min-width:0}
-    .brand-left img{height:36px;display:block;filter:brightness(0) invert(1)}
-    .divider{width:2px;height:58px;background:rgba(255,255,255,.9);border-radius:10px}
+.cards{
+  margin-top:-55px;
+  padding:0 16px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
 
-    .brand-copy h1{
-      margin:0;
-      font-size:18px;
-      line-height:1.2;
-      font-weight:800;
-      letter-spacing:.2px;
-    }
+.card{
+  background:#fff;
+  border-radius:24px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
 
-    .brand-copy p{margin:6px 0 0;font-size:11px;opacity:.95}
+.card small{
+  color:#666;
+  font-weight:bold;
+}
 
-    .profile-btn{
-      width:46px;height:46px;border-radius:50%;
-      border:2px solid rgba(255,255,255,.9);
-      display:grid;place-items:center;font-size:22px;font-weight:700;
-      background:rgba(255,255,255,.08);flex:0 0 auto
-    }
+.card h2{
+  font-size:32px;
+  margin-top:10px;
+}
 
-    .page{display:none;padding:0 16px 16px}
-    .page.active{display:block}
+.full-card{
+  margin:16px;
+  background:#fff;
+  border-radius:24px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
 
-    .welcome{padding:18px 6px 8px;text-align:center}
-    .welcome h2{margin:0;font-size:28px;line-height:1.08;font-weight:800}
-    .welcome p{margin:10px 0 0;color:#5f5f5f;font-size:14px}
+.route{
+  border:1px solid #eee;
+  border-radius:20px;
+  padding:16px;
+  margin-top:14px;
+}
 
-    .hero-card{
-      margin-top:18px;border:none;border-radius:30px;color:#fff;
-      padding:22px 18px 18px;min-height:225px;box-shadow:var(--shadow);
-      position:relative;overflow:hidden;text-align:center;
-      background:linear-gradient(180deg,#1a1a1a 0%, #101010 68%, #000000 100%);
-      cursor:pointer;width:100%
-    }
+.route-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    .hero-card::before{
-      content:"";position:absolute;right:-6px;top:16px;width:130px;height:170px;opacity:.12;
-      background:radial-gradient(ellipse at center, rgba(255,255,255,.95) 0%, rgba(255,255,255,.35) 45%, transparent 70%);
-      border-radius:55% 45% 42% 58% / 38% 44% 56% 62%;transform:rotate(8deg)
-    }
+.route h3{
+  font-size:22px;
+}
 
-    .hero-card::after{
-      content:"";position:absolute;right:14px;bottom:34px;width:88px;height:34px;
-      opacity:.12;border-radius:50%;background:rgba(255,255,255,.9);filter:blur(8px)
-    }
+.badge{
+  padding:8px 14px;
+  border-radius:999px;
+  font-weight:bold;
+  color:#fff;
+}
 
-    .hero-icon{
-      width:112px;height:112px;border-radius:50%;
-      border:2px solid rgba(255,255,255,.75);
-      display:grid;place-items:center;margin:0 auto 22px;font-size:54px;position:relative;z-index:1
-    }
+.green{
+  background:#16a34a;
+}
 
-    .hero-card h3{margin:0;font-size:26px;font-weight:800;position:relative;z-index:1}
-    .hero-card p{margin:14px 0 18px;font-size:14px;line-height:1.35;position:relative;z-index:1}
+.orange{
+  background:#f97316;
+}
 
-    .cta{
-      width:100%;border:none;border-radius:999px;background:#fff;color:#111;
-      padding:14px 16px;font-size:15px;font-weight:800;display:block;position:relative;z-index:1
-    }
+.red{
+  background:#dc2626;
+}
 
-    .panel{
-      background:rgba(255,255,255,.94);border:1px solid rgba(0,0,0,.06);
-      border-radius:24px;box-shadow:var(--shadow);padding:16px;margin-top:18px;backdrop-filter:blur(4px)
-    }
+.progress{
+  height:12px;
+  background:#eee;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:14px;
+}
 
-    .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
-    .panel-head-left{display:flex;align-items:flex-start;gap:10px;min-width:0}
-    .panel-head h4{margin:0;font-size:18px;line-height:1.1}
-    .panel-head small{color:#777;font-size:12px}
-    .panel-icon{font-size:24px}
-    .date-chip{font-size:12px;color:#777;white-space:nowrap}
+.progress span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,#16a34a,#22c55e);
+}
 
-    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .stat-card{border-radius:18px;padding:14px 10px;text-align:center;border:1px solid rgba(0,0,0,.05)}
-    .stat-card .ico{font-size:28px;display:block;margin-bottom:8px}
-    .stat-card .label{font-size:12px;line-height:1.15;min-height:30px}
-    .stat-card .num{font-size:24px;font-weight:800;margin-top:10px}
-    .stat-card .sub{font-size:11px;color:#555;margin-top:2px}
-    .stat1{background:#edf3fb}
-    .stat2{background:#eef7ef}
-    .stat3{background:#fff4e8}
-    .stat4{background:#fdeeee}
+.metrics{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px;
+  margin-top:16px;
+}
 
-    .quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .quick-btn{
-      background:#fff;border:1px solid rgba(0,0,0,.05);border-radius:18px;
-      padding:16px 10px;text-align:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.04)
-    }
-    .quick-btn .qico{font-size:28px;display:block;margin-bottom:10px}
-    .quick-btn .qtxt{font-size:12px;font-weight:700;line-height:1.25}
+.metric{
+  background:#fafafa;
+  border-radius:16px;
+  padding:12px;
+  text-align:center;
+}
 
-    .search-box{display:grid;gap:10px;margin-top:2px}
-    .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.metric small{
+  color:#666;
+}
 
-    input,select{
-      width:100%;padding:13px 14px;border-radius:16px;border:1px solid #dfdfdf;
-      background:#fff;font-size:14px;outline:none
-    }
+.metric h4{
+  margin-top:6px;
+  font-size:24px;
+}
 
-    input:focus,select:focus{border-color:var(--red)}
+.client-card{
+  margin-top:16px;
+  border:1px solid #eee;
+  border-radius:20px;
+  padding:16px;
+}
 
-    .results{display:grid;gap:10px;margin-top:14px}
+.client-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 
-    .item{
-      background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;
-      padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)
-    }
+.client-name{
+  font-size:22px;
+  font-weight:bold;
+}
 
-    .item-title{font-size:15px;font-weight:800;margin:0 0 4px}
-    .item-meta{font-size:12px;color:#666;line-height:1.35}
+.category{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 0;
+  border-bottom:1px solid #eee;
+}
 
-    .badge{padding:8px 10px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}
-    .ok{background:var(--green-bg);color:var(--green-tx)}
-    .warn{background:var(--yellow-bg);color:var(--yellow-tx)}
-    .bad{background:var(--red-bg);color:var(--red-tx)}
+.category:last-child{
+  border:none;
+}
 
-    .progress{margin-top:10px;height:11px;background:#ececec;border-radius:999px;overflow:hidden}
-    .progress > span{display:block;height:100%;border-radius:999px}
-    .progress.green > span{background:linear-gradient(90deg,#3cbf67,#159947)}
-    .progress.yellow > span{background:linear-gradient(90deg,#ffcf4d,#f59e0b)}
-    .progress.red > span{background:linear-gradient(90deg,#ff8a8a,#dc2626)}
+.whatsapp{
+  width:100%;
+  border:none;
+  background:#16a34a;
+  color:#fff;
+  padding:18px;
+  border-radius:20px;
+  margin-top:20px;
+  font-size:18px;
+  font-weight:bold;
+}
 
-    .mini-progress{margin-top:8px;height:8px;background:#ececec;border-radius:999px;overflow:hidden}
-    .mini-progress > span{display:block;height:100%;border-radius:999px}
-    .mini-progress.green > span{background:linear-gradient(90deg,#3cbf67,#159947)}
-    .mini-progress.yellow > span{background:linear-gradient(90deg,#ffcf4d,#f59e0b)}
-    .mini-progress.red > span{background:linear-gradient(90deg,#ff8a8a,#dc2626)}
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  max-width:500px;
+  margin:auto;
+  background:#fff;
+  border-top:1px solid #eee;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr;
+  padding:14px 0;
+}
 
-    .empty{padding:24px 10px;text-align:center;color:#777;font-size:14px}
-    .tool-header{padding-top:16px}
-    .tool-title{font-size:24px;font-weight:800;margin:0}
-    .tool-sub{margin:6px 0 0;color:#666;font-size:13px}
+.bottom-nav div{
+  text-align:center;
+  font-size:14px;
+  font-weight:bold;
+}
 
-    .back-btn{
-      border:none;
-      background:linear-gradient(180deg,#ff1a24 0%, #e30613 65%, #b80009 100%);
-      color:#fff;
-      border-radius:999px;
-      padding:16px 28px;
-      font-size:18px;
-      font-weight:900;
-      letter-spacing:.2px;
-      cursor:pointer;
-      box-shadow:0 10px 22px rgba(227,6,19,.28);
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid rgba(255,255,255,.35);
-    }
-    .back-btn::before{
-      content:'←';
-      width:30px;
-      height:30px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      background:#fff;
-      color:#e30613;
-      font-size:20px;
-      line-height:1;
-      box-shadow:0 4px 10px rgba(0,0,0,.12);
-    }
-    .back-btn:active{transform:scale(.99)}
-
-    .wa-btn{
-      width:100%;margin-top:12px;border:none;border-radius:16px;padding:14px 16px;
-      font-size:14px;font-weight:800;cursor:pointer;color:#fff;
-      background:linear-gradient(180deg,#25D366 0%, #128C7E 100%);
-      box-shadow:0 8px 18px rgba(18,140,126,.22);
-    }
-
-    .wa-btn:active{transform:scale(.99)}
-
-    .client-card{cursor:pointer}
-    .client-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-
-    .alert-box{
-      border-radius:18px;padding:13px 14px;font-size:13px;line-height:1.35;
-      border:1px solid rgba(0,0,0,.05);background:#fff;cursor:pointer
-    }
-    .alert-box + .alert-box{margin-top:10px}
-    .alert-high{background:#fdeeee}
-    .alert-mid{background:#fff4e6}
-    .alert-low{background:#eef7ef}
-
-    .route-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-    .route-kpi .box:last-child{grid-column:span 3}
-    .route-kpi .box{
-      background:#fff;border:1px solid rgba(0,0,0,.05);
-      border-radius:16px;padding:12px 10px;text-align:center
-    }
-    .route-kpi .box .t{font-size:11px;color:#666}
-    .route-kpi .box .v{font-size:20px;font-weight:800;margin-top:6px}
-
-    .box-clientes{background: linear-gradient(180deg,#eef6ff,#e0edff);border: 1px solid #c7dcff !important;}
-    .box-clientes .v{color:#1d4ed8}
-    .box-objetivo{background: linear-gradient(180deg,#f0fdf4,#dcfce7);border: 1px solid #bbf7d0 !important;}
-    .box-objetivo .v{color:#15803d}
-
-    .box-cumplen-premium{
-      position:relative;overflow:hidden;border-radius:22px !important;padding:18px 14px !important;
-      min-height:120px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center
-    }
-    .box-cumplen-premium::before{
-      content:"";position:absolute;inset:0;
-      background:linear-gradient(135deg, rgba(255,255,255,.55), rgba(255,255,255,.08));pointer-events:none;
-    }
-    .box-cumplen-premium::after{
-      content:"";position:absolute;width:160px;height:160px;right:-45px;top:-55px;border-radius:50%;
-      background:rgba(255,255,255,.18);pointer-events:none;
-    }
-    .premium-kpi-title{position:relative;z-index:1;font-size:13px;font-weight:700;opacity:.8;letter-spacing:.2px}
-    .premium-kpi-value{position:relative;z-index:1;margin-top:8px;font-size:34px;line-height:1;font-weight:900;letter-spacing:.5px}
-    .premium-kpi-sub{position:relative;z-index:1;margin-top:8px;font-size:12px;opacity:.78;font-weight:600}
-
-    .cat-grid{display:grid;gap:10px;margin-top:14px}
-    .cat-card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:18px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-    .cat-row{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .cat-name{font-size:14px;font-weight:800;margin:0}
-    .cat-sub{margin-top:6px;color:#666;font-size:12px;line-height:1.5}
-    .legend-box{font-size:12px;color:#666;margin-bottom:12px;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:10px 12px;line-height:1.5}
-    .watermark{margin:14px auto 6px;text-align:center;color:#b2b2b2;font-style:italic;font-size:30px;opacity:.8}
-    .cat-main{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:flex-start}
-    .cat-bottle{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:36px;border:1px solid rgba(0,0,0,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
-    .cat-ref{margin-top:10px;padding:10px 12px;border-radius:14px;font-size:12px;line-height:1.35;border:1px solid}
-    .cat-ref-title{font-weight:800;margin-bottom:4px;display:flex;align-items:center;gap:6px}
-
-    .score-card{grid-column:span 3;padding:20px 10px !important;text-align:center;border-radius:20px !important}
-    .score-value{font-size:34px;font-weight:900;line-height:1;margin-top:6px}
-    .score-sub{font-size:12px;margin-top:8px;font-weight:700;opacity:.9}
-
-    .bottom-nav{
-      position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:min(500px,calc(100% - 24px));
-      background:linear-gradient(180deg,#ff0e18 0%, #eb000c 100%);border-radius:24px;box-shadow:var(--shadow);
-      padding:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;z-index:50
-    }
-    .nav-btn{border:none;background:transparent;color:#fff;border-radius:18px;padding:12px 6px;cursor:pointer;display:grid;place-items:center;gap:6px;font-size:12px;font-weight:800}
-    .nav-btn.active{background:linear-gradient(180deg,#900009 0%, #6e0007 100%)}
-    .nav-btn .nicon{font-size:24px}
-
-    .status-chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#555}
-    .historico-select{margin-top:12px}
-    .historico-note{margin-top:10px;font-size:12px;line-height:1.35;color:#666;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:10px}
-    .client-kpi-card{
-      min-height:106px;
-      border-radius:20px !important;
-      padding:16px 12px !important;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      gap:8px;
-      box-shadow:0 8px 18px rgba(0,0,0,.06);
-    }
-    .client-kpi-card .t{font-size:12px !important;font-weight:900;text-transform:uppercase;letter-spacing:.2px}
-    .client-kpi-card .v{font-size:34px !important;line-height:1;font-weight:900 !important;margin-top:0 !important}
-    .kpi-objetivo{background:linear-gradient(180deg,#fff5f5,#ffe2e2) !important;border:1px solid #ff9b9b !important;color:#e30613}
-    .kpi-avance{background:linear-gradient(180deg,#effdf4,#dcfce7) !important;border:1px solid #86efac !important;color:#16a34a}
-    .kpi-puntos{background:linear-gradient(180deg,#eff6ff,#dbeafe) !important;border:1px solid #93c5fd !important;color:#0b74e5}
-    .historico-panel{
-      grid-column:span 3;
-      border-radius:22px !important;
-      padding:18px 12px !important;
-      text-align:center;
-    }
-    .historico-grid{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:14px;align-items:center;margin-top:12px}
-    .historico-main{border-radius:18px;padding:16px 12px;border:1px solid currentColor;background:rgba(255,255,255,.45)}
-    .historico-legend{background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:12px;text-align:left;font-size:13px;line-height:1.8}
-    .dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:8px;vertical-align:-1px}
-    .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
-    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}}
-
-    @media (max-width:450px){
-      .brand-left img{height:32px}
-      .divider{height:48px}
-      .brand-copy h1{font-size:16px}
-      .stats-grid,.quick-grid{grid-template-columns:1fr 1fr}
-      .route-kpi{grid-template-columns:1fr 1fr 1fr}
-      .hero-card{min-height:210px}
-    }
-  </style>
+.active{
+  color:#e30613;
+}
+</style>
 </head>
 <body>
-  <div class="app">
-    <header class="hero-header">
-      <div class="brand-row">
-        <div class="brand-left">
-          <img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" alt="Coca-Cola">
-          <div class="divider"></div>
-          <div class="brand-copy">
-            <h1>GESTIÓN VOLUMEN PDV 2026</h1>
-            <p>Objetivo, vendido y avance por ruta, cliente y categoría.</p>
-          </div>
-        </div>
-        <div class="profile-btn">👤</div>
-      </div>
-    </header>
 
-    <main>
-      <section id="page-home" class="page active">
-        <div class="welcome">
-          <h2>¡Bienvenido!</h2>
-          <p>Seguimiento ejecutivo de volumen con foco en objetivo y avance</p>
-          <div id="syncStatus" class="status-chip">Cargando datos...</div>
-        </div>
+<div class="app">
 
-        <button class="hero-card" onclick="goToRoutes()">
-          <div class="hero-icon">📦</div>
-          <h3>Volumen</h3>
-          <p>Entrá al tablero y revisá objetivo, vendido y avance por ruta y por cliente.</p>
-          <span class="cta">IR AL DASHBOARD ❯</span>
-        </button>
-
-        <section class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">📈</div>
-              <div><h4>Resumen ejecutivo</h4><small>Vista consolidada del archivo cargado.</small></div>
-            </div>
-            <div class="date-chip" id="todayChip"></div>
-          </div>
-          <div class="stats-grid">
-            <div class="stat-card stat1"><span class="ico">🛣️</span><div class="label">Rutas</div><div class="num" id="kpiRoutes">0</div><div class="sub">detectadas</div></div>
-            <div class="stat-card stat2"><span class="ico">👥</span><div class="label">Clientes</div><div class="num" id="kpiClients">0</div><div class="sub">gestionados</div></div>
-            <div class="stat-card stat3"><span class="ico">🎯</span><div class="label">Objetivo CAJAS FÍSICAS</div><div class="num" id="kpiObjetivo">0</div><div class="sub">total</div></div>
-            <div class="stat-card stat4"><span class="ico">🚨</span><div class="label">Alertas críticas</div><div class="num" id="kpiDesvios">0</div><div class="sub">detectadas</div></div>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head" style="margin-bottom:10px;">
-            <div class="panel-head-left">
-              <div class="panel-icon">⭐</div>
-              <div><h4>Accesos rápidos</h4><small>Ingreso rápido a la gestión diaria.</small></div>
-            </div>
-          </div>
-          <div class="quick-grid">
-            <button class="quick-btn" onclick="goToRoutes()"><span class="qico">🛣️</span><span class="qtxt">Ver rutas</span></button>
-            <button class="quick-btn" onclick="goToClients()"><span class="qico">🔎</span><span class="qtxt">Buscar cliente</span></button>
-            <button class="quick-btn" onclick="goTo('alertas')"><span class="qico">🚨</span><span class="qtxt">Alertas</span></button>
-            <button class="quick-btn" onclick="loadData(true)"><span class="qico">☁️</span><span class="qtxt">Sincronizar</span></button>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">📌</div>
-              <div><h4>Cómo leer la app</h4><small>Para que quede claro qué es cada dato.</small></div>
-            </div>
-          </div>
-          <div class="legend-box">
-            🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
-            📦 <b>Avance:</b> volumen real cargado en columnas tipo <b>_REAL</b> o <b>_CF_REAL</b>.<br>
-            🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
-            🚦 <b>Badge de puntos:</b> Verde = 40 pts · Amarillo = 30 a 39 pts · Rojo = menos de 30 pts.
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">🚨</div>
-              <div><h4>Top alertas</h4><small>Clientes o categorías con mayor desvío.</small></div>
-            </div>
-          </div>
-          <div id="homeAlerts"></div>
-        </section>
-
-        <div class="watermark">Coca-Cola</div>
-      </section>
-
-      <section id="page-routes" class="page">
-        <div class="tool-header">
-          <h2 class="tool-title">Dashboard por ruta</h2>
-          <p class="tool-sub">Seleccioná una ruta para ver clientes, objetivo, vendido y alertas.</p>
-        </div>
-        <div class="panel">
-          <div class="search-box">
-            <div class="row-2">
-              <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
-              <select id="routeSort">
-                <option value="ruta" selected>Ordenar por ruta</option>
-                <option value="avance">Ordenar por avance</option>
-                <option value="objetivo">Ordenar por objetivo</option>
-                <option value="clientes">Ordenar por clientes</option>
-              </select>
-            </div>
-          </div>
-          <div id="routeResults" class="results"></div>
-          <div id="routeEmpty" class="empty" style="display:none;">No hay rutas para mostrar.</div>
-        </div>
-      </section>
-
-      <section id="page-clients" class="page">
-        <div class="tool-header">
-          <h2 class="tool-title">Clientes</h2>
-          <p class="tool-sub">Buscá por cliente, número, ruta o vendedor.</p>
-        </div>
-        <div class="panel">
-          <div class="search-box">
-            <div class="row-2">
-              <input id="clientSearch" type="text" placeholder="Buscar cliente, número, ruta o vendedor">
-              <select id="clientRouteFilter"><option value="">Todas las rutas</option></select>
-            </div>
-          </div>
-          <div id="clientResults" class="results"></div>
-          <div id="clientEmpty" class="empty" style="display:none;">No hay clientes para mostrar.</div>
-        </div>
-      </section>
-
-      <section id="page-route-detail" class="page">
-        <div class="tool-header">
-          <button class="back-btn" onclick="goToRoutes()">Volver atrás</button>
-          <h2 class="tool-title" id="routeDetailTitle" style="margin-top:14px;">Ruta</h2>
-          <p class="tool-sub" id="routeDetailSub">Detalle ejecutivo de la ruta.</p>
-        </div>
-
-        <div class="panel">
-          <div class="item-meta" id="routeDetailMeta"></div>
-          <div class="route-kpi">
-            <div class="box box-clientes"><div class="t">👥 Clientes</div><div class="v" id="rdClients">0</div></div>
-            <div class="box box-objetivo"><div class="t">🎯 Objetivo CAJAS FÍSICAS</div><div class="v" id="rdObjetivo">0</div></div>
-            <div class="box box-cumplen-premium"><div class="premium-kpi-title">Cumplimiento clientes</div><div class="premium-kpi-value" id="rdCumplen40">0 / 0</div><div class="premium-kpi-sub" id="rdCumplen40Sub">Clientes con score completo</div></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div>
-          <div id="routeAlerts"></div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">👥</div><div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div></div></div>
-          <div id="routeClients"></div>
-        </div>
-      </section>
-
-      <section id="page-client-detail" class="page">
-        <div class="tool-header">
-          <button class="back-btn" onclick="backFromClientDetail()">Volver atrás</button>
-          <h2 class="tool-title" id="clientDetailTitle" style="margin-top:14px;">Cliente</h2>
-          <p class="tool-sub" id="clientDetailSub">Detalle por categoría.</p>
-        </div>
-
-        <div class="panel">
-          <div class="item-meta" id="clientDetailMeta"></div>
-          <div class="route-kpi" id="clientDetailSummary" style="margin-top:14px;"></div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">📦</div><div><h4>Categorías del cliente</h4><small>Objetivo, vendido, avance y semáforo por categoría.</small></div></div></div>
-          <div class="legend-box">
-            🎯 <b>Objetivo:</b> lo que tiene que vender.<br>
-            📦 <b>Avance:</b> lo que ya se cargó en el Excel.<br>
-            🏆 <b>Puntos:</b> 5 por cada categoría cumplida.
-          </div>
-          <div id="clientCategories" class="cat-grid"></div>
-          <div id="clientCategoriesEmpty" class="empty" style="display:none;">No hay categorías para mostrar.</div>
-        </div>
-      </section>
-
-      <section id="page-alertas" class="page">
-        <div class="tool-header">
-          <h2 class="tool-title">Alertas de desvío</h2>
-          <p class="tool-sub">Listado priorizado para seguimiento comercial.</p>
-        </div>
-        <div class="panel">
-          <div class="search-box">
-            <div class="row-2">
-              <select id="alertLevelFilter">
-                <option value="">Todos los niveles</option>
-                <option value="critico">Crítico</option>
-                <option value="medio">Medio</option>
-                <option value="controlado">Controlado</option>
-              </select>
-              <input id="alertSearch" type="text" placeholder="Buscar cliente, ruta o vendedor">
-            </div>
-          </div>
-          <div id="alertResults" class="results"></div>
-          <div id="alertEmpty" class="empty" style="display:none;">No hay alertas para mostrar.</div>
-        </div>
-      </section>
-    </main>
-
-    <nav class="bottom-nav">
-      <button id="nav-home" class="nav-btn active" onclick="goTo('home')"><span class="nicon">🏠</span><span>Inicio</span></button>
-      <button id="nav-routes" class="nav-btn" onclick="goToRoutes()"><span class="nicon">🛣️</span><span>Rutas</span></button>
-      <button id="nav-clients" class="nav-btn" onclick="goToClients()"><span class="nicon">👥</span><span>Clientes</span></button>
-      <button id="nav-alertas" class="nav-btn" onclick="goTo('alertas')"><span class="nicon">🚨</span><span>Alertas</span></button>
-    </nav>
+  <div class="header">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" width="130">
+    <h1>Dashboard Volumen PRO</h1>
+    <p>Resumen ejecutivo de volumen y avance de puntos</p>
   </div>
 
-  <script>
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
-    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQSuRpKllI3EgCIHu51oqxUVEVtsDYgt5LFX0iNFndhHeRfsKIy3RyGoLnfobWFw/pub?gid=278734128&single=true&output=csv';
-
-    const CATEGORY_CONFIG = [
-      { keys: ['Agua'], label: 'Agua' },
-      { keys: ['Bebida energética','Bebida energetica'], label: 'Bebida Energética' },
-      { keys: ['Colas'], label: 'Colas' },
-      { keys: ['Isotónica','Isotonica'], label: 'Isotónica' },
-      { keys: ['Jugos'], label: 'Jugos' },
-      { keys: ['Multicategorías','Multicategorias','Multicategoria','Multicategoría'], label: 'Multicategoría' },
-      { keys: ['Sabores'], label: 'Sabores' },
-      { keys: ['Saborizada'], label: 'Saborizada' }
-    ];
-
-    const referenciaMap = {
-      'Agua': 'Agua 2 Lts x 6 unidades',
-      'Bebida Energética': 'Monster 473 ml x 6 unidades',
-      'Colas': 'Coca-Cola 2 Lts RET x 8 unidades',
-      'Isotónica': 'Powerade 500 cc x 6 unidades',
-      'Jugos': 'Cepita 1.5 Lts PET x 4 unidades',
-      'Multicategoría': 'Leche L3N 1 Litro x 12 unidad',
-      'Sabores': 'Fanta / Sprite 2 Lts RET x 8 unidades',
-      'Saborizada': 'Aquarius 1.5 Lts PET x 6 unidades'
-    };
-
-    const categoryVisualMap = {
-      'Agua': { icon: '💧', bubble: '#eaf4ff', bubbleBorder: '#b7d8ff', refBg: '#eef6ff', refBorder: '#bfdcff' },
-      'Bebida Energética': { icon: 'https://zehid2010-lgtm.github.io/auditoria_volumen/monster.png', bubble: '#f2ecff', bubbleBorder: '#d4c0ff', refBg: '#f5eeff', refBorder: '#d9c7ff' },
-      'Colas': { icon: '🥤', bubble: '#eef9f1', bubbleBorder: '#bfe3c7', refBg: '#ecf8ef', refBorder: '#bee2c4' },
-      'Isotónica': { icon: 'https://www.nicepng.com/png/detail/313-3138194_powerade-plastic-bottle.png', bubble: '#eef5ff', bubbleBorder: '#c6dafb', refBg: '#edf5ff', refBorder: '#c7daf8' },
-      'Jugos': { icon: '🧃', bubble: '#fff7e8', bubbleBorder: '#f2d59f', refBg: '#fff8e9', refBorder: '#efd59b' },
-      'Multicategoría': { icon: '🧺', bubble: '#fff7e7', bubbleBorder: '#f1d188', refBg: '#fff8ea', refBorder: '#f0d28e' },
-      'Sabores': { icon: '🍊', bubble: '#fff3e8', bubbleBorder: '#f2c8aa', refBg: '#fff3ea', refBorder: '#efc7aa' },
-      'Saborizada': { icon: 'https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png', bubble: '#eefcf1', bubbleBorder: '#bfe4c6', refBg: '#eefcf3', refBorder: '#c0e6ca' }
-    };
-
-    const state = { rows: [], routes: [], clients: [], alerts: [], historico: [], mesesHistorico: [], selectedMesHistorico: '', selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
-
-    function normalizeKey(str){
-      return String(str || '')
-        .trim()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g,'')
-        .replace(/[_\-]+/g,' ')
-        .replace(/\s+/g,' ')
-        .toUpperCase();
-    }
-
-    function escapeHtml(str){
-      return String(str || '')
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/'/g,'&#39;');
-    }
-
-    function toNumber(value){
-      if(value === null || value === undefined || value === '') return 0;
-      let s = String(value).trim().replace(/\s/g, '');
-      if(!s) return 0;
-
-      if(s.includes(',') && s.includes('.')){
-        if(s.lastIndexOf(',') > s.lastIndexOf('.')){
-          s = s.replace(/\./g, '').replace(',', '.');
-        } else {
-          s = s.replace(/,/g, '');
-        }
-      } else if(s.includes(',')) {
-        s = s.replace(',', '.');
-      }
-
-      const n = parseFloat(s);
-      return Number.isFinite(n) ? n : 0;
-    }
-
-    function formatNumber(n){ return Number(n || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 }); }
-    function formatPct(n){ return `${Math.round(Number(n || 0))}%`; }
-    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
-    function getSemaforo(cumplimiento){
-      if(cumplimiento >= 80) return 'green';
-      if(cumplimiento >= 50) return 'yellow';
-      return 'red';
-    }
-    function getSemaforoBadge(cumplimiento){ return cumplimiento >= 80 ? 'ok' : cumplimiento >= 50 ? 'warn' : 'bad'; }
-    function getSemaforoText(cumplimiento){ return cumplimiento >= 80 ? 'VERDE' : cumplimiento >= 50 ? 'AMARILLO' : 'ROJO'; }
-    function getRoutePointsBadgeClass(points){ return points >= 40 ? 'ok' : points >= 30 ? 'warn' : 'bad'; }
-    function getBadgePointsClass(client){ const p = Number(client?.totalPuntos || 0); return p >= 40 ? 'ok' : p >= 30 ? 'warn' : 'bad'; }
-    function getPointsText(client){ return `${Number(client?.totalPuntos || 0)} / 40 pts`; }
-    function getPointsProgressClass(points){ return points >= 40 ? 'green' : points >= 30 ? 'yellow' : 'red'; }
-
-    function getScoreStyle(points, maxPoints=40){
-      const p = Number(points || 0);
-      const max = Number(maxPoints || 40);
-      const pct = max > 0 ? (p / max) * 100 : 0;
-      if(pct >= 100) return { bg: 'linear-gradient(180deg,#dcfce7,#bbf7d0)', border: '#86efac', color: '#15803d', sub: 'Score completo' };
-      if(pct >= 75) return { bg: 'linear-gradient(180deg,#fef3c7,#fde68a)', border: '#fcd34d', color: '#b45309', sub: 'Score intermedio' };
-      return { bg: 'linear-gradient(180deg,#fee2e2,#fecaca)', border: '#fca5a5', color: '#dc2626', sub: 'Score bajo' };
-    }
-
-    function parseCSVLine(line){
-      const out = [];
-      let cur = '';
-      let inQuotes = false;
-      for(let i = 0; i < line.length; i++){
-        const ch = line[i];
-        const next = line[i + 1];
-        if(ch === '"'){
-          if(inQuotes && next === '"'){
-            cur += '"';
-            i++;
-          } else {
-            inQuotes = !inQuotes;
-          }
-        } else if(ch === ',' && !inQuotes) {
-          out.push(cur);
-          cur = '';
-        } else {
-          cur += ch;
-        }
-      }
-      out.push(cur);
-      return out.map(v => v.replace(/^\uFEFF/, '').trim());
-    }
-
-    function csvToObjects(text){
-      const lines = String(text || '').replace(/\r/g, '').split('\n').filter(l => l.trim() !== '');
-      if(!lines.length) return [];
-
-      let headerIndex = lines.findIndex(line => {
-        const cells = parseCSVLine(line).map(normalizeKey);
-        return cells.includes('CLIENTE') && (cells.includes('NUMERO') || cells.includes('RU') || cells.includes('VENDEDOR'));
-      });
-      if(headerIndex < 0) headerIndex = 0;
-
-      const headers = parseCSVLine(lines[headerIndex]);
-      const objects = [];
-      for(let i = headerIndex + 1; i < lines.length; i++){
-        const cols = parseCSVLine(lines[i]);
-        if(cols.every(c => String(c).trim() === '')) continue;
-        const obj = {};
-        headers.forEach((h, idx) => { obj[h] = cols[idx] ?? ''; });
-        obj.__COL_D_TELEFONO = cols[3] ?? '';
-        objects.push(obj);
-      }
-      return objects;
-    }
-
-    async function fetchCSV(url){
-      const finalUrl = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
-      const res = await fetch(finalUrl, { method: 'GET', cache: 'no-store' });
-      if(!res.ok) throw new Error(`No se pudo cargar el CSV (${res.status})`);
-      const text = await res.text();
-      const rows = csvToObjects(text);
-      if(!rows.length) throw new Error('El CSV llegó vacío');
-      return rows;
-    }
-
-    function getCell(row, ...possibleKeys){
-      const map = new Map(Object.keys(row).map(k => [normalizeKey(k), row[k]]));
-      for(const key of possibleKeys){
-        const normalized = normalizeKey(key);
-        if(map.has(normalized)) return map.get(normalized);
-      }
-      return '';
-    }
-
-    function getHistCell(row, ...possibleKeys){
-      return getCell(row, ...possibleKeys);
-    }
-
-    function normalizeMonthText(value){
-      return String(value || '').trim().replace(/\s+/g,' ');
-    }
-
-    function getHistoricoMonth(row){
-      return normalizeMonthText(getHistCell(row,'MES','Mes','mes','PERIODO','Periodo','MES_CIERRE','Cierre'));
-    }
-
-    function buildHistorico(rawRows){
-      state.historico = rawRows.map(r => {
-        const mes = getHistoricoMonth(r) || 'Abril 2026';
-        const numero = String(getHistCell(r,'NUMERO','NÚMERO','Numero','CLIENTE_ID','ID','OUTNUM','Outnum','outnum') || '').trim();
-        const cliente = String(getHistCell(r,'CLIENTE','Cliente') || '').trim();
-        const ruta = String(getHistCell(r,'RUTA','RU','Ruta','ruta') || '').trim();
-        const vendedor = String(getHistCell(r,'VENDEDOR','Vendedor','JEFE','Jefe') || '').trim();
-        const nivel = String(getHistCell(r,'NIVEL','Nivel') || '').trim();
-        const condicion = String(getHistCell(r,'CONDICION','Condición','Condicion') || '').trim();
-        const volumen = toNumber(getHistCell(r,'VOLUMEN','Volumen'));
-        const referencias = toNumber(getHistCell(r,'REFERENCIAS','Referencias'));
-        const pedidoSugerido = toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO'));
-        const ejecucion = toNumber(getHistCell(r,'EJECUCION','Ejecucion','EJECUCIÓN','Ejecución'));
-        const objetivo = toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
-        const avance = toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
-        const puntosDetectados = getHistCell(r,'PUNTOS TOTALES','Puntos Totales','PUNTOS','Puntos','PUNTOS OBTENIDOS','PUNTOS_OBTENIDOS','SCORE','Score');
-        const puntos = puntosDetectados !== '' ? toNumber(puntosDetectados) : (volumen + referencias + pedidoSugerido + ejecucion);
-        const cumplimientoRaw = getHistCell(r,'%','% CUMPLIMIENTO','CUMPLIMIENTO','Cumplimiento','PORCENTAJE');
-        const cumplimiento = cumplimientoRaw !== '' ? toNumber(cumplimientoRaw) : puntos;
-        return { mes, numero, cliente, ruta, vendedor, nivel, condicion, objetivo, avance, puntos, cumplimiento, volumen, referencias, pedidoSugerido, ejecucion };
-      }).filter(r => r.mes && (r.numero || r.cliente));
-
-      state.mesesHistorico = [...new Set(state.historico.map(r => r.mes))].filter(Boolean);
-      if(!state.selectedMesHistorico && state.mesesHistorico.length){
-        state.selectedMesHistorico = state.mesesHistorico[0];
-      }
-    }
-
-    function getHistoricoCliente(client){
-      if(!client || !state.historico.length) return null;
-      const mes = state.selectedMesHistorico || state.mesesHistorico[0] || '';
-      const numero = normalizeKey(client.numero);
-      const cliente = normalizeKey(client.cliente);
-      const ruta = normalizeKey(client.ruta);
-      return state.historico.find(h => {
-        const sameMonth = normalizeKey(h.mes) === normalizeKey(mes);
-        const sameNumero = numero && normalizeKey(h.numero) === numero;
-        const sameClienteRuta = cliente && normalizeKey(h.cliente) === cliente && (!ruta || normalizeKey(h.ruta) === ruta);
-        return sameMonth && (sameNumero || sameClienteRuta);
-      }) || null;
-    }
-
-    function getCierreStyle(points){
-      const p = Number(points || 0);
-      if(p >= 80) return {
-        bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)', border:'#86efac', color:'#15803d',
-        sub:'Cierre excelente', tag:'CIERRE EXCELENTE', icon:'✅'
-      };
-      if(p >= 70) return {
-        bg:'linear-gradient(180deg,#ffedd5,#fed7aa)', border:'#fb923c', color:'#ea580c',
-        sub:'Cierre medio', tag:'CIERRE MEDIO', icon:'⚠️'
-      };
-      if(p >= 60) return {
-        bg:'linear-gradient(180deg,#fef9c3,#fde68a)', border:'#facc15', color:'#a16207',
-        sub:'Cierre bajo', tag:'CIERRE BAJO', icon:'⚠️'
-      };
-      return {
-        bg:'linear-gradient(180deg,#fee2e2,#fecaca)', border:'#fca5a5', color:'#dc2626',
-        sub:'Fuera de rango', tag:'FUERA DE RANGO', icon:'🚨'
-      };
-    }
-
-    function getCierreText(points, mes){
-      const p = Number(points || 0);
-      const m = String(mes || 'el mes anterior').replace(/^Cierre\s+/i,'');
-      if(p >= 80) return `Cliente cerró ${m} en verde: 80 puntos o más`;
-      if(p >= 70) return `Cliente cerró ${m} en naranja: 70 a 79 puntos`;
-      if(p >= 60) return `Cliente cerró ${m} en amarillo: 60 a 69 puntos`;
-      return `Cliente cerró ${m} por debajo de 60 puntos`;
-    }
-
-    async function loadHistorico(){
-      try{
-        const raw = await fetchCSV(CSV_HISTORICO);
-        buildHistorico(raw);
-      }catch(err){
-        console.error('Error al cargar histórico:', err);
-        state.historico = [];
-        state.mesesHistorico = [];
-      }
-    }
-
-    function detectObjectiveValue(row, categoryKeys){
-      const variants = [];
-      categoryKeys.forEach(baseKey => {
-        variants.push(
-          `${baseKey}_OBJ`, `${baseKey} OBJ`, `${baseKey}_OB`, `${baseKey} OB`,
-          `${baseKey}_OBJETIVO`, `${baseKey} OBJETIVO`, `${baseKey}_objetivo`, `${baseKey} objetivo`
-        );
-      });
-      for(const variant of variants){
-        const value = getCell(row, variant);
-        if(value !== '' && value !== undefined) return toNumber(value);
-      }
-      return 0;
-    }
-
-    function detectAdvanceValue(row, categoryKeys){
-      const variants = [];
-      categoryKeys.forEach(baseKey => {
-        variants.push(
-          `${baseKey}_CF_REAL`, `${baseKey} CF REAL`, `${baseKey}_REAL`, `${baseKey} REAL`,
-          `${baseKey}_avance`, `${baseKey} avance`, `${baseKey}_real`, `${baseKey} real`
-        );
-      });
-      for(const variant of variants){
-        const value = getCell(row, variant);
-        if(value !== '' && value !== undefined) return toNumber(value);
-      }
-      return 0;
-    }
-
-    function detectPointsValue(row, categoryKeys, objetivo, real){
-      const variants = [];
-      categoryKeys.forEach(baseKey => {
-        variants.push(`${baseKey}_PUNTOS`, `${baseKey} PUNTOS`, `${baseKey}_puntos`, `${baseKey} puntos`);
-      });
-      for(const variant of variants){
-        const value = getCell(row, variant);
-        if(value !== '' && value !== undefined) return toNumber(value);
-      }
-      return real >= objetivo && objetivo > 0 ? 5 : 0;
-    }
-
-    function dedupeRows(rows){
-      const map = new Map();
-      rows.forEach(r => {
-        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID');
-        const cliente = getCell(r,'CLIENTE');
-        const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
-        const key = `${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
-        if(key !== '||') map.set(key, r);
-      });
-      return [...map.values()];
-    }
-
-    function buildData(rawRows){
-      const uniqueRows = dedupeRows(rawRows);
-
-      state.rows = uniqueRows.map(r => {
-        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID');
-        const cliente = getCell(r,'CLIENTE');
-        const ruta = String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
-        const vendedor = getCell(r,'VENDEDOR','Vendedor');
-        const repositor = getCell(r,'REPOSITOR','Repositor');
-        const telefono =
-String(
-  getCell(
-    r,
-    'TELEFONO',
-    'TELÉFONO',
-    'Telefono',
-    'teléfono',
-    ' TELEFONO ',
-    'TELEFONO ',
-    ' TELEFONO',
-    'CELULAR',
-    'Celular',
-    'WHATSAPP',
-    'Whatsapp'
-  ) || r.__COL_D_TELEFONO || ''
-).trim();
-
-        const categories = CATEGORY_CONFIG.map(cat => {
-          const objetivo = detectObjectiveValue(r, cat.keys);
-          const real = detectAdvanceValue(r, cat.keys);
-          const puntos = detectPointsValue(r, cat.keys, objetivo, real);
-          const cumplimiento = objetivo > 0 ? (real / objetivo) * 100 : 0;
-          const desvio = objetivo - real;
-          return {
-            key: cat.label,
-            label: cat.label,
-            objetivo, real, puntos, cumplimiento, desvio,
-            semaforo: getSemaforo(cumplimiento),
-            semaforoText: getSemaforoText(cumplimiento)
-          };
-        }).filter(c => c.objetivo > 0 || c.real > 0);
-
-        const totalObjetivo = categories.reduce((a,c) => a + c.objetivo, 0);
-        const totalReal = categories.reduce((a,c) => a + c.real, 0);
-        const totalPuntos = categories.reduce((a,c) => a + c.puntos, 0);
-        const cumplimientoTotal = totalObjetivo > 0 ? (totalReal / totalObjetivo) * 100 : 0;
-        const desvioTotal = totalObjetivo - totalReal;
-
-        return {
-          key: `${numero}|${cliente}|${ruta}`,
-          numero, cliente, ruta, vendedor, repositor, telefono, categories,
-          totalObjetivo, totalReal, totalPuntos, cumplimientoTotal, desvioTotal,
-          semaforo: getSemaforo(cumplimientoTotal),
-          semaforoText: getSemaforoText(cumplimientoTotal)
-        };
-      }).filter(r => r.numero || r.cliente);
-
-      buildRoutes();
-      buildClients();
-      buildAlerts();
-    }
-
-    function buildRoutes(){
-      const map = new Map();
-      state.rows.forEach(r => {
-        const key = r.ruta || 'SIN ASIGNAR';
-        if(!map.has(key)){
-          map.set(key, { ruta: key, vendedor: r.vendedor || '', clients: 0, objetivo: 0, real: 0, desvio: 0, cumplimiento: 0, rows: [] });
-        }
-        const route = map.get(key);
-        route.clients += 1;
-        route.objetivo += r.totalObjetivo;
-        route.real += r.totalReal;
-        route.desvio += r.desvioTotal;
-        if(!route.vendedor && r.vendedor) route.vendedor = r.vendedor;
-        route.rows.push(r);
-      });
-
-      state.routes = [...map.values()].map(r => {
-        r.cumplimiento = r.objetivo > 0 ? (r.real / r.objetivo) * 100 : 0;
-        r.semaforo = getSemaforo(r.cumplimiento);
-        r.semaforoText = getSemaforoText(r.cumplimiento);
-        return r;
-      }).sort((a,b) => {
-        const ar = Number(a.ruta), br = Number(b.ruta);
-        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
-        return String(a.ruta).localeCompare(String(b.ruta), 'es');
-      });
-    }
-
-    function buildClients(){
-      state.clients = [...state.rows].sort((a,b) => String(a.cliente).localeCompare(String(b.cliente), 'es'));
-    }
-
-    function buildAlerts(){
-      const alerts = [];
-      state.rows.forEach(client => {
-        client.categories.forEach(cat => {
-          alerts.push({
-            ruta: client.ruta,
-            vendedor: client.vendedor,
-            cliente: client.cliente,
-            numero: client.numero,
-            categoria: cat.label,
-            objetivo: cat.objetivo,
-            real: cat.real,
-            desvio: cat.desvio,
-            cumplimiento: cat.cumplimiento,
-            puntosCliente: client.totalPuntos,
-            level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado',
-            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS · ${client.totalPuntos}/40 pts`,
-            refKey: client.key
-          });
-        });
-      });
-
-      state.alerts = alerts.sort((a,b) => {
-        const rank = {critico:0, medio:1, controlado:2};
-        if(rank[a.level] !== rank[b.level]) return rank[a.level] - rank[b.level];
-        return (b.desvio || 0) - (a.desvio || 0);
-      });
-    }
-
-    function updateHomeKPIs(){
-      document.getElementById('kpiRoutes').textContent = state.routes.length;
-      document.getElementById('kpiClients').textContent = state.clients.length;
-      document.getElementById('kpiObjetivo').textContent = formatNumber(state.rows.reduce((a,r)=>a+r.totalObjetivo,0));
-      document.getElementById('kpiDesvios').textContent = state.alerts.filter(a => a.level === 'critico').length;
-      renderHomeAlerts();
-    }
-
-    function severityText(level){ return level === 'critico' ? 'CRÍTICO' : level === 'medio' ? 'MEDIO' : 'CONTROLADO'; }
-
-    function renderHomeAlerts(){
-      const box = document.getElementById('homeAlerts');
-      const top = state.alerts.slice(0,5);
-      if(!top.length){ box.innerHTML = '<div class="empty">No hay alertas para mostrar.</div>'; return; }
-      box.innerHTML = top.map(a => `
-        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','home')">
-          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')}<br>
-          ${escapeHtml(a.text)}
-        </div>
-      `).join('');
-    }
-
-    function goTo(page){
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page-' + page).classList.add('active');
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      const nav = document.getElementById('nav-' + page);
-      if(nav) nav.classList.add('active');
-      window.scrollTo({top:0, behavior:'smooth'});
-      if(page === 'alertas') renderAlerts();
-    }
-
-    function goToRoutes(){ goTo('routes'); document.getElementById('nav-routes').classList.add('active'); renderRoutes(); }
-    function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
-
-    function renderRoutes(){
-      const q = normalizeKey(document.getElementById('routeSearch').value);
-      const sort = document.getElementById('routeSort').value;
-
-      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
-
-      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
-      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
-      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
-      else data.sort((a,b)=> {
-        const ar = Number(a.ruta), br = Number(b.ruta);
-        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
-        return String(a.ruta).localeCompare(String(b.ruta), 'es');
-      });
-
-      const box = document.getElementById('routeResults');
-      const empty = document.getElementById('routeEmpty');
-      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
-      empty.style.display = 'none';
-
-      box.innerHTML = data.map(r => {
-        const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0;
-        const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
-        const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
-        return `
-          <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
-            <div class="client-head">
-              <div>
-                <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
-                <div class="item-meta">
-                  Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
-                  🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
-                  ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
-                </div>
-                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
-              </div>
-              <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function openRouteDetail(ruta){
-      state.selectedRoute = ruta;
-      const route = state.routes.find(r => String(r.ruta) === String(ruta));
-      if(!route) return;
-
-      document.getElementById('routeDetailTitle').textContent = `Ruta ${route.ruta}`;
-      document.getElementById('routeDetailSub').textContent = `Vendedor: ${route.vendedor || '-'} · Seguimiento ejecutivo de volumen`;
-      document.getElementById('routeDetailMeta').innerHTML = `<b>Ruta:</b> ${escapeHtml(route.ruta)}<br><b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br><b>Semáforo:</b> ${route.semaforoText}`;
-
-      const clientesCumplen40 = route.rows.filter(c => c.totalPuntos >= 40).length;
-      const totalClientes = route.clients;
-      const ratio = totalClientes > 0 ? (clientesCumplen40 / totalClientes) * 100 : 0;
-      const isGreen = (ratio >= 100 || clientesCumplen40 === totalClientes);
-      const isYellow = ratio >= 60 && !isGreen;
-      const bgColor = isGreen ? 'linear-gradient(135deg, #dcfce7, #bbf7d0)' : isYellow ? 'linear-gradient(135deg, #fef3c7, #fde68a)' : 'linear-gradient(135deg, #fee2e2, #fecaca)';
-      const borderColor = isGreen ? '#86efac' : isYellow ? '#fcd34d' : '#fca5a5';
-      const valueColor = isGreen ? '#15803d' : isYellow ? '#b45309' : '#dc2626';
-
-      document.getElementById('rdClients').textContent = formatNumber(route.clients);
-      document.getElementById('rdObjetivo').textContent = formatNumber(route.objetivo);
-      const el = document.getElementById('rdCumplen40');
-      const sub = document.getElementById('rdCumplen40Sub');
-      const box = el.closest('.box');
-      el.textContent = `${clientesCumplen40} / ${totalClientes}`;
-      el.style.color = valueColor;
-      sub.textContent = `${formatPct(ratio)} cumplimiento clientes`;
-      box.style.background = bgColor;
-      box.style.border = `1px solid ${borderColor}`;
-      box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
-
-      const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
-      document.getElementById('routeAlerts').innerHTML = routeAlerts.length ? routeAlerts.map(c => `
-        <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-          <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
-          🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
-        </div>
-      `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
-
-      document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
-        <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-          <div class="client-head">
-            <div>
-              <div class="item-title">${escapeHtml(c.cliente)}</div>
-              <div class="item-meta">
-                Número: ${escapeHtml(c.numero || '-')}<br>
-                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
-              </div>
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
-            </div>
-            <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
-          </div>
-        </div>
-      `).join('');
-
-      goTo('route-detail');
-    }
-
-    function renderClients(){
-      const q = normalizeKey(document.getElementById('clientSearch').value);
-      const routeFilter = document.getElementById('clientRouteFilter').value;
-      const data = state.clients.filter(c => {
-        const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q));
-        const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter);
-        return matchesText && matchesRoute;
-      });
-
-      const box = document.getElementById('clientResults');
-      const empty = document.getElementById('clientEmpty');
-      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
-      empty.style.display = 'none';
-      box.innerHTML = data.map(c => `
-        <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
-          <div class="client-head">
-            <div>
-              <div class="item-title">${escapeHtml(c.cliente)}</div>
-              <div class="item-meta">
-                Número: ${escapeHtml(c.numero || '-')}<br>
-                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
-              </div>
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
-            </div>
-            <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function openClientDetail(key, backMode='clients'){
-      state.selectedClientKey = key;
-      state.clientBackMode = backMode;
-      const client = state.clients.find(c => c.key === key);
-      if(!client) return;
-
-      document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente';
-      document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
-      document.getElementById('clientDetailMeta').innerHTML = `
-        <b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br>
-        <b>Número:</b> ${escapeHtml(client.numero || '-')}<br>
-        <b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br>
-        <b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br>
-        <b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br>
-        <b>Teléfono:</b> ${escapeHtml(client.telefono || '-')}<br>
-        <b>Semáforo general:</b> ${client.semaforoText}
-      `;
-
-      const maxPuntos = client.categories.length * 5;
-      const historicoCliente = getHistoricoCliente(client);
-      const maxCierre = historicoCliente ? 100 : maxPuntos;
-      const puntosCierre = historicoCliente ? historicoCliente.puntos : client.totalPuntos;
-      const mesCierre = state.selectedMesHistorico || state.mesesHistorico[0] || 'Mes anterior';
-      const cierreStyle = getCierreStyle(puntosCierre);
-      const cierreTexto = getCierreText(puntosCierre, mesCierre);
-      const mesesOptions = (state.mesesHistorico.length ? state.mesesHistorico : [mesCierre]).map(m => `<option value="${escapeHtml(m)}" ${normalizeKey(m) === normalizeKey(mesCierre) ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('');
-      const detalleHistorico = historicoCliente ? `
-        <div class="historico-note">
-          <b>Detalle del cierre:</b><br>
-          📦 Volumen: <b>${formatNumber(historicoCliente.volumen)}</b> pts ·
-          🧾 Referencias: <b>${formatNumber(historicoCliente.referencias)}</b> pts ·
-          💡 Pedido sugerido: <b>${formatNumber(historicoCliente.pedidoSugerido)}</b> pts ·
-          ✅ Ejecución: <b>${formatNumber(historicoCliente.ejecucion)}</b> pts<br>
-          Nivel: <b>${escapeHtml(historicoCliente.nivel || '-')}</b> · Condición: <b>${escapeHtml(historicoCliente.condicion || '-')}</b>
-        </div>` : `
-        <div class="historico-note">
-          No se encontró este cliente en el cierre histórico. Se muestra el score actual calculado por la app.
-        </div>`;
-
-      document.getElementById('clientDetailSummary').innerHTML = `
-        <div class="box client-kpi-card kpi-objetivo">
-          <div class="t">Objetivo CAJAS FÍSICAS</div>
-          <div class="v">🎯 ${formatNumber(client.totalObjetivo)}</div>
-        </div>
-        <div class="box client-kpi-card kpi-avance">
-          <div class="t">Avance CAJAS FÍSICAS</div>
-          <div class="v">📈 ${formatNumber(client.totalReal)}</div>
-        </div>
-        <div class="box client-kpi-card kpi-puntos">
-          <div class="t">Puntos totales</div>
-          <div class="v">🏅 ${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
+  <div class="cards">
+    <div class="card">
+      <small>Rutas</small>
+      <h2>12</h2>
+    </div>
+
+    <div class="card">
+      <small>Clientes</small>
+      <h2>156</h2>
+    </div>
+
+    <div class="card">
+      <small>Objetivo CF</small>
+      <h2>28.560</h2>
+    </div>
+
+    <div class="card">
+      <small>Avance CF</small>
+      <h2>21.645</h2>
+    </div>
+  </div>
+
+  <div class="full-card">
+    <h2>Rutas</h2>
+
+    <div class="route">
+      <div class="route-top">
+        <h3>Ruta Centro</h3>
+        <div class="badge green">Excelente</div>
+      </div>
+
+      <div class="progress">
+        <span style="width:82%"></span>
+      </div>
+
+      <div class="metrics">
+        <div class="metric">
+          <small>Objetivo</small>
+          <h4>8500</h4>
         </div>
 
-        <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
-          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">CIERRE DE PUNTOS DEL MES ANTERIOR</div>
-          <div class="historico-grid">
-            <div class="historico-select" style="margin:0;">
-              <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
-            </div>
-            <div class="historico-main" style="color:${cierreStyle.color};">
-              <div style="font-size:14px;font-weight:900;">Cierre ${escapeHtml(mesCierre)}</div>
-              <div class="score-value" style="color:${cierreStyle.color};font-size:42px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
-              <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:13px;">${cierreStyle.tag}</div>
-            </div>
-            <div class="historico-legend">
-              <div><span class="dot dot-green"></span>80 o más puntos: Cierre excelente</div>
-              <div><span class="dot dot-orange"></span>70 a 79 puntos: Cierre medio</div>
-              <div><span class="dot dot-yellow"></span>60 a 69 puntos: Cierre bajo</div>
-            </div>
-          </div>
-          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${cierreStyle.border};font-size:15px;font-weight:900;color:${cierreStyle.color};">${cierreStyle.icon} ${cierreTexto}</div>
-          ${detalleHistorico}
+        <div class="metric">
+          <small>Avance</small>
+          <h4>6620</h4>
         </div>
 
-        <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
-      `;
-
-      const cats = document.getElementById('clientCategories');
-      const catsEmpty = document.getElementById('clientCategoriesEmpty');
-      if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; }
-      else {
-        catsEmpty.style.display = 'none';
-        cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
-          const cumple = cat.cumplimiento >= 100;
-          const puntos = cumple ? 5 : 0;
-          const badgeClass = getSemaforoBadge(cat.cumplimiento);
-          const progressClass = cat.semaforo;
-          const visual = categoryVisualMap[cat.key] || { icon: '📦', bubble: '#f3f4f6', bubbleBorder: '#d7dbe0', refBg: '#f8fafc', refBorder: '#d9dee5' };
-          return `
-            <div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
-              <div class="cat-row">
-                <div class="cat-main">
-                  <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
-                    ${String(visual.icon).includes('http') ? `<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">` : visual.icon}
-                  </div>
-                  <div>
-                    <div class="cat-name">${escapeHtml(cat.label)}</div>
-                    <div class="cat-sub">
-                      🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
-                      📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
-                      📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
-                      🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
-                    </div>
-                    <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
-                      <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
-                      <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="badge ${badgeClass}">${puntos} pts</div>
-              </div>
-              <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
-              ${cumple ? '<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>' : ''}
-            </div>
-          `;
-        }).join('');
-      }
-
-      goTo('client-detail');
-    }
-
-    function cambiarMesHistorico(mes){
-      state.selectedMesHistorico = mes;
-      if(state.selectedClientKey){
-        openClientDetail(state.selectedClientKey, state.clientBackMode);
-      }
-    }
-
-    function backFromClientDetail(){
-      if(state.clientBackMode === 'route') openRouteDetail(state.selectedRoute);
-      else if(state.clientBackMode === 'home') goTo('home');
-      else if(state.clientBackMode === 'alertas') goTo('alertas');
-      else goToClients();
-    }
-
-    function renderAlerts(){
-      const q = normalizeKey(document.getElementById('alertSearch').value);
-      const level = document.getElementById('alertLevelFilter').value;
-      const data = state.alerts.filter(a => {
-        const matchesLevel = !level || a.level === level;
-        const matchesText = !q || [a.cliente, a.ruta, a.vendedor, a.categoria, a.numero].some(v => normalizeKey(v).includes(q));
-        return matchesLevel && matchesText;
-      });
-
-      const box = document.getElementById('alertResults');
-      const empty = document.getElementById('alertEmpty');
-      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
-      empty.style.display = 'none';
-      box.innerHTML = data.map(a => `
-        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')">
-          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')} · ${escapeHtml(a.vendedor || '-')}<br>
-          ${escapeHtml(a.text)}
+        <div class="metric">
+          <small>Avance de puntos</small>
+          <h4>82</h4>
         </div>
-      `).join('');
-    }
+      </div>
+    </div>
+  </div>
 
-    function fillRouteFilter(){
-      const select = document.getElementById('clientRouteFilter');
-      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b) => {
-        const ar = Number(a), br = Number(b);
-        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
-        return String(a).localeCompare(String(b), 'es');
-      });
-      select.innerHTML = '<option value="">Todas las rutas</option>' + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
-    }
+  <div class="full-card">
+    <h2>Detalle del cliente</h2>
 
-    function setStatus(text, isError=false){
-      const el = document.getElementById('syncStatus');
-      el.textContent = text;
-      el.style.background = isError ? '#fee2e2' : '#f3f4f6';
-      el.style.color = isError ? '#991b1b' : '#555';
-    }
+    <div class="client-card">
 
-    async function loadData(showAlert=false){
-      try{
-        setStatus('Cargando datos...');
-        const raw = await fetchCSV(CSV_URL);
-        await loadHistorico();
-        buildData(raw);
-        fillRouteFilter();
-        updateHomeKPIs();
-        renderRoutes();
-        renderClients();
-        renderAlerts();
-        setStatus(`Datos cargados: ${raw.length} filas`);
-        if(showAlert) alert('Datos sincronizados correctamente');
-      } catch(err){
-        console.error('Error al cargar:', err);
-        setStatus('No se pudieron cargar los datos', true);
-        alert('No se pudieron cargar los datos. Revisá que la hoja esté compartida y que el link CSV sea correcto.');
-      }
-    }
+      <div class="client-head">
+        <div>
+          <div class="client-name">Autoservicio El Sol</div>
+          <small>Nivel ORO</small>
+        </div>
 
-    function bind(){
-      document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-      document.getElementById('routeSearch').addEventListener('input', renderRoutes);
-      document.getElementById('routeSort').addEventListener('change', renderRoutes);
-      document.getElementById('clientSearch').addEventListener('input', renderClients);
-      document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
-      document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
-      document.getElementById('alertSearch').addEventListener('input', renderAlerts);
-    }
+        <div class="badge green">92%</div>
+      </div>
 
-    function normalizarTelefonoAR(raw){
-      let tel = String(raw || '').replace(/\D/g,'');
-      if(!tel) return '';
-      if(tel.startsWith('549')) return tel;
-      if(tel.startsWith('54')) return '9' + tel;
-      if(tel.startsWith('9')) return '54' + tel;
-      if(tel.startsWith('0')) tel = tel.replace(/^0+/, '');
-      return '549' + tel;
-    }
+      <div class="metrics">
+        <div class="metric">
+          <small>Objetivo</small>
+          <h4>1200</h4>
+        </div>
 
-    function enviarWhatsAppCliente(key){
-      const client = state.clients.find(c => c.key === key);
-      if(!client){ alert('No se encontró el cliente'); return; }
-      const telefonoBase = String(client.telefono || '').trim();
-      if(!telefonoBase){ alert('Este cliente no tiene teléfono cargado en la base. Revisá que la columna D sea TELEFONO y volvé a sincronizar.'); return; }
-      const telefono = normalizarTelefonoAR(telefonoBase);
-      if(!telefono){ alert('El teléfono del cliente no es válido'); return; }
+        <div class="metric">
+          <small>Avance</small>
+          <h4>1104</h4>
+        </div>
 
-      const objetivo = Number(client.totalObjetivo || 0);
-      const avance = Number(client.totalReal || 0);
-      const cumplimiento = objetivo > 0 ? (avance / objetivo) * 100 : 0;
-      const faltante = Math.max(0, objetivo - avance);
+        <div class="metric">
+          <small>Avance de puntos</small>
+          <h4>92</h4>
+        </div>
+      </div>
 
-      const iconos = {
-        'Colas': '🥤', 'Agua': '💧', 'Bebida Energética': '⚡', 'Isotónica': '🏃',
-        'Jugos': '🧃', 'Sabores': '🍊', 'Saborizada': '🍹', 'Multicategoría': '🧺'
-      };
+      <div class="category">
+        <div>
+          <b>Volumen</b><br>
+          <small>25 / 25</small>
+        </div>
+        <div class="badge green">OK</div>
+      </div>
 
-      let detalleCategorias = '';
-      client.categories.forEach(cat => {
-        const porcentaje = cat.objetivo > 0 ? (cat.real / cat.objetivo) * 100 : 0;
-        const icono = iconos[cat.label] || '📦';
-        detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
-      });
+      <div class="category">
+        <div>
+          <b>Referencias</b><br>
+          <small>22 / 25</small>
+        </div>
+        <div class="badge orange">Medio</div>
+      </div>
 
-      const mensaje = `Hola ${client.cliente} 👋\n\nTe compartimos tu avance de volumen actual:\n\n📊 Avance por categoría (cajas físicas):${detalleCategorias}\n\n📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})\n📉 Volumen faltante: ${formatNumber(faltante)} cajas\n\nSeguimos trabajando juntos para cumplir el objetivo. 💪`;
-      const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
-    }
+      <div class="category">
+        <div>
+          <b>Pedido sugerido</b><br>
+          <small>25 / 25</small>
+        </div>
+        <div class="badge green">OK</div>
+      </div>
 
-    bind();
-    loadData();
-  </script>
+      <button class="whatsapp">
+        Compartir por WhatsApp
+      </button>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom-nav">
+  <div class="active">Inicio</div>
+  <div>Rutas</div>
+  <div>Alertas</div>
+  <div>Perfil</div>
+</div>
+
 </body>
 </html>
+```
+
+Cambios incluidos:
+
+* Diseño tipo app premium.
+* Navegación pantalla por pantalla.
+* Cambio de “Cierre de puntos” → “Avance de puntos”.
+* Tarjetas más visuales.
+* Botones grandes.
+* Indicadores más accesibles.
+* Semáforo visual.
+* Compatible mobile.
+* Estilo Coca-Cola PRO.
