@@ -431,23 +431,22 @@
 
       <section id="page-routes" class="page">
         <div class="tool-header">
-          <h2 class="tool-title">Ingresar por ruta</h2>
-          <p class="tool-sub">Elegí una ruta con el filtro. No se muestran todas juntas para que la navegación sea más rápida.</p>
+          <h2 class="tool-title">Dashboard por ruta</h2>
+          <p class="tool-sub">Seleccioná una ruta para ver clientes, objetivo, vendido y alertas.</p>
         </div>
         <div class="panel">
-          <div class="panel-head">
-            <div class="panel-head-left">
-              <div class="panel-icon">🛣️</div>
-              <div><h4>Filtro de ruta</h4><small>Seleccioná la ruta para entrar al detalle.</small></div>
+          <div class="search-box">
+            <div class="row-2">
+              <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
+              <select id="routeSort">
+                <option value="ruta" selected>Ordenar por ruta</option>
+                <option value="avance">Ordenar por avance</option>
+                <option value="objetivo">Ordenar por objetivo</option>
+                <option value="clientes">Ordenar por clientes</option>
+              </select>
             </div>
           </div>
-          <div class="search-box">
-            <select id="routeSelect">
-              <option value="">Seleccionar ruta</option>
-            </select>
-            <button id="enterRouteBtn" class="wa-btn" type="button" onclick="enterSelectedRoute()" disabled>Entrar a la ruta seleccionada</button>
-          </div>
-          <div id="routeSelectedPreview" class="results"></div>
+          <div id="routeResults" class="results"></div>
           <div id="routeEmpty" class="empty" style="display:none;">No hay rutas para mostrar.</div>
         </div>
       </section>
@@ -483,6 +482,11 @@
             <div class="box box-objetivo"><div class="t">🎯 Objetivo CAJAS FÍSICAS</div><div class="v" id="rdObjetivo">0</div></div>
             <div class="box box-cumplen-premium"><div class="premium-kpi-title">Cumplimiento clientes</div><div class="premium-kpi-value" id="rdCumplen40">0 / 0</div><div class="premium-kpi-sub" id="rdCumplen40Sub">Clientes con score completo</div></div>
           </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div>
+          <div id="routeAlerts"></div>
         </div>
 
         <div class="panel">
@@ -798,6 +802,30 @@
       return `Cliente cerró ${m} por debajo de 60 puntos`;
     }
 
+
+
+    function getAvancePuntosStyle(points, maxPoints){
+      const p = Number(points || 0);
+      const max = Number(maxPoints || 40);
+      const pct = max > 0 ? (p / max) * 100 : 0;
+      if(pct >= 80) return {
+        bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)', border:'#86efac', color:'#15803d',
+        tag:'PUNTAJE EXCELENTE', icon:'✅', rango:'verde', pct
+      };
+      if(pct >= 70) return {
+        bg:'linear-gradient(180deg,#ffedd5,#fed7aa)', border:'#fb923c', color:'#ea580c',
+        tag:'PUNTAJE MEDIO', icon:'⚠️', rango:'naranja', pct
+      };
+      if(pct >= 60) return {
+        bg:'linear-gradient(180deg,#fef9c3,#fde68a)', border:'#facc15', color:'#a16207',
+        tag:'PUNTAJE BAJO', icon:'⚠️', rango:'amarillo', pct
+      };
+      return {
+        bg:'linear-gradient(180deg,#fee2e2,#fecaca)', border:'#fca5a5', color:'#dc2626',
+        tag:'PUNTAJE CRÍTICO', icon:'🚨', rango:'rojo', pct
+      };
+    }
+
     async function loadHistorico(){
       try{
         const raw = await fetchCSV(CSV_HISTORICO);
@@ -1022,77 +1050,46 @@ String(
     function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
     function renderRoutes(){
-      const selectEl = document.getElementById('routeSelect');
-      const preview = document.getElementById('routeSelectedPreview');
-      const empty = document.getElementById('routeEmpty');
-      const btn = document.getElementById('enterRouteBtn');
-      if(!selectEl || !preview || !empty || !btn) return;
+      const q = normalizeKey(document.getElementById('routeSearch').value);
+      const sort = document.getElementById('routeSort').value;
 
-      let data = [...state.routes];
-      data.sort((a,b)=> {
+      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
+
+      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
+      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
+      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
+      else data.sort((a,b)=> {
         const ar = Number(a.ruta), br = Number(b.ruta);
         if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
         return String(a.ruta).localeCompare(String(b.ruta), 'es');
       });
 
-      const selectedBefore = selectEl.value || state.selectedRoute || '';
-      selectEl.innerHTML = '<option value="">Seleccionar ruta</option>' + data.map(r => {
-        const label = `Ruta ${r.ruta}${r.vendedor ? ' · ' + r.vendedor : ''}`;
-        return `<option value="${escapeHtml(r.ruta)}">${escapeHtml(label)}</option>`;
-      }).join('');
-
-      if(selectedBefore && data.some(r => String(r.ruta) === String(selectedBefore))){
-        selectEl.value = selectedBefore;
-        state.selectedRoute = selectedBefore;
-      }else{
-        selectEl.value = '';
-        state.selectedRoute = '';
-      }
-
-      if(!data.length){
-        preview.innerHTML = '';
-        empty.style.display = 'block';
-        empty.textContent = 'No hay rutas para seleccionar.';
-        btn.disabled = true;
-        return;
-      }
-
+      const box = document.getElementById('routeResults');
+      const empty = document.getElementById('routeEmpty');
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
       empty.style.display = 'none';
-      const route = data.find(r => String(r.ruta) === String(selectEl.value));
-      btn.disabled = !route;
 
-      if(!route){
-        preview.innerHTML = '<div class="empty">Seleccioná una ruta para ver el resumen y entrar al detalle.</div>';
-        return;
-      }
-
-      const puntosRuta = route.clients > 0 ? route.rows.reduce((a,c)=> a + c.totalPuntos, 0) / route.clients : 0;
-      const clientesCumplen40 = route.rows.filter(c => c.totalPuntos >= 40).length;
-      const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
-
-      preview.innerHTML = `
-        <div class="item client-card" onclick="openRouteDetail('${escapeHtml(route.ruta)}')">
-          <div class="client-head">
-            <div>
-              <div class="item-title">Ruta ${escapeHtml(route.ruta)}</div>
-              <div class="item-meta">
-                Vendedor: ${escapeHtml(route.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(route.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(route.real)} CAJAS FÍSICAS<br>
-                ✅ Cumplen: ${clientesCumplen40} de ${route.clients} clientes
+      box.innerHTML = data.map(r => {
+        const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0;
+        const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
+        const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
+        return `
+          <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
+            <div class="client-head">
+              <div>
+                <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
+                <div class="item-meta">
+                  Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
+                  🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
+                  ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
+                </div>
+                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
               </div>
-              <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
+              <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
             </div>
-            <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
           </div>
-        </div>
-      `;
-    }
-
-    function enterSelectedRoute(){
-      const selectEl = document.getElementById('routeSelect');
-      const ruta = selectEl ? selectEl.value : '';
-      if(!ruta) return;
-      openRouteDetail(ruta);
+        `;
+      }).join('');
     }
 
     function openRouteDetail(ruta){
@@ -1124,6 +1121,14 @@ String(
       box.style.background = bgColor;
       box.style.border = `1px solid ${borderColor}`;
       box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
+
+      const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
+      document.getElementById('routeAlerts').innerHTML = routeAlerts.length ? routeAlerts.map(c => `
+        <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+          <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
+          🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
+        </div>
+      `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
 
       document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
@@ -1195,25 +1200,10 @@ String(
       `;
 
       const maxPuntos = client.categories.length * 5;
-      const historicoCliente = getHistoricoCliente(client);
-      const maxCierre = historicoCliente ? 100 : maxPuntos;
-      const puntosCierre = historicoCliente ? historicoCliente.puntos : client.totalPuntos;
-      const mesCierre = state.selectedMesHistorico || state.mesesHistorico[0] || 'Mes anterior';
-      const cierreStyle = getCierreStyle(puntosCierre);
-      const cierreTexto = getCierreText(puntosCierre, mesCierre);
-      const mesesOptions = (state.mesesHistorico.length ? state.mesesHistorico : [mesCierre]).map(m => `<option value="${escapeHtml(m)}" ${normalizeKey(m) === normalizeKey(mesCierre) ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('');
-      const detalleHistorico = historicoCliente ? `
-        <div class="historico-note">
-          <b>Detalle del cierre:</b><br>
-          📦 Volumen: <b>${formatNumber(historicoCliente.volumen)}</b> pts ·
-          🧾 Referencias: <b>${formatNumber(historicoCliente.referencias)}</b> pts ·
-          💡 Pedido sugerido: <b>${formatNumber(historicoCliente.pedidoSugerido)}</b> pts ·
-          ✅ Ejecución: <b>${formatNumber(historicoCliente.ejecucion)}</b> pts<br>
-          Nivel: <b>${escapeHtml(historicoCliente.nivel || '-')}</b> · Condición: <b>${escapeHtml(historicoCliente.condicion || '-')}</b>
-        </div>` : `
-        <div class="historico-note">
-          No se encontró este cliente en el cierre histórico. Se muestra el score actual calculado por la app.
-        </div>`;
+      const puntosAvance = Number(client.totalPuntos || 0);
+      const avanceStyle = getAvancePuntosStyle(puntosAvance, maxPuntos);
+      const avancePct = clamp(avanceStyle.pct, 0, 100);
+      const avanceTexto = `El cliente actualmente se encuentra en rango ${avanceStyle.rango} según su puntaje total de avance.`;
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
@@ -1229,25 +1219,20 @@ String(
           <div class="v">🏅 ${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
         </div>
 
-        <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
-          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">CIERRE DE PUNTOS DEL MES ANTERIOR</div>
-          <div class="historico-grid">
-            <div class="historico-select" style="margin:0;">
-              <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
-            </div>
-            <div class="historico-main" style="color:${cierreStyle.color};">
-              <div style="font-size:14px;font-weight:900;">Cierre ${escapeHtml(mesCierre)}</div>
-              <div class="score-value" style="color:${cierreStyle.color};font-size:42px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
-              <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:13px;">${cierreStyle.tag}</div>
-            </div>
-            <div class="historico-legend">
-              <div><span class="dot dot-green"></span>80 o más puntos: Cierre excelente</div>
-              <div><span class="dot dot-orange"></span>70 a 79 puntos: Cierre medio</div>
-              <div><span class="dot dot-yellow"></span>60 a 69 puntos: Cierre bajo</div>
-            </div>
+        <div class="box historico-panel" style="background:${avanceStyle.bg}; border:1px solid ${avanceStyle.border};">
+          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">PUNTAJE TOTAL DE AVANCE</div>
+          <div class="historico-main" style="color:${avanceStyle.color}; margin-top:14px;">
+            <div style="font-size:14px;font-weight:900;">Puntaje actual del cliente</div>
+            <div class="score-value" style="color:${avanceStyle.color};font-size:46px;">${formatNumber(puntosAvance)} / ${maxPuntos}</div>
+            <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${avanceStyle.color};color:#fff;font-weight:900;font-size:13px;">${avanceStyle.tag}</div>
           </div>
-          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${cierreStyle.border};font-size:15px;font-weight:900;color:${cierreStyle.color};">${cierreStyle.icon} ${cierreTexto}</div>
-          ${detalleHistorico}
+          <div style="margin-top:16px;background:rgba(255,255,255,.65);border-radius:999px;height:18px;overflow:hidden;border:1px solid ${avanceStyle.border};">
+            <div style="width:${avancePct}%;height:100%;background:${avanceStyle.color};border-radius:999px;transition:width .35s ease;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;font-weight:900;color:#666;">
+            <span>0</span><span>${formatPct(avancePct)}</span><span>${maxPuntos} pts</span>
+          </div>
+          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${avanceStyle.border};font-size:15px;font-weight:900;color:${avanceStyle.color};">${avanceStyle.icon} ${avanceTexto}</div>
         </div>
 
         <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
@@ -1371,7 +1356,8 @@ String(
 
     function bind(){
       document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-      document.getElementById('routeSelect').addEventListener('change', function(){ state.selectedRoute = this.value; renderRoutes(); });
+      document.getElementById('routeSearch').addEventListener('input', renderRoutes);
+      document.getElementById('routeSort').addEventListener('change', renderRoutes);
       document.getElementById('clientSearch').addEventListener('input', renderClients);
       document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
       document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
