@@ -1,370 +1,351 @@
-# HTML — Dashboard Volumen Mobile PRO
+# HTML completo — Dashboard Volumen PRO
 
 ```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Dashboard Volumen PRO</title>
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,Helvetica,sans-serif;
+:root{
+  --red:#e30613;
+  --red-dark:#b80009;
+  --green:#16a34a;
+  --orange:#f97316;
+  --yellow:#eab308;
+  --bad:#dc2626;
+  --bg:#f4f4f4;
+  --card:#ffffff;
+  --text:#111111;
+  --muted:#666666;
+  --line:#eeeeee;
+  --shadow:0 12px 28px rgba(0,0,0,.12);
+  --radius:24px;
 }
 
-body{
-  background:#f2f2f2;
-  color:#111;
-}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+html,body{background:#e9e9e9;color:var(--text);min-height:100vh}
+body{max-width:520px;margin:0 auto;background:#f8f8f8;padding-bottom:92px;overflow-x:hidden}
+button,input,select{font-family:inherit}
 
-.app{
-  max-width:500px;
-  margin:auto;
-  min-height:100vh;
-  background:#fff;
-}
+.app{min-height:100vh;background:#f8f8f8}
+.page{display:none;padding:0 16px 18px}
+.page.active{display:block}
 
-.header{
-  background:linear-gradient(180deg,#e30613,#b80009);
+/* HEADER */
+.hero{
+  background:linear-gradient(180deg,#f5141d 0%,#e30613 60%,#b80009 100%);
   color:#fff;
-  padding:22px 18px 80px;
-  border-bottom-left-radius:40px;
-  border-bottom-right-radius:40px;
+  padding:22px 18px 72px;
+  border-bottom-left-radius:38px;
+  border-bottom-right-radius:38px;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
 }
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.logo{font-size:26px;font-weight:900;font-style:italic;letter-spacing:-1px}
+.user{width:44px;height:44px;border-radius:50%;background:#fff;color:var(--red);display:grid;place-items:center;font-size:24px;font-weight:900}
+.hero h1{font-size:27px;line-height:1.05;margin-top:20px}
+.hero p{font-size:13px;margin-top:8px;opacity:.95}
 
-.header h1{
-  font-size:28px;
-  margin-top:14px;
+/* HOME */
+.home-kpis{margin-top:-52px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.kpi{
+  background:var(--card);
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:22px;
+  padding:16px 14px;
+  box-shadow:var(--shadow);
+  min-height:118px;
 }
+.kpi .ico{font-size:28px;margin-bottom:8px}
+.kpi .label{font-size:12px;font-weight:800;color:#333}
+.kpi .num{font-size:30px;font-weight:900;margin-top:8px}
+.kpi .sub{font-size:11px;color:#555;margin-top:2px}
+.kpi.red-soft{background:#fff1f1}.kpi.green-soft{background:#effdf4}.kpi.blue-soft{background:#eff6ff}.kpi.yellow-soft{background:#fff8e6}
 
-.header p{
-  opacity:.9;
-  margin-top:6px;
-}
-
-.cards{
-  margin-top:-55px;
-  padding:0 16px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-}
-
-.card{
+.panel{
   background:#fff;
+  border:1px solid rgba(0,0,0,.06);
   border-radius:24px;
-  padding:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-.card small{
-  color:#666;
-  font-weight:bold;
-}
-
-.card h2{
-  font-size:32px;
-  margin-top:10px;
-}
-
-.full-card{
-  margin:16px;
-  background:#fff;
-  border-radius:24px;
-  padding:18px;
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-}
-
-.route{
-  border:1px solid #eee;
-  border-radius:20px;
   padding:16px;
-  margin-top:14px;
-}
-
-.route-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.route h3{
-  font-size:22px;
-}
-
-.badge{
-  padding:8px 14px;
-  border-radius:999px;
-  font-weight:bold;
-  color:#fff;
-}
-
-.green{
-  background:#16a34a;
-}
-
-.orange{
-  background:#f97316;
-}
-
-.red{
-  background:#dc2626;
-}
-
-.progress{
-  height:12px;
-  background:#eee;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:14px;
-}
-
-.progress span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,#16a34a,#22c55e);
-}
-
-.metrics{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr;
-  gap:10px;
   margin-top:16px;
+  box-shadow:var(--shadow);
 }
-
-.metric{
-  background:#fafafa;
-  border-radius:16px;
-  padding:12px;
-  text-align:center;
-}
-
-.metric small{
-  color:#666;
-}
-
-.metric h4{
-  margin-top:6px;
-  font-size:24px;
-}
-
-.client-card{
-  margin-top:16px;
-  border:1px solid #eee;
-  border-radius:20px;
-  padding:16px;
-}
-
-.client-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.client-name{
-  font-size:22px;
-  font-weight:bold;
-}
-
-.category{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 0;
-  border-bottom:1px solid #eee;
-}
-
-.category:last-child{
-  border:none;
-}
-
-.whatsapp{
+.panel h2{font-size:22px;margin-bottom:4px}
+.panel-sub{font-size:13px;color:var(--muted);line-height:1.35}
+.main-btn{
   width:100%;
   border:none;
-  background:#16a34a;
+  border-radius:999px;
+  background:linear-gradient(180deg,#f5141d,#d4000b);
   color:#fff;
-  padding:18px;
-  border-radius:20px;
-  margin-top:20px;
+  padding:17px 18px;
   font-size:18px;
-  font-weight:bold;
+  font-weight:900;
+  margin-top:16px;
+  box-shadow:0 10px 22px rgba(227,6,19,.26);
+  cursor:pointer;
 }
+.alert-list{margin-top:12px;border:1px solid #ffd1d1;border-radius:18px;overflow:hidden;background:#fff8f8}
+.alert-row{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;border-bottom:1px solid #ffe0e0;font-size:14px}
+.alert-row:last-child{border-bottom:none}
+.alert-row b{color:var(--red)}
 
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  max-width:500px;
-  margin:auto;
-  background:#fff;
-  border-top:1px solid #eee;
+/* TOP BAR */
+.topbar{
+  background:linear-gradient(180deg,#f5141d,#d4000b);
+  color:#fff;
+  margin:0 -16px 16px;
+  padding:16px;
   display:grid;
-  grid-template-columns:1fr 1fr 1fr 1fr;
-  padding:14px 0;
+  grid-template-columns:42px 1fr 42px;
+  align-items:center;
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
 }
+.topbar h2{text-align:center;font-size:18px}
+.icon-btn{border:none;background:transparent;color:#fff;font-size:28px;cursor:pointer}
 
-.bottom-nav div{
-  text-align:center;
-  font-size:14px;
-  font-weight:bold;
-}
+.search{width:100%;height:44px;border:1px solid #ddd;border-radius:16px;background:#fff;padding:0 14px;font-size:14px;outline:none;margin-bottom:12px}
+.filter-pills{display:flex;gap:8px;overflow:auto;padding-bottom:4px;margin-bottom:12px}
+.pill{border:none;padding:9px 12px;border-radius:999px;background:#fff;border:1px solid #eee;color:#333;font-size:12px;font-weight:900;white-space:nowrap}
+.pill.active{background:var(--red);border-color:var(--red);color:#fff}
 
-.active{
-  color:#e30613;
+/* ROUTES */
+.route-card,.client-card,.detail-card{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.07);
+  border-radius:22px;
+  padding:16px;
+  margin-top:12px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  cursor:pointer;
 }
+.route-head,.client-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.route-title,.client-title{font-size:18px;font-weight:900;line-height:1.15}
+.meta{font-size:12px;color:#555;margin-top:4px;line-height:1.35}
+.badge{display:inline-block;border-radius:999px;padding:8px 11px;color:#fff;font-weight:900;font-size:12px;white-space:nowrap}
+.badge.green{background:var(--green)}.badge.orange{background:var(--orange)}.badge.yellow{background:var(--yellow)}.badge.red{background:var(--bad)}
+.progress{height:10px;border-radius:999px;background:#e5e5e5;margin-top:13px;overflow:hidden}
+.progress span{display:block;height:100%;border-radius:999px}
+.progress.green span{background:linear-gradient(90deg,#16a34a,#22c55e)}
+.progress.orange span{background:linear-gradient(90deg,#f97316,#fb923c)}
+.progress.yellow span{background:linear-gradient(90deg,#eab308,#fde047)}
+.progress.red span{background:linear-gradient(90deg,#dc2626,#ef4444)}
+.route-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.mini-kpi{background:#fafafa;border-radius:16px;padding:12px 8px;text-align:center;border:1px solid #f0f0f0}
+.mini-kpi .t{font-size:11px;color:#555;line-height:1.15}.mini-kpi .v{font-size:20px;font-weight:900;margin-top:5px}.mini-kpi .green-t{color:var(--green)}.mini-kpi .orange-t{color:var(--orange)}.mini-kpi .red-t{color:var(--bad)}
+.bottom-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;font-size:12px;color:#333}
+.bottom-info div{display:flex;gap:6px;align-items:center}
+
+/* CLIENTS */
+.client-status{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px;flex:0 0 auto}.client-status.ok{background:var(--green)}.client-status.mid{background:var(--orange)}.client-status.bad{background:var(--bad)}
+.client-main{display:flex;gap:10px;align-items:flex-start;min-width:0}.client-data{min-width:0;flex:1}.arrow{font-size:26px;color:#777;align-self:center}
+
+/* DETAIL */
+.detail-card{cursor:default}
+.store-icon{width:74px;height:74px;border-radius:50%;background:#ffe4e6;color:var(--red);display:grid;place-items:center;font-size:40px;flex:0 0 auto}
+.detail-top{display:flex;align-items:center;gap:14px;border:1px solid #eee;border-radius:20px;padding:14px;margin-bottom:12px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
+.big-kpi{border-radius:18px;padding:14px 10px;text-align:center;border:1px solid #eee;background:#fafafa;min-height:104px}.big-kpi .ico{font-size:24px}.big-kpi .t{font-size:11px;margin-top:6px}.big-kpi .v{font-size:22px;font-weight:900;margin-top:6px}.big-kpi.obj{background:#f8fbff}.big-kpi.av{background:#effdf4;color:var(--green)}.big-kpi.pts{background:#fff8e6;color:#111}
+.gauge{margin-top:14px;text-align:center;border:1px solid #eee;border-radius:22px;padding:16px;background:#fff}.gauge-title{font-weight:900;margin-bottom:12px}.gauge-circle{width:170px;height:92px;margin:0 auto;position:relative;overflow:hidden}.gauge-bg,.gauge-fill{position:absolute;left:0;top:0;width:170px;height:170px;border-radius:50%;border:18px solid #e5e5e5;border-bottom-color:transparent;border-left-color:transparent;transform:rotate(-135deg)}.gauge-fill{border-color:var(--green);border-bottom-color:transparent;border-left-color:transparent;transform:rotate(-135deg)}.gauge-num{font-size:42px;font-weight:900;color:var(--green);margin-top:-18px}.gauge-sub{font-size:13px;color:#555}.gauge-good{font-size:14px;font-weight:900;color:var(--green);margin-top:6px}
+.cat-list{margin-top:14px;border:1px solid #eee;border-radius:18px;overflow:hidden}.cat-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid #eee}.cat-row:last-child{border-bottom:none}.cat-name{font-weight:800}.cat-sub{font-size:12px;color:#555;margin-top:3px}
+.whatsapp{width:100%;border:none;border-radius:20px;background:linear-gradient(180deg,#25d366,#16a34a);color:#fff;padding:17px;font-size:17px;font-weight:900;margin-top:16px;cursor:pointer}
+
+/* FLOW */
+.flow{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:16px}.flow-step{border:1px solid #eee;background:#fff;border-radius:18px;text-align:center;padding:12px 6px;font-size:11px}.flow-step .ficon{font-size:28px;color:var(--red);display:block;margin-bottom:5px}.flow-step b{display:block;font-size:11px}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(520px,100%);background:#fff;border-top:1px solid #ddd;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px 10px;z-index:99;box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+.nav-btn{border:none;background:transparent;border-radius:16px;padding:8px 4px;color:#111;font-size:12px;font-weight:800;cursor:pointer}.nav-btn span{font-size:24px;display:block;margin-bottom:3px}.nav-btn.active{color:var(--red);background:#fff2f2}
+
+@media(max-width:380px){.hero h1{font-size:24px}.kpi .num{font-size:26px}.route-metrics,.summary-grid{gap:6px}.mini-kpi .v{font-size:18px}.big-kpi .v{font-size:19px}}
 </style>
 </head>
 <body>
-
 <div class="app">
 
-  <div class="header">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg" width="130">
-    <h1>Dashboard Volumen PRO</h1>
-    <p>Resumen ejecutivo de volumen y avance de puntos</p>
-  </div>
-
-  <div class="cards">
-    <div class="card">
-      <small>Rutas</small>
-      <h2>12</h2>
+  <!-- INICIO -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="hero-top">
+        <div class="logo">Coca-Cola</div>
+        <div class="user">👤</div>
+      </div>
+      <h1>¡Hola, Juan!</h1>
+      <p>Bienvenido a tu tablero comercial</p>
     </div>
 
-    <div class="card">
-      <small>Clientes</small>
-      <h2>156</h2>
+    <div class="home-kpis">
+      <div class="kpi red-soft"><div class="ico">📍</div><div class="label">Rutas</div><div class="num">12</div><div class="sub">Totales</div></div>
+      <div class="kpi green-soft"><div class="ico">👥</div><div class="label">Clientes</div><div class="num">156</div><div class="sub">Totales</div></div>
+      <div class="kpi blue-soft"><div class="ico">🎯</div><div class="label">Objetivo CF</div><div class="num">28.560</div><div class="sub">Cajas físicas</div></div>
+      <div class="kpi yellow-soft"><div class="ico">📈</div><div class="label">Avance CF</div><div class="num">21.645</div><div class="sub">75,7% del objetivo</div></div>
     </div>
 
-    <div class="card">
-      <small>Objetivo CF</small>
-      <h2>28.560</h2>
+    <div class="panel">
+      <h2>Alertas importantes</h2>
+      <p class="panel-sub">Prioridades para accionar en la calle.</p>
+      <div class="alert-list">
+        <div class="alert-row"><span>Clientes en riesgo</span><b>5 ›</b></div>
+        <div class="alert-row"><span>Sin venta en el mes</span><b>2 ›</b></div>
+        <div class="alert-row"><span>Bajo avance de puntos</span><b>1 ›</b></div>
+      </div>
+      <button class="main-btn" onclick="goTo('routes')">Ver rutas →</button>
     </div>
 
-    <div class="card">
-      <small>Avance CF</small>
-      <h2>21.645</h2>
-    </div>
-  </div>
-
-  <div class="full-card">
-    <h2>Rutas</h2>
-
-    <div class="route">
-      <div class="route-top">
-        <h3>Ruta Centro</h3>
-        <div class="badge green">Excelente</div>
-      </div>
-
-      <div class="progress">
-        <span style="width:82%"></span>
-      </div>
-
-      <div class="metrics">
-        <div class="metric">
-          <small>Objetivo</small>
-          <h4>8500</h4>
-        </div>
-
-        <div class="metric">
-          <small>Avance</small>
-          <h4>6620</h4>
-        </div>
-
-        <div class="metric">
-          <small>Avance de puntos</small>
-          <h4>82</h4>
-        </div>
+    <div class="panel">
+      <h2>Flujo de gestión</h2>
+      <p class="panel-sub">Inicio → Rutas → Clientes → Detalle del cliente</p>
+      <div class="flow">
+        <div class="flow-step"><span class="ficon">🏠</span><b>INICIO</b>Resumen</div>
+        <div class="flow-step"><span class="ficon">🗺️</span><b>RUTAS</b>Desempeño</div>
+        <div class="flow-step"><span class="ficon">👥</span><b>CLIENTES</b>Por ruta</div>
+        <div class="flow-step"><span class="ficon">🏪</span><b>DETALLE</b>Avance</div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="full-card">
-    <h2>Detalle del cliente</h2>
-
-    <div class="client-card">
-
-      <div class="client-head">
-        <div>
-          <div class="client-name">Autoservicio El Sol</div>
-          <small>Nivel ORO</small>
-        </div>
-
-        <div class="badge green">92%</div>
-      </div>
-
-      <div class="metrics">
-        <div class="metric">
-          <small>Objetivo</small>
-          <h4>1200</h4>
-        </div>
-
-        <div class="metric">
-          <small>Avance</small>
-          <h4>1104</h4>
-        </div>
-
-        <div class="metric">
-          <small>Avance de puntos</small>
-          <h4>92</h4>
-        </div>
-      </div>
-
-      <div class="category">
-        <div>
-          <b>Volumen</b><br>
-          <small>25 / 25</small>
-        </div>
-        <div class="badge green">OK</div>
-      </div>
-
-      <div class="category">
-        <div>
-          <b>Referencias</b><br>
-          <small>22 / 25</small>
-        </div>
-        <div class="badge orange">Medio</div>
-      </div>
-
-      <div class="category">
-        <div>
-          <b>Pedido sugerido</b><br>
-          <small>25 / 25</small>
-        </div>
-        <div class="badge green">OK</div>
-      </div>
-
-      <button class="whatsapp">
-        Compartir por WhatsApp
-      </button>
-
+  <!-- RUTAS -->
+  <section id="routes" class="page">
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('home')">‹</button>
+      <h2>Rutas</h2>
+      <button class="icon-btn">⌕</button>
     </div>
-  </div>
+    <input class="search" placeholder="Buscar ruta..." />
+
+    <div class="route-card" onclick="goTo('clients')">
+      <div class="route-head"><div><div class="route-title">Ruta Centro</div><div class="meta">Vendedor: Juan Pérez</div></div><span class="badge green">Excelente</span></div>
+      <div class="progress green"><span style="width:82%"></span></div>
+      <div class="route-metrics"><div class="mini-kpi"><div class="t">Objetivo CF</div><div class="v">8.500</div></div><div class="mini-kpi"><div class="t">Avance CF</div><div class="v green-t">6.620</div><div class="t green-t">77,9%</div></div><div class="mini-kpi"><div class="t">Avance de puntos</div><div class="v green-t">82 / 100</div></div></div>
+      <div class="bottom-info"><div>👥 Clientes 28</div><div>✅ Cumplen 18 (64%)</div></div>
+    </div>
+
+    <div class="route-card" onclick="goTo('clients')">
+      <div class="route-head"><div><div class="route-title">Ruta Norte</div><div class="meta">Vendedor: María López</div></div><span class="badge orange">Medio</span></div>
+      <div class="progress orange"><span style="width:71%"></span></div>
+      <div class="route-metrics"><div class="mini-kpi"><div class="t">Objetivo CF</div><div class="v">7.200</div></div><div class="mini-kpi"><div class="t">Avance CF</div><div class="v orange-t">5.010</div><div class="t orange-t">69,6%</div></div><div class="mini-kpi"><div class="t">Avance de puntos</div><div class="v orange-t">71 / 100</div></div></div>
+      <div class="bottom-info"><div>👥 Clientes 24</div><div>✅ Cumplen 12 (50%)</div></div>
+    </div>
+
+    <div class="route-card" onclick="goTo('clients')">
+      <div class="route-head"><div><div class="route-title">Ruta Sur</div><div class="meta">Vendedor: Carlos Gómez</div></div><span class="badge yellow">Bajo</span></div>
+      <div class="progress yellow"><span style="width:58%"></span></div>
+      <div class="route-metrics"><div class="mini-kpi"><div class="t">Objetivo CF</div><div class="v">6.800</div></div><div class="mini-kpi"><div class="t">Avance CF</div><div class="v orange-t">4.380</div><div class="t orange-t">64,4%</div></div><div class="mini-kpi"><div class="t">Avance de puntos</div><div class="v orange-t">58 / 100</div></div></div>
+      <div class="bottom-info"><div>👥 Clientes 22</div><div>✅ Cumplen 8 (36%)</div></div>
+    </div>
+  </section>
+
+  <!-- CLIENTES -->
+  <section id="clients" class="page">
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('routes')">‹</button>
+      <h2>Clientes</h2>
+      <button class="icon-btn">⌕</button>
+    </div>
+    <p class="panel-sub" style="margin-bottom:8px"><b>Ruta:</b> RUTA CENTRO</p>
+    <input class="search" placeholder="Buscar cliente..." />
+    <div class="filter-pills"><button class="pill active">Todos (28)</button><button class="pill">Cumplen (18)</button><button class="pill">En riesgo (6)</button><button class="pill">No cumplen (4)</button></div>
+
+    <div class="client-card" onclick="goTo('detail')">
+      <div class="client-head"><div class="client-main"><div class="client-status ok">✓</div><div class="client-data"><div class="client-title">Autoservicio El Sol</div><div class="meta">Nivel: ORO</div></div></div><div class="arrow">›</div></div>
+      <div class="route-metrics"><div class="mini-kpi"><div class="t">Avance CF</div><div class="v green-t">92%</div></div><div class="mini-kpi"><div class="t">Avance de puntos</div><div class="v green-t">92 / 100</div></div><div class="mini-kpi"><div class="t">Estado</div><div class="v green-t">OK</div></div></div>
+      <div class="progress green"><span style="width:92%"></span></div>
+    </div>
+
+    <div class="client-card" onclick="goTo('detail')">
+      <div class="client-head"><div class="client-main"><div class="client-status mid">!</div><div class="client-data"><div class="client-title">Kiosco San Martín</div><div class="meta">Nivel: PLATA</div></div></div><div class="arrow">›</div></div>
+      <div class="route-metrics"><div class="mini-kpi"><div class="t">Avance CF</div><div class="v orange-t">72%</div></div><div class="mini-kpi"><div class="t">Avance de puntos</div><div class="v orange-t">72 / 100</div></div><div class="mini-kpi"><div class="t">Estado</div><div class="v orange-t">Medio</div></div></div>
+      <div class="progress orange"><span style="width:72%"></span></div>
+    </div>
+
+    <div class="client-card" onclick="goTo('detail')">
+      <div class="client-head"><div class="client-main"><div class="client-status bad">×</div><div class="client-data"><div class="client-title">Despensa La Familia</div><div class="meta">Nivel: BRONCE</div></div></div><div class="arrow">›</div></div>
+      <div class="route-metrics"><div class="mini-kpi"><div class="t">Avance CF</div><div class="v red-t">48%</div></div><div class="mini-kpi"><div class="t">Avance de puntos</div><div class="v red-t">48 / 100</div></div><div class="mini-kpi"><div class="t">Estado</div><div class="v red-t">Bajo</div></div></div>
+      <div class="progress red"><span style="width:48%"></span></div>
+    </div>
+  </section>
+
+  <!-- DETALLE CLIENTE -->
+  <section id="detail" class="page">
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('clients')">‹</button>
+      <h2>Detalle del cliente</h2>
+      <button class="icon-btn">↗</button>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-top">
+        <div class="store-icon">🏪</div>
+        <div><div class="client-title">Autoservicio El Sol</div><div class="meta">Código: 10235<br>Nivel: ORO</div></div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="big-kpi obj"><div class="ico">🎯</div><div class="t">Objetivo CF</div><div class="v">1.200</div></div>
+        <div class="big-kpi av"><div class="ico">📈</div><div class="t">Avance CF</div><div class="v">1.104</div><div class="t">92%</div></div>
+        <div class="big-kpi pts"><div class="ico">⭐</div><div class="t">Avance de puntos</div><div class="v">92 / 100</div><span class="badge green" style="margin-top:6px">Excelente</span></div>
+      </div>
+
+      <div class="gauge">
+        <div class="gauge-title">Avance de puntos</div>
+        <div class="gauge-circle"><div class="gauge-bg"></div><div class="gauge-fill"></div></div>
+        <div class="gauge-num">92</div>
+        <div class="gauge-sub">de 100 puntos</div>
+        <div class="gauge-good">EXCELENTE</div>
+      </div>
+
+      <div class="panel-sub" style="margin-top:14px"><b>Detalle por categoría</b></div>
+      <div class="cat-list">
+        <div class="cat-row"><div><div class="cat-name">Volumen</div><div class="cat-sub">25 / 25</div></div><span class="badge green">OK</span></div>
+        <div class="cat-row"><div><div class="cat-name">Referencias</div><div class="cat-sub">22 / 25</div></div><span class="badge orange">Medio</span></div>
+        <div class="cat-row"><div><div class="cat-name">Pedido sugerido</div><div class="cat-sub">25 / 25</div></div><span class="badge green">OK</span></div>
+        <div class="cat-row"><div><div class="cat-name">Ejecución</div><div class="cat-sub">20 / 25</div></div><span class="badge orange">Medio</span></div>
+      </div>
+
+      <button class="whatsapp">💬 Compartir por WhatsApp</button>
+    </div>
+  </section>
+
+  <!-- ALERTAS -->
+  <section id="alerts" class="page">
+    <div class="topbar">
+      <button class="icon-btn" onclick="goTo('home')">‹</button>
+      <h2>Alertas</h2>
+      <button class="icon-btn">⌕</button>
+    </div>
+    <div class="panel">
+      <h2>Alertas importantes</h2>
+      <p class="panel-sub">Clientes con bajo avance o riesgo de no cierre.</p>
+      <div class="alert-list">
+        <div class="alert-row"><span>Despensa La Familia</span><b>48 pts</b></div>
+        <div class="alert-row"><span>Kiosco San Martín</span><b>72 pts</b></div>
+        <div class="alert-row"><span>Cliente sin venta</span><b>0 pts</b></div>
+      </div>
+    </div>
+  </section>
 
 </div>
 
-<div class="bottom-nav">
-  <div class="active">Inicio</div>
-  <div>Rutas</div>
-  <div>Alertas</div>
-  <div>Perfil</div>
-</div>
+<nav class="bottom-nav">
+  <button id="nav-home" class="nav-btn active" onclick="goTo('home')"><span>🏠</span>Inicio</button>
+  <button id="nav-routes" class="nav-btn" onclick="goTo('routes')"><span>🗺️</span>Rutas</button>
+  <button id="nav-alerts" class="nav-btn" onclick="goTo('alerts')"><span>🔔</span>Alertas</button>
+  <button id="nav-profile" class="nav-btn" onclick="goTo('home')"><span>👤</span>Perfil</button>
+</nav>
 
+<script>
+function goTo(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const nav = document.getElementById('nav-' + page);
+  if(nav) nav.classList.add('active');
+  if(page === 'clients') document.getElementById('nav-routes').classList.add('active');
+  if(page === 'detail') document.getElementById('nav-routes').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
 </body>
 </html>
 ```
-
-Cambios incluidos:
-
-* Diseño tipo app premium.
-* Navegación pantalla por pantalla.
-* Cambio de “Cierre de puntos” → “Avance de puntos”.
-* Tarjetas más visuales.
-* Botones grandes.
-* Indicadores más accesibles.
-* Semáforo visual.
-* Compatible mobile.
-* Estilo Coca-Cola PRO.
