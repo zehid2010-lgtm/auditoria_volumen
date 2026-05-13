@@ -875,7 +875,23 @@
         const ruta = String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
         const vendedor = getCell(r,'VENDEDOR','Vendedor');
         const repositor = getCell(r,'REPOSITOR','Repositor');
-        const telefono = getCell(r,'TELEFONO','TELÉFONO','Telefono','teléfono','CELULAR','Celular','WHATSAPP','Whatsapp');
+        const telefono =
+String(
+  getCell(
+    r,
+    'TELEFONO',
+    'TELÉFONO',
+    'Telefono',
+    'teléfono',
+    ' TELEFONO ',
+    'TELEFONO ',
+    ' TELEFONO',
+    'CELULAR',
+    'Celular',
+    'WHATSAPP',
+    'Whatsapp'
+  ) || ''
+).trim();
 
         const categories = CATEGORY_CONFIG.map(cat => {
           const objetivo = detectObjectiveValue(r, cat.keys);
@@ -1214,7 +1230,7 @@
           ${detalleHistorico}
         </div>
 
-        <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">📲 Compartir avance por WhatsApp</button></div>
+        <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
       `;
 
       const cats = document.getElementById('clientCategories');
@@ -1346,32 +1362,19 @@
     function normalizarTelefonoAR(raw){
       let tel = String(raw || '').replace(/\D/g,'');
       if(!tel) return '';
-
-      // Si ya viene con código país argentino, lo respetamos.
       if(tel.startsWith('549')) return tel;
-      if(tel.startsWith('54')) return tel;
-
-      // Si viene con 0 adelante, lo quitamos.
+      if(tel.startsWith('54')) return '9' + tel;
+      if(tel.startsWith('9')) return '54' + tel;
       if(tel.startsWith('0')) tel = tel.replace(/^0+/, '');
-
-      // Para celulares argentinos, WhatsApp usa 54 + 9 + número local.
       return '549' + tel;
     }
 
     function enviarWhatsAppCliente(key){
       const client = state.clients.find(c => c.key === key);
-
-      if(!client){
-        alert('No se encontró el cliente');
-        return;
-      }
-
+      if(!client){ alert('No se encontró el cliente'); return; }
+      if(!client.telefono || !String(client.telefono).trim()){ alert('Este cliente no tiene teléfono cargado en la base'); return; }
       const telefono = normalizarTelefonoAR(client.telefono);
-
-      if(!telefono){
-        alert('Este cliente no tiene teléfono cargado en la base');
-        return;
-      }
+      if(!telefono){ alert('El teléfono del cliente no es válido'); return; }
 
       const objetivo = Number(client.totalObjetivo || 0);
       const avance = Number(client.totalReal || 0);
@@ -1379,14 +1382,8 @@
       const faltante = Math.max(0, objetivo - avance);
 
       const iconos = {
-        'Colas': '🥤',
-        'Agua': '💧',
-        'Bebida Energética': '⚡',
-        'Isotónica': '🏃',
-        'Jugos': '🧃',
-        'Sabores': '🍊',
-        'Saborizada': '🍹',
-        'Multicategoría': '🧺'
+        'Colas': '🥤', 'Agua': '💧', 'Bebida Energética': '⚡', 'Isotónica': '🏃',
+        'Jugos': '🧃', 'Sabores': '🍊', 'Saborizada': '🍹', 'Multicategoría': '🧺'
       };
 
       let detalleCategorias = '';
@@ -1396,9 +1393,7 @@
         detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
       });
 
-      const mensaje =
-`Hola ${client.cliente} 👋\n\nTe compartimos tu avance de volumen actual:\n\n📊 Avance por categoría (cajas físicas):${detalleCategorias}\n\n📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})\n📉 Volumen faltante: ${formatNumber(faltante)} cajas\n\nSeguimos trabajando juntos para cumplir el objetivo. 💪`;
-
+      const mensaje = `Hola ${client.cliente} 👋\n\nTe compartimos tu avance de volumen actual:\n\n📊 Avance por categoría (cajas físicas):${detalleCategorias}\n\n📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})\n📉 Volumen faltante: ${formatNumber(faltante)} cajas\n\nSeguimos trabajando juntos para cumplir el objetivo. 💪`;
       const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
       window.open(url, '_blank');
     }
