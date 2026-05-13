@@ -431,22 +431,23 @@
 
       <section id="page-routes" class="page">
         <div class="tool-header">
-          <h2 class="tool-title">Dashboard por ruta</h2>
-          <p class="tool-sub">Seleccioná una ruta para ver clientes, objetivo, vendido y alertas.</p>
+          <h2 class="tool-title">Ingresar por ruta</h2>
+          <p class="tool-sub">Elegí una ruta con el filtro. No se muestran todas juntas para que la navegación sea más rápida.</p>
         </div>
         <div class="panel">
-          <div class="search-box">
-            <div class="row-2">
-              <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
-              <select id="routeSort">
-                <option value="ruta" selected>Ordenar por ruta</option>
-                <option value="avance">Ordenar por avance</option>
-                <option value="objetivo">Ordenar por objetivo</option>
-                <option value="clientes">Ordenar por clientes</option>
-              </select>
+          <div class="panel-head">
+            <div class="panel-head-left">
+              <div class="panel-icon">🛣️</div>
+              <div><h4>Filtro de ruta</h4><small>Seleccioná la ruta para entrar al detalle.</small></div>
             </div>
           </div>
-          <div id="routeResults" class="results"></div>
+          <div class="search-box">
+            <select id="routeSelect">
+              <option value="">Seleccionar ruta</option>
+            </select>
+            <button id="enterRouteBtn" class="wa-btn" type="button" onclick="enterSelectedRoute()" disabled>Entrar a la ruta seleccionada</button>
+          </div>
+          <div id="routeSelectedPreview" class="results"></div>
           <div id="routeEmpty" class="empty" style="display:none;">No hay rutas para mostrar.</div>
         </div>
       </section>
@@ -482,11 +483,6 @@
             <div class="box box-objetivo"><div class="t">🎯 Objetivo CAJAS FÍSICAS</div><div class="v" id="rdObjetivo">0</div></div>
             <div class="box box-cumplen-premium"><div class="premium-kpi-title">Cumplimiento clientes</div><div class="premium-kpi-value" id="rdCumplen40">0 / 0</div><div class="premium-kpi-sub" id="rdCumplen40Sub">Clientes con score completo</div></div>
           </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div>
-          <div id="routeAlerts"></div>
         </div>
 
         <div class="panel">
@@ -1026,46 +1022,77 @@ String(
     function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
     function renderRoutes(){
-      const q = normalizeKey(document.getElementById('routeSearch').value);
-      const sort = document.getElementById('routeSort').value;
+      const selectEl = document.getElementById('routeSelect');
+      const preview = document.getElementById('routeSelectedPreview');
+      const empty = document.getElementById('routeEmpty');
+      const btn = document.getElementById('enterRouteBtn');
+      if(!selectEl || !preview || !empty || !btn) return;
 
-      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
-
-      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
-      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
-      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
-      else data.sort((a,b)=> {
+      let data = [...state.routes];
+      data.sort((a,b)=> {
         const ar = Number(a.ruta), br = Number(b.ruta);
         if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
         return String(a.ruta).localeCompare(String(b.ruta), 'es');
       });
 
-      const box = document.getElementById('routeResults');
-      const empty = document.getElementById('routeEmpty');
-      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
-      empty.style.display = 'none';
-
-      box.innerHTML = data.map(r => {
-        const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0;
-        const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
-        const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
-        return `
-          <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
-            <div class="client-head">
-              <div>
-                <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
-                <div class="item-meta">
-                  Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
-                  🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
-                  ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
-                </div>
-                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
-              </div>
-              <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
-            </div>
-          </div>
-        `;
+      const selectedBefore = selectEl.value || state.selectedRoute || '';
+      selectEl.innerHTML = '<option value="">Seleccionar ruta</option>' + data.map(r => {
+        const label = `Ruta ${r.ruta}${r.vendedor ? ' · ' + r.vendedor : ''}`;
+        return `<option value="${escapeHtml(r.ruta)}">${escapeHtml(label)}</option>`;
       }).join('');
+
+      if(selectedBefore && data.some(r => String(r.ruta) === String(selectedBefore))){
+        selectEl.value = selectedBefore;
+        state.selectedRoute = selectedBefore;
+      }else{
+        selectEl.value = '';
+        state.selectedRoute = '';
+      }
+
+      if(!data.length){
+        preview.innerHTML = '';
+        empty.style.display = 'block';
+        empty.textContent = 'No hay rutas para seleccionar.';
+        btn.disabled = true;
+        return;
+      }
+
+      empty.style.display = 'none';
+      const route = data.find(r => String(r.ruta) === String(selectEl.value));
+      btn.disabled = !route;
+
+      if(!route){
+        preview.innerHTML = '<div class="empty">Seleccioná una ruta para ver el resumen y entrar al detalle.</div>';
+        return;
+      }
+
+      const puntosRuta = route.clients > 0 ? route.rows.reduce((a,c)=> a + c.totalPuntos, 0) / route.clients : 0;
+      const clientesCumplen40 = route.rows.filter(c => c.totalPuntos >= 40).length;
+      const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
+
+      preview.innerHTML = `
+        <div class="item client-card" onclick="openRouteDetail('${escapeHtml(route.ruta)}')">
+          <div class="client-head">
+            <div>
+              <div class="item-title">Ruta ${escapeHtml(route.ruta)}</div>
+              <div class="item-meta">
+                Vendedor: ${escapeHtml(route.vendedor || '-')}<br>
+                🎯 Objetivo: ${formatNumber(route.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(route.real)} CAJAS FÍSICAS<br>
+                ✅ Cumplen: ${clientesCumplen40} de ${route.clients} clientes
+              </div>
+              <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
+            </div>
+            <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function enterSelectedRoute(){
+      const selectEl = document.getElementById('routeSelect');
+      const ruta = selectEl ? selectEl.value : '';
+      if(!ruta) return;
+      openRouteDetail(ruta);
     }
 
     function openRouteDetail(ruta){
@@ -1097,14 +1124,6 @@ String(
       box.style.background = bgColor;
       box.style.border = `1px solid ${borderColor}`;
       box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
-
-      const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
-      document.getElementById('routeAlerts').innerHTML = routeAlerts.length ? routeAlerts.map(c => `
-        <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-          <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
-          🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
-        </div>
-      `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
 
       document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
@@ -1352,8 +1371,7 @@ String(
 
     function bind(){
       document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-      document.getElementById('routeSearch').addEventListener('input', renderRoutes);
-      document.getElementById('routeSort').addEventListener('change', renderRoutes);
+      document.getElementById('routeSelect').addEventListener('change', function(){ state.selectedRoute = this.value; renderRoutes(); });
       document.getElementById('clientSearch').addEventListener('input', renderClients);
       document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
       document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
