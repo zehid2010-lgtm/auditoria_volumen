@@ -694,6 +694,7 @@
         if(cols.every(c => String(c).trim() === '')) continue;
         const obj = {};
         headers.forEach((h, idx) => { obj[h] = cols[idx] ?? ''; });
+        obj.__COL_D_TELEFONO = cols[3] ?? '';
         objects.push(obj);
       }
       return objects;
@@ -890,7 +891,7 @@ String(
     'Celular',
     'WHATSAPP',
     'Whatsapp'
-  ) || ''
+  ) || r.__COL_D_TELEFONO || ''
 ).trim();
 
         const categories = CATEGORY_CONFIG.map(cat => {
@@ -1372,8 +1373,9 @@ String(
     function enviarWhatsAppCliente(key){
       const client = state.clients.find(c => c.key === key);
       if(!client){ alert('No se encontró el cliente'); return; }
-      if(!client.telefono || !String(client.telefono).trim()){ alert('Este cliente no tiene teléfono cargado en la base'); return; }
-      const telefono = normalizarTelefonoAR(client.telefono);
+      const telefonoBase = String(client.telefono || '').trim();
+      if(!telefonoBase){ alert('Este cliente no tiene teléfono cargado en la base. Revisá que la columna D sea TELEFONO y volvé a sincronizar.'); return; }
+      const telefono = normalizarTelefonoAR(telefonoBase);
       if(!telefono){ alert('El teléfono del cliente no es válido'); return; }
 
       const objetivo = Number(client.totalObjetivo || 0);
