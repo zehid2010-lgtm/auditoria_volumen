@@ -1206,10 +1206,21 @@ String(
       `;
 
       const maxPuntos = client.categories.length * 5;
-      const puntosAvance = Number(client.totalPuntos || 0);
-      const avanceStyle = getAvancePuntosStyle(puntosAvance, maxPuntos);
-      const avancePct = clamp(avanceStyle.pct, 0, 100);
-      const avanceTexto = `El cliente actualmente se encuentra en rango ${avanceStyle.rango} según su puntaje total de avance.`;
+      const historicoCliente = getHistoricoCliente(client);
+
+      // Puntaje total de avance: se toma desde HISTORICO_PUNTOS cuando existe coincidencia por cliente/outnum.
+      // Columnas usadas: Volumen, Referencias, Pedido Sugerido, Ejecucion y Puntos Totales.
+      const puntosVolumen = historicoCliente ? Number(historicoCliente.volumen || 0) : 0;
+      const puntosReferencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
+      const puntosPedidoSugerido = historicoCliente ? Number(historicoCliente.pedidoSugerido || 0) : 0;
+      const puntosEjecucion = historicoCliente ? Number(historicoCliente.ejecucion || 0) : 0;
+      const puntosTotalesAvance = historicoCliente ? Number(historicoCliente.puntos || 0) : Number(client.totalPuntos || 0);
+      const maxPuntajeAvance = 100;
+      const avanceStyle = getAvancePuntosStyle(puntosTotalesAvance, maxPuntajeAvance);
+      const avancePct = clamp((puntosTotalesAvance / maxPuntajeAvance) * 100, 0, 100);
+      const avanceTexto = historicoCliente
+        ? 'Puntaje tomado desde HISTORICO_PUNTOS según el avance actual del cliente.'
+        : 'Sin coincidencia en HISTORICO_PUNTOS. Se muestra el puntaje calculado por categorías.';
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
@@ -1222,23 +1233,45 @@ String(
         </div>
         <div class="box client-kpi-card kpi-puntos">
           <div class="t">Puntos totales</div>
-          <div class="v">🏅 ${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
+          <div class="v">🏅 ${formatNumber(puntosTotalesAvance)} / ${maxPuntajeAvance}</div>
         </div>
 
         <div class="box historico-panel" style="background:${avanceStyle.bg}; border:1px solid ${avanceStyle.border};">
           <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">PUNTAJE TOTAL DE AVANCE</div>
+
           <div class="historico-main" style="color:${avanceStyle.color}; margin-top:14px;">
-            <div style="font-size:14px;font-weight:900;">Puntaje actual del cliente</div>
-            <div class="score-value" style="color:${avanceStyle.color};font-size:46px;">${formatNumber(puntosAvance)} / ${maxPuntos}</div>
+            <div style="font-size:14px;font-weight:900;">Puntos Totales</div>
+            <div class="score-value" style="color:${avanceStyle.color};font-size:48px;">${formatNumber(puntosTotalesAvance)} / ${maxPuntajeAvance}</div>
             <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${avanceStyle.color};color:#fff;font-weight:900;font-size:13px;">${avanceStyle.tag}</div>
           </div>
+
           <div style="margin-top:16px;background:rgba(255,255,255,.65);border-radius:999px;height:18px;overflow:hidden;border:1px solid ${avanceStyle.border};">
             <div style="width:${avancePct}%;height:100%;background:${avanceStyle.color};border-radius:999px;transition:width .35s ease;"></div>
           </div>
           <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;font-weight:900;color:#666;">
-            <span>0</span><span>${formatPct(avancePct)}</span><span>${maxPuntos} pts</span>
+            <span>0</span><span>${formatPct(avancePct)}</span><span>${maxPuntajeAvance} pts</span>
           </div>
-          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${avanceStyle.border};font-size:15px;font-weight:900;color:${avanceStyle.color};">${avanceStyle.icon} ${avanceTexto}</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;">
+            <div style="background:rgba(255,255,255,.72);border:1px solid ${avanceStyle.border};border-radius:16px;padding:12px;text-align:center;">
+              <div style="font-size:12px;font-weight:900;color:#666;text-transform:uppercase;">Volumen</div>
+              <div style="font-size:26px;font-weight:900;color:${avanceStyle.color};margin-top:4px;">${formatNumber(puntosVolumen)}</div>
+            </div>
+            <div style="background:rgba(255,255,255,.72);border:1px solid ${avanceStyle.border};border-radius:16px;padding:12px;text-align:center;">
+              <div style="font-size:12px;font-weight:900;color:#666;text-transform:uppercase;">Referencias</div>
+              <div style="font-size:26px;font-weight:900;color:${avanceStyle.color};margin-top:4px;">${formatNumber(puntosReferencias)}</div>
+            </div>
+            <div style="background:rgba(255,255,255,.72);border:1px solid ${avanceStyle.border};border-radius:16px;padding:12px;text-align:center;">
+              <div style="font-size:12px;font-weight:900;color:#666;text-transform:uppercase;">Pedido sugerido</div>
+              <div style="font-size:26px;font-weight:900;color:${avanceStyle.color};margin-top:4px;">${formatNumber(puntosPedidoSugerido)}</div>
+            </div>
+            <div style="background:rgba(255,255,255,.72);border:1px solid ${avanceStyle.border};border-radius:16px;padding:12px;text-align:center;">
+              <div style="font-size:12px;font-weight:900;color:#666;text-transform:uppercase;">Ejecución</div>
+              <div style="font-size:26px;font-weight:900;color:${avanceStyle.color};margin-top:4px;">${formatNumber(puntosEjecucion)}</div>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${avanceStyle.border};font-size:14px;font-weight:800;color:${avanceStyle.color};">${avanceStyle.icon} ${avanceTexto}</div>
         </div>
 
         <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
