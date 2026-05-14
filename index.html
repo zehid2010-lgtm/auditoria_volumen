@@ -557,7 +557,7 @@
 
   <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
-    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/10rXfsiS24PprNxiq0d2-EfIlvdUO-YF2/export?format=csv&gid=1389632754';
+    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/10rXfsiS24PprNxiq0d2-EfllvdUO-YF2/gviz/tq?tqx=out:csv&gid=1389632754';
 
     const CATEGORY_CONFIG = [
       { keys: ['Agua'], label: 'Agua' },
@@ -747,7 +747,7 @@
         const condicion = String(getHistCell(r,'CONDICION','Condición','Condicion') || '').trim();
         const volumen = toNumber(getHistCell(r,'VOLUMEN','Volumen'));
         const referencias = toNumber(getHistCell(r,'REFERENCIAS','Referencias'));
-        const pedidoSugerido = toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO','Pedido Sugeri','PEDIDO SUGERI'));
+        const pedidoSugerido = toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO'));
         const ejecucion = toNumber(getHistCell(r,'EJECUCION','Ejecucion','EJECUCIÓN','Ejecución'));
         const objetivo = toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
         const avance = toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
@@ -766,16 +766,24 @@
 
     function getHistoricoCliente(client){
       if(!client || !state.historico.length) return null;
-      const mes = state.selectedMesHistorico || state.mesesHistorico[0] || '';
       const numero = normalizeKey(client.numero);
       const cliente = normalizeKey(client.cliente);
       const ruta = normalizeKey(client.ruta);
-      return state.historico.find(h => {
-        const sameMonth = normalizeKey(h.mes) === normalizeKey(mes);
-        const sameNumero = numero && normalizeKey(h.numero) === numero;
-        const sameClienteRuta = cliente && normalizeKey(h.cliente) === cliente && (!ruta || normalizeKey(h.ruta) === ruta);
-        return sameMonth && (sameNumero || sameClienteRuta);
-      }) || null;
+
+      // Prioridad 1: coincidencia exacta por Outnum / Número de cliente.
+      const byNumero = state.historico.find(h => numero && normalizeKey(h.numero) === numero);
+      if(byNumero) return byNumero;
+
+      // Prioridad 2: coincidencia por cliente + ruta, por si el número viene vacío o con otro encabezado.
+      const byClienteRuta = state.historico.find(h => {
+        const sameCliente = cliente && normalizeKey(h.cliente) === cliente;
+        const sameRuta = !ruta || !h.ruta || normalizeKey(h.ruta) === ruta;
+        return sameCliente && sameRuta;
+      });
+      if(byClienteRuta) return byClienteRuta;
+
+      // Prioridad 3: coincidencia por nombre de cliente solamente.
+      return state.historico.find(h => cliente && normalizeKey(h.cliente) === cliente) || null;
     }
 
     function getCierreStyle(points){
@@ -1220,7 +1228,7 @@ String(
       const avancePct = clamp((puntosTotalesAvance / maxPuntajeAvance) * 100, 0, 100);
       const avanceTexto = historicoCliente
         ? 'Puntaje tomado desde HISTORICO_PUNTOS según el avance actual del cliente.'
-        : 'No se encontró puntaje en HISTORICO_PUNTOS para este cliente.';
+        : 'No se encontró el Outnum en HISTORICO_PUNTOS o la solapa no está publicada como CSV.';
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
