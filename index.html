@@ -432,22 +432,21 @@
       <section id="page-routes" class="page">
         <div class="tool-header">
           <h2 class="tool-title">Dashboard por ruta</h2>
-          <p class="tool-sub">Seleccioná una ruta para ver clientes, objetivo, vendido y alertas.</p>
+          <p class="tool-sub">Filtrá por vendedor y seleccioná una ruta para ver el detalle.</p>
         </div>
         <div class="panel">
           <div class="search-box">
             <div class="row-2">
-              <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
-              <select id="routeSort">
-                <option value="ruta" selected>Ordenar por ruta</option>
-                <option value="avance">Ordenar por avance</option>
-                <option value="objetivo">Ordenar por objetivo</option>
-                <option value="clientes">Ordenar por clientes</option>
+              <select id="sellerFilter">
+                <option value="">Todos los vendedores</option>
+              </select>
+              <select id="routeFilter">
+                <option value="">Seleccioná una ruta</option>
               </select>
             </div>
           </div>
           <div id="routeResults" class="results"></div>
-          <div id="routeEmpty" class="empty" style="display:none;">No hay rutas para mostrar.</div>
+          <div id="routeEmpty" class="empty" style="display:block;">Seleccioná una ruta para visualizar el detalle.</div>
         </div>
       </section>
 
@@ -482,11 +481,6 @@
             <div class="box box-objetivo"><div class="t">🎯 Objetivo CAJAS FÍSICAS</div><div class="v" id="rdObjetivo">0</div></div>
             <div class="box box-cumplen-premium"><div class="premium-kpi-title">Cumplimiento clientes</div><div class="premium-kpi-value" id="rdCumplen40">0 / 0</div><div class="premium-kpi-sub" id="rdCumplen40Sub">Clientes con score completo</div></div>
           </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div>
-          <div id="routeAlerts"></div>
         </div>
 
         <div class="panel">
@@ -1050,15 +1044,16 @@ String(
     function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
     function renderRoutes(){
-      const q = normalizeKey(document.getElementById('routeSearch').value);
-      const sort = document.getElementById('routeSort').value;
+      const sellerFilter = document.getElementById('sellerFilter') ? document.getElementById('sellerFilter').value : '';
+      const routeFilter = document.getElementById('routeFilter') ? document.getElementById('routeFilter').value : '';
 
-      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
+      let data = state.routes.filter(r => {
+        const matchesSeller = !sellerFilter || String(r.vendedor || '') === String(sellerFilter);
+        const matchesRoute = routeFilter && String(r.ruta || '') === String(routeFilter);
+        return matchesSeller && matchesRoute;
+      });
 
-      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
-      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
-      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
-      else data.sort((a,b)=> {
+      data.sort((a,b)=> {
         const ar = Number(a.ruta), br = Number(b.ruta);
         if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
         return String(a.ruta).localeCompare(String(b.ruta), 'es');
@@ -1066,9 +1061,22 @@ String(
 
       const box = document.getElementById('routeResults');
       const empty = document.getElementById('routeEmpty');
-      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
-      empty.style.display = 'none';
 
+      if(!routeFilter){
+        box.innerHTML = '';
+        empty.style.display = 'block';
+        empty.textContent = 'Seleccioná una ruta para visualizar el detalle.';
+        return;
+      }
+
+      if(!data.length){
+        box.innerHTML = '';
+        empty.style.display = 'block';
+        empty.textContent = 'No hay datos para la ruta seleccionada.';
+        return;
+      }
+
+      empty.style.display = 'none';
       box.innerHTML = data.map(r => {
         const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0;
         const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
@@ -1121,14 +1129,6 @@ String(
       box.style.background = bgColor;
       box.style.border = `1px solid ${borderColor}`;
       box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
-
-      const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
-      document.getElementById('routeAlerts').innerHTML = routeAlerts.length ? routeAlerts.map(c => `
-        <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-          <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
-          🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
-        </div>
-      `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
 
       document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
@@ -1318,13 +1318,46 @@ String(
     }
 
     function fillRouteFilter(){
-      const select = document.getElementById('clientRouteFilter');
+      const clientSelect = document.getElementById('clientRouteFilter');
+      const routeSelect = document.getElementById('routeFilter');
+      const sellerSelect = document.getElementById('sellerFilter');
+
       const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b) => {
         const ar = Number(a), br = Number(b);
         if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
         return String(a).localeCompare(String(b), 'es');
       });
-      select.innerHTML = '<option value="">Todas las rutas</option>' + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+
+      if(clientSelect){
+        clientSelect.innerHTML = '<option value="">Todas las rutas</option>' + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+      }
+
+      if(sellerSelect){
+        const sellers = [...new Set(state.routes.map(r => r.vendedor).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'es'));
+        const currentSeller = sellerSelect.value;
+        sellerSelect.innerHTML = '<option value="">Todos los vendedores</option>' + sellers.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+        if(sellers.includes(currentSeller)) sellerSelect.value = currentSeller;
+      }
+
+      refreshRouteSelect();
+    }
+
+    function refreshRouteSelect(){
+      const routeSelect = document.getElementById('routeFilter');
+      const sellerSelect = document.getElementById('sellerFilter');
+      if(!routeSelect) return;
+
+      const seller = sellerSelect ? sellerSelect.value : '';
+      const routes = [...new Set(state.routes
+        .filter(r => !seller || String(r.vendedor || '') === String(seller))
+        .map(r => r.ruta)
+      )].sort((a,b) => {
+        const ar = Number(a), br = Number(b);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a).localeCompare(String(b), 'es');
+      });
+
+      routeSelect.innerHTML = '<option value="">Seleccioná una ruta</option>' + routes.map(r => `<option value="${escapeHtml(r)}">Ruta ${escapeHtml(r)}</option>`).join('');
     }
 
     function setStatus(text, isError=false){
@@ -1338,7 +1371,6 @@ String(
       try{
         setStatus('Cargando datos...');
         const raw = await fetchCSV(CSV_URL);
-        await loadHistorico();
         buildData(raw);
         fillRouteFilter();
         updateHomeKPIs();
@@ -1356,8 +1388,8 @@ String(
 
     function bind(){
       document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-      document.getElementById('routeSearch').addEventListener('input', renderRoutes);
-      document.getElementById('routeSort').addEventListener('change', renderRoutes);
+      document.getElementById('sellerFilter').addEventListener('change', () => { refreshRouteSelect(); renderRoutes(); });
+      document.getElementById('routeFilter').addEventListener('change', renderRoutes);
       document.getElementById('clientSearch').addEventListener('input', renderClients);
       document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
       document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
