@@ -557,7 +557,7 @@
 
   <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
-    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQSuRpKllI3EgCIHu51oqxUVEVtsDYgt5LFX0iNFndhHeRfsKIy3RyGoLnfobWFw/pub?gid=278734128&single=true&output=csv';
+    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/10rXfsiS24PprNxiq0d2-EfIlvdUO-YF2/export?format=csv&gid=1389632754';
 
     const CATEGORY_CONFIG = [
       { keys: ['Agua'], label: 'Agua' },
@@ -747,7 +747,7 @@
         const condicion = String(getHistCell(r,'CONDICION','Condición','Condicion') || '').trim();
         const volumen = toNumber(getHistCell(r,'VOLUMEN','Volumen'));
         const referencias = toNumber(getHistCell(r,'REFERENCIAS','Referencias'));
-        const pedidoSugerido = toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO'));
+        const pedidoSugerido = toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO','Pedido Sugeri','PEDIDO SUGERI'));
         const ejecucion = toNumber(getHistCell(r,'EJECUCION','Ejecucion','EJECUCIÓN','Ejecución'));
         const objetivo = toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
         const avance = toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
@@ -1220,7 +1220,7 @@ String(
       const avancePct = clamp((puntosTotalesAvance / maxPuntajeAvance) * 100, 0, 100);
       const avanceTexto = historicoCliente
         ? 'Puntaje tomado desde HISTORICO_PUNTOS según el avance actual del cliente.'
-        : 'Sin coincidencia en HISTORICO_PUNTOS. Se muestra el puntaje calculado por categorías.';
+        : 'No se encontró puntaje en HISTORICO_PUNTOS para este cliente.';
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
