@@ -150,6 +150,21 @@
 
     .search-box{display:grid;gap:10px;margin-top:2px}
     .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .route-filter-wrap{display:grid;gap:10px}
+    .big-route-select{
+      width:100%;
+      min-height:68px;
+      border-radius:22px;
+      border:2px solid var(--red);
+      background:linear-gradient(180deg,#fff,#fff7f7);
+      color:#111;
+      font-size:18px;
+      font-weight:900;
+      padding:0 18px;
+      box-shadow:0 10px 24px rgba(227,6,19,.12);
+      text-transform:uppercase;
+    }
+    .filter-help{font-size:12px;color:#666;text-align:center;font-weight:700}
 
     input,select{
       width:100%;padding:13px 14px;border-radius:16px;border:1px solid #dfdfdf;
@@ -432,18 +447,14 @@
       <section id="page-routes" class="page">
         <div class="tool-header">
           <h2 class="tool-title">Dashboard por ruta</h2>
-          <p class="tool-sub">Filtrá por vendedor y seleccioná una ruta para ver el detalle.</p>
+          <p class="tool-sub">Seleccioná una ruta para ver el detalle.</p>
         </div>
         <div class="panel">
-          <div class="search-box">
-            <div class="row-2">
-              <select id="sellerFilter">
-                <option value="">Todos los vendedores</option>
-              </select>
-              <select id="routeFilter">
-                <option value="">Seleccioná una ruta</option>
-              </select>
-            </div>
+          <div class="search-box route-filter-wrap">
+            <select id="routeFilter" class="big-route-select">
+              <option value="">SELECCIONÁ RUTA Y VENDEDOR</option>
+            </select>
+            <div class="filter-help">Un solo filtro: ruta + nombre del vendedor</div>
           </div>
           <div id="routeResults" class="results"></div>
           <div id="routeEmpty" class="empty" style="display:block;">Seleccioná una ruta para visualizar el detalle.</div>
@@ -1044,14 +1055,9 @@ String(
     function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
     function renderRoutes(){
-      const sellerFilter = document.getElementById('sellerFilter') ? document.getElementById('sellerFilter').value : '';
       const routeFilter = document.getElementById('routeFilter') ? document.getElementById('routeFilter').value : '';
 
-      let data = state.routes.filter(r => {
-        const matchesSeller = !sellerFilter || String(r.vendedor || '') === String(sellerFilter);
-        const matchesRoute = routeFilter && String(r.ruta || '') === String(routeFilter);
-        return matchesSeller && matchesRoute;
-      });
+      let data = state.routes.filter(r => routeFilter && String(r.ruta || '') === String(routeFilter));
 
       data.sort((a,b)=> {
         const ar = Number(a.ruta), br = Number(b.ruta);
@@ -1320,7 +1326,6 @@ String(
     function fillRouteFilter(){
       const clientSelect = document.getElementById('clientRouteFilter');
       const routeSelect = document.getElementById('routeFilter');
-      const sellerSelect = document.getElementById('sellerFilter');
 
       const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b) => {
         const ar = Number(a), br = Number(b);
@@ -1332,33 +1337,31 @@ String(
         clientSelect.innerHTML = '<option value="">Todas las rutas</option>' + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
       }
 
-      if(sellerSelect){
-        const sellers = [...new Set(state.routes.map(r => r.vendedor).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'es'));
-        const currentSeller = sellerSelect.value;
-        sellerSelect.innerHTML = '<option value="">Todos los vendedores</option>' + sellers.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
-        if(sellers.includes(currentSeller)) sellerSelect.value = currentSeller;
-      }
 
       refreshRouteSelect();
     }
 
     function refreshRouteSelect(){
       const routeSelect = document.getElementById('routeFilter');
-      const sellerSelect = document.getElementById('sellerFilter');
       if(!routeSelect) return;
 
-      const seller = sellerSelect ? sellerSelect.value : '';
-      const routes = [...new Set(state.routes
-        .filter(r => !seller || String(r.vendedor || '') === String(seller))
-        .map(r => r.ruta)
-      )].sort((a,b) => {
-        const ar = Number(a), br = Number(b);
+      const currentRoute = routeSelect.value;
+      const routes = [...state.routes].sort((a,b) => {
+        const ar = Number(a.ruta), br = Number(b.ruta);
         if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
-        return String(a).localeCompare(String(b), 'es');
+        return String(a.ruta).localeCompare(String(b.ruta), 'es');
       });
 
-      routeSelect.innerHTML = '<option value="">Seleccioná una ruta</option>' + routes.map(r => `<option value="${escapeHtml(r)}">Ruta ${escapeHtml(r)}</option>`).join('');
+      routeSelect.innerHTML = '<option value="">SELECCIONÁ RUTA Y VENDEDOR</option>' + routes.map(r => {
+        const label = `RUTA ${r.ruta} — ${r.vendedor || 'SIN VENDEDOR'}`;
+        return `<option value="${escapeHtml(r.ruta)}">${escapeHtml(label)}</option>`;
+      }).join('');
+
+      if(routes.some(r => String(r.ruta) === String(currentRoute))){
+        routeSelect.value = currentRoute;
+      }
     }
+
 
     function setStatus(text, isError=false){
       const el = document.getElementById('syncStatus');
@@ -1388,7 +1391,6 @@ String(
 
     function bind(){
       document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-      document.getElementById('sellerFilter').addEventListener('change', () => { refreshRouteSelect(); renderRoutes(); });
       document.getElementById('routeFilter').addEventListener('change', renderRoutes);
       document.getElementById('clientSearch').addEventListener('input', renderClients);
       document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
