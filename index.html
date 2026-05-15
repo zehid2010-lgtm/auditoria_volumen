@@ -298,8 +298,9 @@
     .nav-btn .nicon{font-size:24px}
 
     .status-chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#555}
-    .historico-select{margin-top:12px}
-    .historico-note{margin-top:10px;font-size:12px;line-height:1.35;color:#666;background:#fafafa;border:1px solid #eee;border-radius:14px;padding:10px}
+    .historico-select{margin-top:16px;width:100%}
+    .historico-select select{width:100%;font-size:16px;padding:18px 20px;border:1.5px solid #ff2b32;border-radius:20px;background:#fff}
+    .historico-note{margin-top:12px;font-size:12px;line-height:1.35;color:#666;background:#fafafa;border:1px solid #eee;border-radius:16px;padding:12px}
     .client-kpi-card{
       min-height:106px;
       border-radius:20px !important;
@@ -318,16 +319,17 @@
     .kpi-puntos{background:linear-gradient(180deg,#eff6ff,#dbeafe) !important;border:1px solid #93c5fd !important;color:#0b74e5}
     .historico-panel{
       grid-column:span 3;
-      border-radius:22px !important;
-      padding:18px 12px !important;
+      border-radius:26px !important;
+      padding:22px 16px !important;
       text-align:center;
     }
-    .historico-grid{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:14px;align-items:center;margin-top:12px}
-    .historico-main{border-radius:18px;padding:16px 12px;border:1px solid currentColor;background:rgba(255,255,255,.45)}
-    .historico-legend{background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:12px;text-align:left;font-size:13px;line-height:1.8}
+    .historico-subtitle{margin-top:8px;font-size:14px;color:#666;font-weight:700}
+    .historico-grid{display:grid;grid-template-columns:minmax(0,1fr) 156px;gap:14px;align-items:stretch;margin-top:16px}
+    .historico-main{border-radius:22px;padding:26px 14px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);display:flex;flex-direction:column;justify-content:center;min-height:220px}
+    .historico-legend{background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:14px;text-align:left;font-size:13px;line-height:1.7;display:flex;flex-direction:column;justify-content:center}
     .dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:8px;vertical-align:-1px}
     .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
-    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}}
+    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:190px}.historico-select select{font-size:16px}}
 
     @media (max-width:450px){
       .brand-left img{height:32px}
@@ -723,6 +725,15 @@
       return String(value || '').trim().replace(/\s+/g,' ');
     }
 
+    function isMayoValue(value){
+      const v = normalizeKey(value);
+      return v.includes('MAYO') || v === '05' || v === '5' || v.includes('2026 05') || v.includes('05 2026');
+    }
+
+    function getMesActualApp(){
+      return 'Mayo 2026';
+    }
+
     function getHistoricoMonth(row){
       return normalizeMonthText(getHistCell(row,'MES','Mes','mes','PERIODO','Periodo','MES_CIERRE','Cierre'));
     }
@@ -746,7 +757,7 @@
 
     function buildHistorico(rawRows){
       state.historico = rawRows.map(r => {
-        const mes = getHistoricoMonth(r) || 'Abril 2026';
+        const mes = getMesActualApp();
         const numero = String(getHistCell(r,'NUMERO','NÚMERO','Numero','CLIENTE_ID','ID','OUTNUM','Outnum','outnum') || '').trim();
         const cliente = String(getHistCell(r,'CLIENTE','Cliente') || '').trim();
         const ruta = String(getHistCell(r,'RUTA','RU','Ruta','ruta') || '').trim();
@@ -760,7 +771,14 @@
         const objetivo = toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
         const avance = toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
         const imperdonableAutoservicios = getImperdonableAutoservicios(r);
-        const puntosDetectados = getHistCell(r,'PUNTOS TOTALES','Puntos Totales','PUNTOS','Puntos','PUNTOS OBTENIDOS','PUNTOS_OBTENIDOS','SCORE','Score');
+        const puntosDetectados = getHistCell(
+          r,
+          'PUNTOS ACTUALES','Puntos Actuales','PUNTOS_ACTUALES','PUNTOS ACTUALES HOY','PUNTOS_ACTUALES_HOY',
+          'PUNTOS A LA FECHA','Puntos a la fecha','PUNTOS_A_LA_FECHA',
+          'HISTORICO DE PUNTOS','Histórico de Puntos','HISTÓRICO DE PUNTOS','HISTORICO_PUNTOS',
+          'P','Columna P','COLUMNA P',
+          'PUNTOS TOTALES','Puntos Totales','PUNTOS','Puntos','PUNTOS OBTENIDOS','PUNTOS_OBTENIDOS','SCORE','Score'
+        );
         const puntosBase = puntosDetectados !== '' ? toNumber(puntosDetectados) : (volumen + referencias + pedidoSugerido + ejecucion);
         const puntos = puntosBase + imperdonableAutoservicios;
         const cumplimientoRaw = getHistCell(r,'%','% CUMPLIMIENTO','CUMPLIMIENTO','Cumplimiento','PORCENTAJE');
@@ -770,13 +788,14 @@
 
       state.mesesHistorico = [...new Set(state.historico.map(r => r.mes))].filter(Boolean);
       if(!state.selectedMesHistorico && state.mesesHistorico.length){
-        state.selectedMesHistorico = state.mesesHistorico[0];
+        const mayo = state.mesesHistorico.find(m => isMayoValue(m));
+        state.selectedMesHistorico = mayo || getMesActualApp();
       }
     }
 
     function getHistoricoCliente(client){
       if(!client || !state.historico.length) return null;
-      const mes = state.selectedMesHistorico || state.mesesHistorico[0] || '';
+      const mes = state.selectedMesHistorico || getMesActualApp();
       const numero = normalizeKey(client.numero);
       const cliente = normalizeKey(client.cliente);
       const ruta = normalizeKey(client.ruta);
@@ -810,7 +829,7 @@
 
     function getCierreText(points, mes){
       const p = Number(points || 0);
-      const m = String(mes || 'a la fecha').replace(/^Cierre\s+/i,'');
+      const m = String(mes || getMesActualApp()).replace(/^Cierre\s+/i,'');
       if(p >= 80) return `Cliente viene excelente ${m}: 80 puntos o más`;
       if(p >= 70) return `Cliente viene en nivel medio ${m}: 70 a 79 puntos`;
       if(p >= 60) return `Cliente viene en nivel bajo ${m}: 60 a 69 puntos`;
@@ -1198,10 +1217,10 @@ String(
       const historicoCliente = getHistoricoCliente(client);
       const maxCierre = historicoCliente ? 110 : maxPuntos;
       const puntosCierre = historicoCliente ? historicoCliente.puntos : client.totalPuntos;
-      const mesCierre = state.selectedMesHistorico || state.mesesHistorico[0] || 'A la fecha';
+      const mesCierre = state.selectedMesHistorico || getMesActualApp();
       const cierreStyle = getCierreStyle(puntosCierre);
       const cierreTexto = getCierreText(puntosCierre, mesCierre);
-      const mesesOptions = (state.mesesHistorico.length ? state.mesesHistorico : [mesCierre]).map(m => `<option value="${escapeHtml(m)}" ${normalizeKey(m) === normalizeKey(mesCierre) ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('');
+      const mesesOptions = `<option value="${escapeHtml(getMesActualApp())}" selected>${escapeHtml(getMesActualApp())}</option>`;
       const detalleHistorico = historicoCliente ? `
         <div class="historico-note">
           <b>Detalle de puntos a la fecha:</b><br>
@@ -1231,15 +1250,16 @@ String(
         </div>
 
         <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
-          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">PUNTOS A LA FECHA</div>
+          <div class="t" style="font-size:22px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">PUNTOS A LA FECHA</div>
+          <div class="historico-subtitle">Seleccione el mes para ver el avance actual</div>
+          <div class="historico-select">
+            <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
+          </div>
           <div class="historico-grid">
-            <div class="historico-select" style="margin:0;">
-              <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
-            </div>
             <div class="historico-main" style="color:${cierreStyle.color};">
-              <div style="font-size:14px;font-weight:900;">Avance ${escapeHtml(mesCierre)}</div>
-              <div class="score-value" style="color:${cierreStyle.color};font-size:42px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
-              <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:13px;">${cierreStyle.tag}</div>
+              <div style="font-size:20px;font-weight:900;text-transform:uppercase;">Avance de ${escapeHtml(mesCierre)}</div>
+              <div class="score-value" style="color:${cierreStyle.color};font-size:70px;margin-top:18px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
+              <div style="display:inline-block;margin-top:16px;padding:13px 32px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:16px;min-width:220px;">${cierreStyle.tag}</div>
             </div>
             <div class="historico-legend">
               <div><span class="dot dot-green"></span>80 o más puntos: Excelente</div>
