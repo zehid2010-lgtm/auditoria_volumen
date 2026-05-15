@@ -484,10 +484,6 @@
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">⚠️</div><div><h4>Alertas de la ruta</h4><small>Priorización para gestión inmediata.</small></div></div></div>
-          <div id="routeAlerts"></div>
-        </div>
 
         <div class="panel">
           <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">👥</div><div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div></div></div>
@@ -640,7 +636,7 @@
     function getSemaforoText(cumplimiento){ return cumplimiento >= 80 ? 'VERDE' : cumplimiento >= 50 ? 'AMARILLO' : 'ROJO'; }
     function getRoutePointsBadgeClass(points){ return points >= 40 ? 'ok' : points >= 30 ? 'warn' : 'bad'; }
     function getBadgePointsClass(client){ const p = Number(client?.totalPuntos || 0); return p >= 40 ? 'ok' : p >= 30 ? 'warn' : 'bad'; }
-    function getPointsText(client){ return `${Number(client?.totalPuntos || 0)} / 40 pts`; }
+    function getPointsText(client){ return `${Number(client?.totalPuntos || 0)} pts`; }
     function getPointsProgressClass(points){ return points >= 40 ? 'green' : points >= 30 ? 'yellow' : 'red'; }
 
     function getScoreStyle(points, maxPoints=40){
@@ -731,6 +727,23 @@
       return normalizeMonthText(getHistCell(row,'MES','Mes','mes','PERIODO','Periodo','MES_CIERRE','Cierre'));
     }
 
+    function getImperdonableAutoservicios(row){
+      const puntosDirectos = getCell(row,
+        'IMPERDONABLE AUTOSERVICIOS PUNTOS','IMPERDONABLE_AUTOSERVICIOS_PUNTOS','PUNTOS IMPERDONABLE','PUNTOS_IMPERDONABLE'
+      );
+      if(puntosDirectos !== '' && puntosDirectos !== undefined){
+        const puntos = toNumber(puntosDirectos);
+        return puntos > 0 ? 10 : 0;
+      }
+
+      const skuValue = getCell(row,
+        'IMPERDONABLE AUTOSERVICIOS','IMPERDONABLE_AUTOSERVICIOS','SKU AUTOSERVICIOS','SKU_AUTOSERVICIOS',
+        '20 SKU','20_SKU','SKU','SKUS','SKU REAL','SKU_REAL','SKU AVANCE','SKU_AVANCE'
+      );
+      const sku = toNumber(skuValue);
+      return sku >= 20 ? 10 : 0;
+    }
+
     function buildHistorico(rawRows){
       state.historico = rawRows.map(r => {
         const mes = getHistoricoMonth(r) || 'Abril 2026';
@@ -746,11 +759,13 @@
         const ejecucion = toNumber(getHistCell(r,'EJECUCION','Ejecucion','EJECUCIÓN','Ejecución'));
         const objetivo = toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
         const avance = toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
+        const imperdonableAutoservicios = getImperdonableAutoservicios(r);
         const puntosDetectados = getHistCell(r,'PUNTOS TOTALES','Puntos Totales','PUNTOS','Puntos','PUNTOS OBTENIDOS','PUNTOS_OBTENIDOS','SCORE','Score');
-        const puntos = puntosDetectados !== '' ? toNumber(puntosDetectados) : (volumen + referencias + pedidoSugerido + ejecucion);
+        const puntosBase = puntosDetectados !== '' ? toNumber(puntosDetectados) : (volumen + referencias + pedidoSugerido + ejecucion);
+        const puntos = puntosBase + imperdonableAutoservicios;
         const cumplimientoRaw = getHistCell(r,'%','% CUMPLIMIENTO','CUMPLIMIENTO','Cumplimiento','PORCENTAJE');
         const cumplimiento = cumplimientoRaw !== '' ? toNumber(cumplimientoRaw) : puntos;
-        return { mes, numero, cliente, ruta, vendedor, nivel, condicion, objetivo, avance, puntos, cumplimiento, volumen, referencias, pedidoSugerido, ejecucion };
+        return { mes, numero, cliente, ruta, vendedor, nivel, condicion, objetivo, avance, puntos, cumplimiento, volumen, referencias, pedidoSugerido, ejecucion, imperdonableAutoservicios };
       }).filter(r => r.mes && (r.numero || r.cliente));
 
       state.mesesHistorico = [...new Set(state.historico.map(r => r.mes))].filter(Boolean);
@@ -777,15 +792,15 @@
       const p = Number(points || 0);
       if(p >= 80) return {
         bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)', border:'#86efac', color:'#15803d',
-        sub:'Cierre excelente', tag:'CIERRE EXCELENTE', icon:'✅'
+        sub:'Excelente a la fecha', tag:'EXCELENTE', icon:'✅'
       };
       if(p >= 70) return {
         bg:'linear-gradient(180deg,#ffedd5,#fed7aa)', border:'#fb923c', color:'#ea580c',
-        sub:'Cierre medio', tag:'CIERRE MEDIO', icon:'⚠️'
+        sub:'Medio a la fecha', tag:'MEDIO', icon:'⚠️'
       };
       if(p >= 60) return {
         bg:'linear-gradient(180deg,#fef9c3,#fde68a)', border:'#facc15', color:'#a16207',
-        sub:'Cierre bajo', tag:'CIERRE BAJO', icon:'⚠️'
+        sub:'Bajo a la fecha', tag:'BAJO', icon:'⚠️'
       };
       return {
         bg:'linear-gradient(180deg,#fee2e2,#fecaca)', border:'#fca5a5', color:'#dc2626',
@@ -795,11 +810,11 @@
 
     function getCierreText(points, mes){
       const p = Number(points || 0);
-      const m = String(mes || 'el mes anterior').replace(/^Cierre\s+/i,'');
-      if(p >= 80) return `Cliente cerró ${m} en verde: 80 puntos o más`;
-      if(p >= 70) return `Cliente cerró ${m} en naranja: 70 a 79 puntos`;
-      if(p >= 60) return `Cliente cerró ${m} en amarillo: 60 a 69 puntos`;
-      return `Cliente cerró ${m} por debajo de 60 puntos`;
+      const m = String(mes || 'a la fecha').replace(/^Cierre\s+/i,'');
+      if(p >= 80) return `Cliente viene excelente ${m}: 80 puntos o más`;
+      if(p >= 70) return `Cliente viene en nivel medio ${m}: 70 a 79 puntos`;
+      if(p >= 60) return `Cliente viene en nivel bajo ${m}: 60 a 69 puntos`;
+      return `Cliente viene por debajo de 60 puntos ${m}`;
     }
 
     async function loadHistorico(){
@@ -911,14 +926,15 @@ String(
 
         const totalObjetivo = categories.reduce((a,c) => a + c.objetivo, 0);
         const totalReal = categories.reduce((a,c) => a + c.real, 0);
-        const totalPuntos = categories.reduce((a,c) => a + c.puntos, 0);
+        const imperdonableAutoservicios = getImperdonableAutoservicios(r);
+        const totalPuntos = categories.reduce((a,c) => a + c.puntos, 0) + imperdonableAutoservicios;
         const cumplimientoTotal = totalObjetivo > 0 ? (totalReal / totalObjetivo) * 100 : 0;
         const desvioTotal = totalObjetivo - totalReal;
 
         return {
           key: `${numero}|${cliente}|${ruta}`,
           numero, cliente, ruta, vendedor, repositor, telefono, categories,
-          totalObjetivo, totalReal, totalPuntos, cumplimientoTotal, desvioTotal,
+          totalObjetivo, totalReal, totalPuntos, imperdonableAutoservicios, cumplimientoTotal, desvioTotal,
           semaforo: getSemaforo(cumplimientoTotal),
           semaforoText: getSemaforoText(cumplimientoTotal)
         };
@@ -1059,7 +1075,7 @@ String(
                   🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
                   ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
                 </div>
-                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 40) * 100,0,100)}%"></span></div>
+                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 50) * 100,0,100)}%"></span></div>
               </div>
               <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
             </div>
@@ -1098,13 +1114,16 @@ String(
       box.style.border = `1px solid ${borderColor}`;
       box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
 
-      const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
-      document.getElementById('routeAlerts').innerHTML = routeAlerts.length ? routeAlerts.map(c => `
-        <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-          <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
-          🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)} / 40
-        </div>
-      `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
+      const routeAlertsEl = document.getElementById('routeAlerts');
+      if(routeAlertsEl){
+        const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
+        routeAlertsEl.innerHTML = routeAlerts.length ? routeAlerts.map(c => `
+          <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+            <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
+            🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)}
+          </div>
+        `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
+      }
 
       document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
@@ -1116,7 +1135,7 @@ String(
                 Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
                 🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
+              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 50) * 100,0,100)}%"></span></div>
             </div>
             <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
@@ -1149,7 +1168,7 @@ String(
                 Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
                 🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 40) * 100,0,100)}%"></span></div>
+              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 50) * 100,0,100)}%"></span></div>
             </div>
             <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
@@ -1175,25 +1194,26 @@ String(
         <b>Semáforo general:</b> ${client.semaforoText}
       `;
 
-      const maxPuntos = client.categories.length * 5;
+      const maxPuntos = (client.categories.length * 5) + 10;
       const historicoCliente = getHistoricoCliente(client);
-      const maxCierre = historicoCliente ? 100 : maxPuntos;
+      const maxCierre = historicoCliente ? 110 : maxPuntos;
       const puntosCierre = historicoCliente ? historicoCliente.puntos : client.totalPuntos;
-      const mesCierre = state.selectedMesHistorico || state.mesesHistorico[0] || 'Mes anterior';
+      const mesCierre = state.selectedMesHistorico || state.mesesHistorico[0] || 'A la fecha';
       const cierreStyle = getCierreStyle(puntosCierre);
       const cierreTexto = getCierreText(puntosCierre, mesCierre);
       const mesesOptions = (state.mesesHistorico.length ? state.mesesHistorico : [mesCierre]).map(m => `<option value="${escapeHtml(m)}" ${normalizeKey(m) === normalizeKey(mesCierre) ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('');
       const detalleHistorico = historicoCliente ? `
         <div class="historico-note">
-          <b>Detalle del cierre:</b><br>
+          <b>Detalle de puntos a la fecha:</b><br>
           📦 Volumen: <b>${formatNumber(historicoCliente.volumen)}</b> pts ·
           🧾 Referencias: <b>${formatNumber(historicoCliente.referencias)}</b> pts ·
           💡 Pedido sugerido: <b>${formatNumber(historicoCliente.pedidoSugerido)}</b> pts ·
-          ✅ Ejecución: <b>${formatNumber(historicoCliente.ejecucion)}</b> pts<br>
+          ✅ Ejecución: <b>${formatNumber(historicoCliente.ejecucion)}</b> pts ·
+          ⭐ Imperdonable Autoservicios: <b>${formatNumber(historicoCliente.imperdonableAutoservicios || 0)}</b> pts<br>
           Nivel: <b>${escapeHtml(historicoCliente.nivel || '-')}</b> · Condición: <b>${escapeHtml(historicoCliente.condicion || '-')}</b>
         </div>` : `
         <div class="historico-note">
-          No se encontró este cliente en el cierre histórico. Se muestra el score actual calculado por la app.
+          No se encontró este cliente en puntos a la fecha. Se muestra el score actual calculado por la app.
         </div>`;
 
       document.getElementById('clientDetailSummary').innerHTML = `
@@ -1206,25 +1226,26 @@ String(
           <div class="v">📈 ${formatNumber(client.totalReal)}</div>
         </div>
         <div class="box client-kpi-card kpi-puntos">
-          <div class="t">Puntos totales</div>
+          <div class="t">Puntos totales del mes</div>
           <div class="v">🏅 ${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
         </div>
 
         <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
-          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">CIERRE DE PUNTOS DEL MES ANTERIOR</div>
+          <div class="t" style="font-size:18px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">PUNTOS A LA FECHA</div>
           <div class="historico-grid">
             <div class="historico-select" style="margin:0;">
               <select id="mesHistoricoSelect" onchange="cambiarMesHistorico(this.value)">${mesesOptions}</select>
             </div>
             <div class="historico-main" style="color:${cierreStyle.color};">
-              <div style="font-size:14px;font-weight:900;">Cierre ${escapeHtml(mesCierre)}</div>
+              <div style="font-size:14px;font-weight:900;">Avance ${escapeHtml(mesCierre)}</div>
               <div class="score-value" style="color:${cierreStyle.color};font-size:42px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
               <div style="display:inline-block;margin-top:8px;padding:9px 18px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:13px;">${cierreStyle.tag}</div>
             </div>
             <div class="historico-legend">
-              <div><span class="dot dot-green"></span>80 o más puntos: Cierre excelente</div>
-              <div><span class="dot dot-orange"></span>70 a 79 puntos: Cierre medio</div>
-              <div><span class="dot dot-yellow"></span>60 a 69 puntos: Cierre bajo</div>
+              <div><span class="dot dot-green"></span>80 o más puntos: Excelente</div>
+              <div><span class="dot dot-orange"></span>70 a 79 puntos: Medio</div>
+              <div><span class="dot dot-yellow"></span>60 a 69 puntos: Bajo</div>
+              <div style="margin-top:8px;font-size:12px;line-height:1.35;">⭐ Imperdonable Autoservicios: 20 SKU suma 10 puntos adicionales.</div>
             </div>
           </div>
           <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${cierreStyle.border};font-size:15px;font-weight:900;color:${cierreStyle.color};">${cierreStyle.icon} ${cierreTexto}</div>
