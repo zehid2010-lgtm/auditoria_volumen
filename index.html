@@ -326,10 +326,18 @@
     .historico-subtitle{margin-top:8px;font-size:14px;color:#666;font-weight:700}
     .historico-grid{display:grid;grid-template-columns:minmax(0,1fr) 156px;gap:14px;align-items:stretch;margin-top:16px}
     .historico-main{border-radius:22px;padding:26px 14px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);display:flex;flex-direction:column;justify-content:center;min-height:220px}
+    .score-breakdown{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:22px}
+    .score-mini{background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:12px 6px;text-align:center;color:#222;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+    .score-mini .mini-title{font-size:10px;font-weight:900;text-transform:uppercase;line-height:1.15;min-height:24px;color:#444}
+    .score-mini .mini-ico{font-size:30px;margin-top:8px}
+    .score-mini .mini-num{font-size:26px;font-weight:900;line-height:1;margin-top:8px}
+    .score-mini .mini-den{font-size:14px;font-weight:800;margin-top:6px;color:#222}
+    .score-mini.vol .mini-num{color:#0b74e5}.score-mini.ref .mini-num{color:#f97316}.score-mini.ps .mini-num{color:#6d28d9}.score-mini.ejec .mini-num{color:#16a34a}.score-mini.total .mini-num{color:#e30613}
+    .historico-status{display:inline-block;margin-top:18px;padding:12px 32px;border-radius:999px;background:#e30613;color:#fff;font-weight:900;font-size:16px;min-width:220px}
     .historico-legend{background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:14px;text-align:left;font-size:13px;line-height:1.7;display:flex;flex-direction:column;justify-content:center}
     .dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:8px;vertical-align:-1px}
     .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
-    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:190px}.historico-select select{font-size:16px}}
+    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.score-breakdown{grid-template-columns:1fr 1fr}.score-mini.total{grid-column:span 2}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:190px}.historico-select select{font-size:16px}}
 
     @media (max-width:450px){
       .brand-left img{height:32px}
@@ -1223,17 +1231,21 @@ String(
       const mesesOptions = `<option value="${escapeHtml(getMesActualApp())}" selected>${escapeHtml(getMesActualApp())}</option>`;
       const detalleHistorico = historicoCliente ? `
         <div class="historico-note">
-          <b>Detalle de puntos a la fecha:</b><br>
-          📦 Volumen: <b>${formatNumber(historicoCliente.volumen)}</b> pts ·
-          🧾 Referencias: <b>${formatNumber(historicoCliente.referencias)}</b> pts ·
-          💡 Pedido sugerido: <b>${formatNumber(historicoCliente.pedidoSugerido)}</b> pts ·
-          ✅ Ejecución: <b>${formatNumber(historicoCliente.ejecucion)}</b> pts ·
-          ⭐ Imperdonable Autoservicios: <b>${formatNumber(historicoCliente.imperdonableAutoservicios || 0)}</b> pts<br>
-          Nivel: <b>${escapeHtml(historicoCliente.nivel || '-')}</b> · Condición: <b>${escapeHtml(historicoCliente.condicion || '-')}</b>
+          <b>Detalle leído desde HISTORICO_PUNTOS:</b><br>
+          Volumen, Referencias, Pedido Sugerido, Ejecución y Puntos Totales se toman de esa solapa para mostrar el avance de Mayo.
+          ${historicoCliente.imperdonableAutoservicios ? `<br>⭐ Imperdonable Autoservicios: <b>${formatNumber(historicoCliente.imperdonableAutoservicios)}</b> pts adicionales.` : ''}
         </div>` : `
         <div class="historico-note">
-          No se encontró este cliente en puntos a la fecha. Se muestra el score actual calculado por la app.
+          No se encontró este cliente en HISTORICO_PUNTOS. Se muestra el score actual calculado por la app.
         </div>`;
+
+      const hVolumen = historicoCliente ? Number(historicoCliente.volumen || 0) : Number(client.totalPuntos || 0);
+      const hReferencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
+      const hPedidoSugerido = historicoCliente ? Number(historicoCliente.pedidoSugerido || 0) : 0;
+      const hEjecucion = historicoCliente ? Number(historicoCliente.ejecucion || 0) : 0;
+      const hImperdonable = historicoCliente ? Number(historicoCliente.imperdonableAutoservicios || 0) : 0;
+      const hPuntosTotales = historicoCliente ? Number(historicoCliente.puntos || 0) : Number(client.totalPuntos || 0);
+      const hMaxTotal = hImperdonable > 0 ? 110 : 100;
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
@@ -1258,8 +1270,14 @@ String(
           <div class="historico-grid">
             <div class="historico-main" style="color:${cierreStyle.color};">
               <div style="font-size:20px;font-weight:900;text-transform:uppercase;">Avance de ${escapeHtml(mesCierre)}</div>
-              <div class="score-value" style="color:${cierreStyle.color};font-size:70px;margin-top:18px;">${formatNumber(puntosCierre)} / ${maxCierre}</div>
-              <div style="display:inline-block;margin-top:16px;padding:13px 32px;border-radius:999px;background:${cierreStyle.color};color:#fff;font-weight:900;font-size:16px;min-width:220px;">${cierreStyle.tag}</div>
+              <div class="score-breakdown">
+                <div class="score-mini vol"><div class="mini-title">Volumen</div><div class="mini-ico">📊</div><div class="mini-num">${formatNumber(hVolumen)}</div><div class="mini-den">/ 40</div></div>
+                <div class="score-mini ref"><div class="mini-title">Referencias</div><div class="mini-ico">📦</div><div class="mini-num">${formatNumber(hReferencias)}</div><div class="mini-den">/ 20</div></div>
+                <div class="score-mini ps"><div class="mini-title">Pedido<br>Sugerido</div><div class="mini-ico">📋</div><div class="mini-num">${formatNumber(hPedidoSugerido)}</div><div class="mini-den">/ 20</div></div>
+                <div class="score-mini ejec"><div class="mini-title">Ejecución</div><div class="mini-ico">✅</div><div class="mini-num">${formatNumber(hEjecucion)}</div><div class="mini-den">/ 20</div></div>
+                <div class="score-mini total"><div class="mini-title">Puntos<br>Totales</div><div class="mini-ico">🏅</div><div class="mini-num">${formatNumber(hPuntosTotales)}</div><div class="mini-den">/ ${hMaxTotal}</div></div>
+              </div>
+              <div class="historico-status" style="background:${cierreStyle.color};">${cierreStyle.tag}</div>
             </div>
             <div class="historico-legend">
               <div><span class="dot dot-green"></span>80 o más puntos: Excelente</div>
