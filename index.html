@@ -824,12 +824,34 @@
       const numero = normalizeKey(client.numero);
       const cliente = normalizeKey(client.cliente);
       const ruta = normalizeKey(client.ruta);
-      return state.historico.find(h => {
-        const sameMonth = normalizeKey(h.mes) === normalizeKey(mes);
-        const sameNumero = numero && normalizeKey(h.numero) === numero;
-        const sameClienteRuta = cliente && normalizeKey(h.cliente) === cliente && (!ruta || normalizeKey(h.ruta) === ruta);
-        return sameMonth && (sameNumero || sameClienteRuta);
-      }) || null;
+
+      const candidates = state.historico.filter(h => normalizeKey(h.mes) === normalizeKey(mes));
+
+      // 1) Prioridad máxima: cruce por Outnum / Número de cliente.
+      if(numero){
+        const byNumero = candidates.find(h => normalizeKey(h.numero) === numero);
+        if(byNumero) return byNumero;
+      }
+
+      // 2) Segundo cruce: nombre exacto del cliente.
+      // Si la hoja HISTORICO_PUNTOS no tiene ruta, no se exige ruta para no perder la coincidencia.
+      const byCliente = candidates.find(h => {
+        const hCliente = normalizeKey(h.cliente);
+        const hRuta = normalizeKey(h.ruta);
+        if(!cliente || hCliente !== cliente) return false;
+        return !hRuta || !ruta || hRuta === ruta;
+      });
+      if(byCliente) return byCliente;
+
+      // 3) Tercer cruce: nombre parcial controlado, para diferencias menores de escritura.
+      const byClienteParcial = candidates.find(h => {
+        const hCliente = normalizeKey(h.cliente);
+        if(!cliente || !hCliente) return false;
+        const matchNombre = hCliente.includes(cliente) || cliente.includes(hCliente);
+        return matchNombre;
+      });
+
+      return byClienteParcial || null;
     }
 
     function getCierreStyle(points){
@@ -917,7 +939,7 @@
     function dedupeRows(rows){
       const map = new Map();
       rows.forEach(r => {
-        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID');
+        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
         const cliente = getCell(r,'CLIENTE');
         const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
         const key = `${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
@@ -930,7 +952,7 @@
       const uniqueRows = dedupeRows(rawRows);
 
       state.rows = uniqueRows.map(r => {
-        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID');
+        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
         const cliente = getCell(r,'CLIENTE');
         const ruta = String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
         const vendedor = getCell(r,'VENDEDOR','Vendedor');
