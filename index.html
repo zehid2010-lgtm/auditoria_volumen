@@ -324,20 +324,24 @@
       text-align:center;
     }
     .historico-subtitle{margin-top:8px;font-size:14px;color:#666;font-weight:700}
-    .historico-grid{display:grid;grid-template-columns:minmax(0,1fr) 156px;gap:14px;align-items:stretch;margin-top:16px}
-    .historico-main{border-radius:22px;padding:26px 14px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);display:flex;flex-direction:column;justify-content:center;min-height:220px}
-    .score-breakdown{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:22px}
-    .score-mini{background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:12px 6px;text-align:center;color:#222;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+    .historico-grid{display:grid;grid-template-columns:1fr;gap:14px;align-items:stretch;margin-top:20px}
+    .historico-main{border-radius:22px;padding:30px 14px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);display:flex;flex-direction:column;justify-content:center;min-height:280px;width:100%}
+    .score-breakdown{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:28px}
+    .score-mini{background:rgba(255,255,255,.72);border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:16px 6px;text-align:center;color:#222;box-shadow:0 4px 12px rgba(0,0,0,.04);min-height:160px;display:flex;flex-direction:column;justify-content:center}
     .score-mini .mini-title{font-size:10px;font-weight:900;text-transform:uppercase;line-height:1.15;min-height:24px;color:#444}
     .score-mini .mini-ico{font-size:30px;margin-top:8px}
-    .score-mini .mini-num{font-size:26px;font-weight:900;line-height:1;margin-top:8px}
+    .score-mini .mini-num{font-size:32px;font-weight:900;line-height:1;margin-top:10px}
     .score-mini .mini-den{font-size:14px;font-weight:800;margin-top:6px;color:#222}
     .score-mini.vol .mini-num{color:#0b74e5}.score-mini.ref .mini-num{color:#f97316}.score-mini.ps .mini-num{color:#6d28d9}.score-mini.ejec .mini-num{color:#16a34a}.score-mini.total .mini-num{color:#e30613}
     .historico-status{display:inline-block;margin-top:18px;padding:12px 32px;border-radius:999px;background:#e30613;color:#fff;font-weight:900;font-size:16px;min-width:220px}
-    .historico-legend{background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:14px;text-align:left;font-size:13px;line-height:1.7;display:flex;flex-direction:column;justify-content:center}
-    .dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+    .historico-legend{margin-top:18px;background:rgba(255,255,255,.68);border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:0;text-align:left;font-size:18px;line-height:1.45;overflow:hidden}
+    .historico-legend-row{display:grid;grid-template-columns:52px 1fr 1fr;gap:12px;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(227,6,19,.16)}
+    .historico-legend-row:last-child{border-bottom:none}
+    .historico-legend-row b{font-weight:900}
+    .historico-legend-row.imp{grid-template-columns:52px auto 1fr}
+    .dot{display:inline-block;width:28px;height:28px;border-radius:50%;vertical-align:-1px}
     .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
-    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.score-breakdown{grid-template-columns:1fr 1fr}.score-mini.total{grid-column:span 2}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:190px}.historico-select select{font-size:16px}}
+    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.score-breakdown{grid-template-columns:1fr 1fr}.score-mini.total{grid-column:span 2}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:250px}.historico-select select{font-size:16px}.historico-legend{font-size:15px}.historico-legend-row{grid-template-columns:38px 1fr 1fr;padding:14px 12px}.historico-legend-row.imp{grid-template-columns:38px 1fr}.dot{width:24px;height:24px}}
 
     @media (max-width:450px){
       .brand-left img{height:32px}
@@ -1229,15 +1233,7 @@ String(
       const cierreStyle = getCierreStyle(puntosCierre);
       const cierreTexto = getCierreText(puntosCierre, mesCierre);
       const mesesOptions = `<option value="${escapeHtml(getMesActualApp())}" selected>${escapeHtml(getMesActualApp())}</option>`;
-      const detalleHistorico = historicoCliente ? `
-        <div class="historico-note">
-          <b>Detalle leído desde HISTORICO_PUNTOS:</b><br>
-          Volumen, Referencias, Pedido Sugerido, Ejecución y Puntos Totales se toman de esa solapa para mostrar el avance de Mayo.
-          ${historicoCliente.imperdonableAutoservicios ? `<br>⭐ Imperdonable Autoservicios: <b>${formatNumber(historicoCliente.imperdonableAutoservicios)}</b> pts adicionales.` : ''}
-        </div>` : `
-        <div class="historico-note">
-          No se encontró este cliente en HISTORICO_PUNTOS. Se muestra el score actual calculado por la app.
-        </div>`;
+      const detalleHistorico = '';
 
       const hVolumen = historicoCliente ? Number(historicoCliente.volumen || 0) : Number(client.totalPuntos || 0);
       const hReferencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
@@ -1279,15 +1275,13 @@ String(
               </div>
               <div class="historico-status" style="background:${cierreStyle.color};">${cierreStyle.tag}</div>
             </div>
-            <div class="historico-legend">
-              <div><span class="dot dot-green"></span>80 o más puntos: Excelente</div>
-              <div><span class="dot dot-orange"></span>70 a 79 puntos: Medio</div>
-              <div><span class="dot dot-yellow"></span>60 a 69 puntos: Bajo</div>
-              <div style="margin-top:8px;font-size:12px;line-height:1.35;">⭐ Imperdonable Autoservicios: 20 SKU suma 10 puntos adicionales.</div>
-            </div>
           </div>
-          <div style="margin-top:14px;padding:11px 14px;border-radius:16px;background:rgba(255,255,255,.55);border:1px solid ${cierreStyle.border};font-size:15px;font-weight:900;color:${cierreStyle.color};">${cierreStyle.icon} ${cierreTexto}</div>
-          ${detalleHistorico}
+          <div class="historico-legend">
+            <div class="historico-legend-row"><span class="dot dot-green"></span><span>80 o más puntos:</span><b>Excelente</b></div>
+            <div class="historico-legend-row"><span class="dot dot-orange"></span><span>70 a 79 puntos:</span><b>Medio</b></div>
+            <div class="historico-legend-row"><span class="dot dot-yellow"></span><span>60 a 69 puntos:</span><b>Bajo</b></div>
+            <div class="historico-legend-row imp"><span style="font-size:32px;line-height:1;">⭐</span><b>Imperdonable</b><span>Autoservicios: 20 SKU suma 10 puntos adicionales.</span></div>
+          </div>
         </div>
 
         <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
