@@ -341,6 +341,19 @@
     .historico-legend-row.imp{grid-template-columns:52px auto 1fr}
     .dot{display:inline-block;width:28px;height:28px;border-radius:50%;vertical-align:-1px}
     .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
+
+    @media (min-width:451px) and (max-width:540px){
+      .historico-panel{padding:18px 12px !important;}
+      .historico-main{padding:24px 10px;}
+      .score-breakdown{gap:8px;}
+      .score-mini{padding:14px 4px;min-height:150px;}
+      .score-mini .mini-title{font-size:9px;}
+      .score-mini .mini-ico{font-size:28px;}
+      .score-mini .mini-num{font-size:30px;}
+      .score-mini .mini-den{font-size:13px;}
+      .historico-legend{font-size:16px;}
+    }
+
     @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.score-breakdown{grid-template-columns:1fr 1fr}.score-mini.total{grid-column:span 2}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:250px}.historico-select select{font-size:16px}.historico-legend{font-size:15px}.historico-legend-row{grid-template-columns:38px 1fr 1fr;padding:14px 12px}.historico-legend-row.imp{grid-template-columns:38px 1fr}.dot{width:24px;height:24px}}
 
     @media (max-width:450px){
@@ -562,7 +575,7 @@
 
   <script>
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
-    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQSuRpKllI3EgCIHu51oqxUVEVtsDYgt5LFX0iNFndhHeRfsKIy3RyGoLnfobWFw/pub?gid=278734128&single=true&output=csv';
+    const CSV_HISTORICO = 'https://docs.google.com/spreadsheets/d/10rXfsiS24PprNxiq0d2-EfllvdUO-YF2/export?format=csv&gid=1389632754';
 
     const CATEGORY_CONFIG = [
       { keys: ['Agua'], label: 'Agua' },
@@ -1254,7 +1267,7 @@ String(
         </div>
         <div class="box client-kpi-card kpi-puntos">
           <div class="t">Puntos totales del mes</div>
-          <div class="v">🏅 ${formatNumber(client.totalPuntos)} / ${maxPuntos}</div>
+          <div class="v">🏅 ${formatNumber(hPuntosTotales)} / ${hMaxTotal}</div>
         </div>
 
         <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
