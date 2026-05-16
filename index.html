@@ -613,7 +613,7 @@
       'Saborizada': { icon: 'https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png', bubble: '#eefcf1', bubbleBorder: '#bfe4c6', refBg: '#eefcf3', refBorder: '#c0e6ca' }
     };
 
-    const state = { rows: [], routes: [], clients: [], alerts: [], historico: [], mesesHistorico: [], selectedMesHistorico: '', selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
+    const state = { rows: [], routes: [], clients: [], alerts: [], historico: [], historicoByNumero: new Map(), historicoByCliente: new Map(), mesesHistorico: [], selectedMesHistorico: '', selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
 
     function normalizeKey(str){
       return String(str || '')
@@ -623,6 +623,23 @@
         .replace(/[_\-]+/g,' ')
         .replace(/\s+/g,' ')
         .toUpperCase();
+    }
+
+    function cleanNumberKey(value){
+      return String(value || '').replace(/\D/g,'').trim();
+    }
+
+    function cleanClientKey(value){
+      return normalizeKey(value)
+        .replace(/\bS\s*A\s*S\b/g,'')
+        .replace(/\bS\s*R\s*L\b/g,'')
+        .replace(/\bSRL\b/g,'')
+        .replace(/\bSAS\b/g,'')
+        .replace(/\bS\s*A\b/g,'')
+        .replace(/\bSA\b/g,'')
+        .replace(/\bHNOS\b/g,'HERMANOS')
+        .replace(/\s+/g,' ')
+        .trim();
     }
 
     function escapeHtml(str){
@@ -801,19 +818,26 @@
         const imperdonableAutoservicios = getImperdonableAutoservicios(r);
         const puntosDetectados = getHistCell(
           r,
-          'PUNTOS ACTUALES','Puntos Actuales','PUNTOS_ACTUALES','PUNTOS ACTUALES HOY','PUNTOS_ACTUALES_HOY',
+          'PUNTOS TOTALES','Puntos Totales','PUNTOS_TOTALES',
+          'PUNTOS ACTUALES','Puntos Actuales','PUNTOS_ACTUALES',
           'PUNTOS A LA FECHA','Puntos a la fecha','PUNTOS_A_LA_FECHA',
-          'HISTORICO DE PUNTOS','Histórico de Puntos','HISTÓRICO DE PUNTOS','HISTORICO_PUNTOS',
-          'P','Columna P','COLUMNA P',
-          'PUNTOS TOTALES','Puntos Totales','PUNTOS','Puntos','PUNTOS OBTENIDOS','PUNTOS_OBTENIDOS','SCORE','Score'
+          'PUNTOS','Puntos','SCORE','Score'
         );
-        // IMPORTANTE: si la hoja HISTORICO_PUNTOS trae Puntos Totales, la app debe respetar EXACTAMENTE ese valor.
-        // No se vuelve a calcular ni se suma nada adicional para evitar diferencias con la planilla.
+        // IMPORTANTE: la pastilla de avance respeta EXACTAMENTE la columna "Puntos Totales" de HISTORICO_PUNTOS.
         const puntos = puntosDetectados !== '' ? toNumber(puntosDetectados) : (volumen + referencias + pedidoSugerido + ejecucion + imperdonableAutoservicios);
         const cumplimientoRaw = getHistCell(r,'%','% CUMPLIMIENTO','CUMPLIMIENTO','Cumplimiento','PORCENTAJE');
         const cumplimiento = cumplimientoRaw !== '' ? toNumber(cumplimientoRaw) : puntos;
         return { mes, numero, cliente, ruta, vendedor, nivel, condicion, objetivo, avance, puntos, cumplimiento, volumen, referencias, pedidoSugerido, ejecucion, imperdonableAutoservicios };
       }).filter(r => r.mes && (r.numero || r.cliente));
+
+      state.historicoByNumero = new Map();
+      state.historicoByCliente = new Map();
+      state.historico.forEach(h => {
+        const numeroKey = cleanNumberKey(h.numero);
+        const clienteKey = cleanClientKey(h.cliente);
+        if(numeroKey) state.historicoByNumero.set(`${normalizeKey(h.mes)}|${numeroKey}`, h);
+        if(clienteKey) state.historicoByCliente.set(`${normalizeKey(h.mes)}|${clienteKey}`, h);
+      });
 
       state.mesesHistorico = [...new Set(state.historico.map(r => r.mes))].filter(Boolean);
       if(!state.selectedMesHistorico && state.mesesHistorico.length){
@@ -824,38 +848,25 @@
 
     function getHistoricoCliente(client){
       if(!client || !state.historico.length) return null;
-      const mes = state.selectedMesHistorico || getMesActualApp();
-      const numero = normalizeKey(client.numero);
-      const cliente = normalizeKey(client.cliente);
-      const ruta = normalizeKey(client.ruta);
 
-      const candidates = state.historico.filter(h => normalizeKey(h.mes) === normalizeKey(mes));
+      const mes = normalizeKey(state.selectedMesHistorico || getMesActualApp());
+      const numeroKey = cleanNumberKey(client.numero);
+      const clienteKey = cleanClientKey(client.cliente);
 
-      // 1) Prioridad máxima: cruce por Outnum / Número de cliente.
-      if(numero){
-        const byNumero = candidates.find(h => normalizeKey(h.numero) === numero || String(h.numero || '').replace(/\D/g,'') === String(client.numero || '').replace(/\D/g,''));
-        if(byNumero) return byNumero;
+      // 1) Cruce principal y obligatorio por Outnum / número de cliente.
+      if(numeroKey){
+        const foundByNumero = state.historicoByNumero.get(`${mes}|${numeroKey}`);
+        if(foundByNumero) return foundByNumero;
       }
 
-      // 2) Segundo cruce: nombre exacto del cliente.
-      // Si la hoja HISTORICO_PUNTOS no tiene ruta, no se exige ruta para no perder la coincidencia.
-      const byCliente = candidates.find(h => {
-        const hCliente = normalizeKey(h.cliente);
-        const hRuta = normalizeKey(h.ruta);
-        if(!cliente || hCliente !== cliente) return false;
-        return !hRuta || !ruta || hRuta === ruta;
-      });
-      if(byCliente) return byCliente;
+      // 2) Cruce secundario por nombre limpio EXACTO.
+      // No se usa cruce parcial porque podía traer otro cliente y sumar puntos incorrectos.
+      if(clienteKey){
+        const foundByCliente = state.historicoByCliente.get(`${mes}|${clienteKey}`);
+        if(foundByCliente) return foundByCliente;
+      }
 
-      // 3) Tercer cruce: nombre parcial controlado, para diferencias menores de escritura.
-      const byClienteParcial = candidates.find(h => {
-        const hCliente = normalizeKey(h.cliente);
-        if(!cliente || !hCliente) return false;
-        const matchNombre = hCliente.includes(cliente) || cliente.includes(hCliente);
-        return matchNombre;
-      });
-
-      return byClienteParcial || null;
+      return null;
     }
 
     function getCierreStyle(points){
@@ -1273,20 +1284,20 @@ String(
       const maxPuntos = (client.categories.length * 5) + 10;
       const historicoCliente = getHistoricoCliente(client);
       const maxCierre = historicoCliente ? 110 : maxPuntos;
-      const puntosCierre = historicoCliente ? historicoCliente.puntos : client.totalPuntos;
+      const puntosCierre = historicoCliente ? historicoCliente.puntos : 0;
       const mesCierre = state.selectedMesHistorico || getMesActualApp();
       const cierreStyle = getCierreStyle(puntosCierre);
       const cierreTexto = getCierreText(puntosCierre, mesCierre);
       const mesesOptions = `<option value="${escapeHtml(getMesActualApp())}" selected>${escapeHtml(getMesActualApp())}</option>`;
       const detalleHistorico = '';
 
-      const hVolumen = historicoCliente ? Number(historicoCliente.volumen || 0) : Number(client.totalPuntos || 0);
+      const hVolumen = historicoCliente ? Number(historicoCliente.volumen || 0) : 0;
       const hReferencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
       const hPedidoSugerido = historicoCliente ? Number(historicoCliente.pedidoSugerido || 0) : 0;
       const hEjecucion = historicoCliente ? Number(historicoCliente.ejecucion || 0) : 0;
       const hImperdonable = historicoCliente ? Number(historicoCliente.imperdonableAutoservicios || 0) : 0;
-      const hPuntosTotales = historicoCliente ? Number(historicoCliente.puntos || 0) : Number(client.totalPuntos || 0);
-      const hMaxTotal = hImperdonable > 0 ? 110 : 100;
+      const hPuntosTotales = historicoCliente ? Number(historicoCliente.puntos || 0) : 0;
+      const hMaxTotal = hPuntosTotales > 100 || hImperdonable > 0 ? 110 : 100;
 
       document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
