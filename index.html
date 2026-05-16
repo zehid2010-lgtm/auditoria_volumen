@@ -365,9 +365,11 @@
       .hero-card{min-height:210px}
     }
   
+
+
 .banner-argentina{
   width:100%;
-  margin:18px 0;
+  margin:18px 0 4px;
   border-radius:24px;
   overflow:hidden;
   box-shadow:0 10px 30px rgba(0,0,0,.15);
@@ -376,10 +378,11 @@
 
 .banner-argentina img{
   width:100%;
-  height:260px;
+  height:220px;
   object-fit:cover;
   display:block;
 }
+
 </style>
 </head>
 <body>
@@ -520,14 +523,11 @@
 
         <div class="panel">
           <div class="item-meta" id="routeDetailMeta"></div>
-    <div class="route-kpi">
 
-  <div class="banner-argentina">
-    <img src="bandera_argentina.png" alt="Argentina Campeón del Mundo">
-  </div>
-
-</div>
-
+          <div class="banner-argentina">
+            <img src="bandera_argentina.png" alt="Argentina Campeón del Mundo">
+          </div>
+        </div>
 
         <div class="panel">
           <div class="panel-head"><div class="panel-head-left"><div class="panel-icon">👥</div><div><h4>Clientes de la ruta</h4><small>Ingresá al detalle de cada cliente.</small></div></div></div>
@@ -1237,17 +1237,21 @@ String(
       const borderColor = isGreen ? '#86efac' : isYellow ? '#fcd34d' : '#fca5a5';
       const valueColor = isGreen ? '#15803d' : isYellow ? '#b45309' : '#dc2626';
 
-      document.getElementById('rdClients').textContent = formatNumber(route.clients);
-      document.getElementById('rdObjetivo').textContent = formatNumber(route.objetivo);
+      const rdClientsEl = document.getElementById('rdClients'); if(rdClientsEl) rdClientsEl.textContent = formatNumber(route.clients);
+      const rdObjetivoEl = document.getElementById('rdObjetivo'); if(rdObjetivoEl) rdObjetivoEl.textContent = formatNumber(route.objetivo);
       const el = document.getElementById('rdCumplen40');
       const sub = document.getElementById('rdCumplen40Sub');
-      const box = el.closest('.box');
-      el.textContent = `${clientesCumplen40} / ${totalClientes}`;
-      el.style.color = valueColor;
-      sub.textContent = `${formatPct(ratio)} cumplimiento clientes`;
-      box.style.background = bgColor;
-      box.style.border = `1px solid ${borderColor}`;
-      box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
+      if(el && sub){
+        const box = el.closest('.box');
+        el.textContent = `${clientesCumplen40} / ${totalClientes}`;
+        el.style.color = valueColor;
+        sub.textContent = `${formatPct(ratio)} cumplimiento clientes`;
+        if(box){
+          box.style.background = bgColor;
+          box.style.border = `1px solid ${borderColor}`;
+          box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
+        }
+      }
 
       const routeAlertsEl = document.getElementById('routeAlerts');
       if(routeAlertsEl){
