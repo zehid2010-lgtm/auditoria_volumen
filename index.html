@@ -367,6 +367,44 @@
   
 
 
+.candado-alert{
+  grid-column:span 3;
+  margin-top:4px;
+  background:linear-gradient(180deg,#fff7ed,#ffedd5);
+  color:#9a3412;
+  border:1.5px solid #fdba74;
+  padding:14px 16px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.35;
+  text-align:center;
+  box-shadow:0 6px 14px rgba(154,52,18,.10);
+}
+.candado-alert.ok{
+  background:linear-gradient(180deg,#ecfdf5,#dcfce7);
+  color:#166534;
+  border-color:#86efac;
+}
+.candado-alert b{font-size:14px}
+.candado-mini{
+  display:inline-block;
+  margin-top:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff7ed;
+  color:#9a3412;
+  border:1px solid #fdba74;
+  font-size:11px;
+  font-weight:900;
+}
+.candado-mini.ok{
+  background:#ecfdf5;
+  color:#166534;
+  border-color:#86efac;
+}
+
+
 .banner-argentina{
   width:100%;
   margin:18px 0 4px;
@@ -458,6 +496,7 @@
             🎯 <b>Objetivo:</b> volumen esperado en CAJAS FÍSICAS.<br>
             📦 <b>Avance:</b> volumen real cargado en columnas tipo <b>_REAL</b> o <b>_CF_REAL</b>.<br>
             🏆 <b>Puntos:</b> cada categoría cumplida suma 5 puntos.<br>
+            🔒 <b>Cláusula candado:</b> los puntos de volumen se liberan sólo cuando cumple el volumen general.<br>
             🚦 <b>Badge de puntos:</b> Verde = 40 pts · Amarillo = 30 a 39 pts · Rojo = menos de 30 pts.
           </div>
         </section>
@@ -552,7 +591,8 @@
           <div class="legend-box">
             🎯 <b>Objetivo:</b> lo que tiene que vender.<br>
             📦 <b>Avance:</b> lo que ya se cargó en el Excel.<br>
-            🏆 <b>Puntos:</b> 5 por cada categoría cumplida.
+            🏆 <b>Puntos:</b> 5 por cada categoría cumplida.<br>
+            🔒 <b>Cláusula candado:</b> si no cumple el volumen general, los puntos de volumen quedan bloqueados.
           </div>
           <div id="clientCategories" class="cat-grid"></div>
           <div id="clientCategoriesEmpty" class="empty" style="display:none;">No hay categorías para mostrar.</div>
@@ -1062,14 +1102,20 @@ String(
         const totalObjetivo = categories.reduce((a,c) => a + c.objetivo, 0);
         const totalReal = categories.reduce((a,c) => a + c.real, 0);
         const imperdonableAutoservicios = getImperdonableAutoservicios(r);
-        const totalPuntos = categories.reduce((a,c) => a + c.puntos, 0) + imperdonableAutoservicios;
         const cumplimientoTotal = totalObjetivo > 0 ? (totalReal / totalObjetivo) * 100 : 0;
         const desvioTotal = totalObjetivo - totalReal;
+
+        // 🔒 CLÁUSULA CANDADO:
+        // Los puntos de volumen se calculan, pero sólo se liberan cuando el cliente cumple el volumen general.
+        const volumenGeneralCumplido = totalObjetivo > 0 && totalReal >= totalObjetivo;
+        const puntosVolumenGanados = categories.reduce((a,c) => a + c.puntos, 0) + imperdonableAutoservicios;
+        const totalPuntos = volumenGeneralCumplido ? puntosVolumenGanados : 0;
+        const puntosBloqueados = volumenGeneralCumplido ? 0 : puntosVolumenGanados;
 
         return {
           key: `${numero}|${cliente}|${ruta}`,
           numero, cliente, ruta, vendedor, repositor, telefono, categories,
-          totalObjetivo, totalReal, totalPuntos, imperdonableAutoservicios, cumplimientoTotal, desvioTotal,
+          totalObjetivo, totalReal, totalPuntos, puntosVolumenGanados, puntosBloqueados, volumenGeneralCumplido, imperdonableAutoservicios, cumplimientoTotal, desvioTotal,
           semaforo: getSemaforo(cumplimientoTotal),
           semaforoText: getSemaforoText(cumplimientoTotal)
         };
@@ -1340,8 +1386,11 @@ String(
       const detalleHistorico = '';
 
       // VOLUMEN: se calcula desde las categorías que el cliente ya va logrando en la app.
-      // Cada categoría lograda suma 5 puntos.
-      const hVolumen = client.categories.reduce((acc, cat) => acc + Number(cat.puntos || 0), 0);
+      // 🔒 Cláusula candado: sólo se libera cuando cumple el volumen general.
+      const volumenGeneralCumplido = !!client.volumenGeneralCumplido;
+      const hVolumenGanado = Number(client.puntosVolumenGanados || 0);
+      const hVolumen = volumenGeneralCumplido ? hVolumenGanado : 0;
+      const hVolumenBloqueado = volumenGeneralCumplido ? 0 : hVolumenGanado;
 
       // REFERENCIAS, PEDIDO SUGERIDO Y EJECUCIÓN: vienen directo de HISTORICO_PUNTOS.
       const hReferencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
@@ -1371,6 +1420,12 @@ String(
           <div class="v">🏅 ${formatNumber(hPuntosTotales)} / ${hMaxTotal}</div>
         </div>
 
+        <div class="candado-alert ${volumenGeneralCumplido ? 'ok' : ''}">
+          ${volumenGeneralCumplido
+            ? `🔓 <b>Cláusula candado liberada</b><br>El cliente cumplió el volumen general. Se liberan ${formatNumber(hVolumenGanado)} puntos de volumen.`
+            : `🔒 <b>Cláusula candado activa</b><br>Los puntos de volumen están bloqueados hasta cumplir el volumen general. Puntos retenidos: ${formatNumber(hVolumenBloqueado)}.`}
+        </div>
+
         <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
           <div class="t" style="font-size:22px !important;font-weight:900;color:#5f5f5f;letter-spacing:.3px;">PUNTOS A LA FECHA</div>
           <div class="historico-subtitle">Seleccione el mes para ver el avance actual</div>
@@ -1381,7 +1436,7 @@ String(
             <div class="historico-main" style="color:${cierreStyle.color};">
               <div style="font-size:20px;font-weight:900;text-transform:uppercase;">Avance de ${escapeHtml(mesCierre)}</div>
               <div class="score-breakdown">
-                <div class="score-mini vol"><div class="mini-title">Volumen</div><div class="mini-ico">📊</div><div class="mini-num">${formatNumber(hVolumen)}</div><div class="mini-den">/ 40</div></div>
+                <div class="score-mini vol"><div class="mini-title">Volumen</div><div class="mini-ico">${volumenGeneralCumplido ? '🔓' : '🔒'}</div><div class="mini-num">${formatNumber(hVolumen)}</div><div class="mini-den">/ 40</div><span class="candado-mini ${volumenGeneralCumplido ? 'ok' : ''}">${volumenGeneralCumplido ? 'Liberado' : 'Bloqueado'}</span></div>
                 <div class="score-mini ref"><div class="mini-title">Referencias</div><div class="mini-ico">📦</div><div class="mini-num">${formatNumber(hReferencias)}</div><div class="mini-den">/ 20</div></div>
                 <div class="score-mini ps"><div class="mini-title">Pedido<br>Sugerido</div><div class="mini-ico">📋</div><div class="mini-num">${formatNumber(hPedidoSugerido)}</div><div class="mini-den">/ 20</div></div>
                 <div class="score-mini ejec"><div class="mini-title">Ejecución</div><div class="mini-ico">✅</div><div class="mini-num">${formatNumber(hEjecucion)}</div><div class="mini-den">/ 20</div></div>
@@ -1408,7 +1463,8 @@ String(
         catsEmpty.style.display = 'none';
         cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
           const cumple = cat.cumplimiento >= 100;
-          const puntos = cumple ? 5 : 0;
+          const puntosGanadosCategoria = cumple ? 5 : 0;
+          const puntos = volumenGeneralCumplido ? puntosGanadosCategoria : 0;
           const badgeClass = getSemaforoBadge(cat.cumplimiento);
           const progressClass = cat.semaforo;
           const visual = categoryVisualMap[cat.key] || { icon: '📦', bubble: '#f3f4f6', bubbleBorder: '#d7dbe0', refBg: '#f8fafc', refBorder: '#d9dee5' };
@@ -1425,7 +1481,7 @@ String(
                       🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
                       📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
                       📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
-                      🏆 Puntos: <b style="color:${cumple ? '#16a34a' : '#999'}">+${puntos}</b>
+                      🏆 Puntos: <b style="color:${volumenGeneralCumplido && cumple ? '#16a34a' : '#999'}">+${puntos}</b>${(!volumenGeneralCumplido && puntosGanadosCategoria > 0) ? ` <span class="candado-mini">🔒 retenidos +${puntosGanadosCategoria}</span>` : ''}
                     </div>
                     <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
                       <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
@@ -1433,7 +1489,7 @@ String(
                     </div>
                   </div>
                 </div>
-                <div class="badge ${badgeClass}">${puntos} pts</div>
+                <div class="badge ${volumenGeneralCumplido ? badgeClass : 'bad'}">${puntos} pts</div>
               </div>
               <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
               ${cumple ? '<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>' : ''}
