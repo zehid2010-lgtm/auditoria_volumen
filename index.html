@@ -422,138 +422,106 @@
 }
 
 
-/* ========================= LOGIN PRIVADO POR VENDEDOR ========================= */
+
+/* ================= LOGIN PRIVADO POR VENDEDOR ================= */
+.app{display:none;}
 .login-overlay{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(180deg,#e30613 0%,#940008 100%);
-  z-index:99999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:fixed; inset:0;
+  background:linear-gradient(180deg,#e30613 0%,#7a0007 100%);
+  z-index:99999; display:flex; align-items:center; justify-content:center;
   padding:20px;
 }
 .login-box{
-  width:100%;
-  max-width:430px;
-  background:#fff;
-  border-radius:30px;
-  padding:40px 32px;
-  box-shadow:0 24px 60px rgba(0,0,0,.28);
-  text-align:center;
+  width:100%; max-width:380px; background:#fff; border-radius:28px;
+  padding:34px 26px; box-shadow:0 20px 50px rgba(0,0,0,.28); text-align:center;
 }
-.login-logo{
-  width:118px;
-  max-height:54px;
-  object-fit:contain;
-  margin:0 auto 18px;
-  display:block;
-}
-.login-title{
-  font-size:34px;
-  font-weight:900;
-  margin:0 0 10px;
-  color:#111;
-  letter-spacing:.2px;
-}
-.login-sub{
-  font-size:15px;
-  color:#555;
-  line-height:1.35;
-  margin-bottom:28px;
-}
+.login-logo{width:96px; margin:0 auto 18px; display:block;}
+.login-title{font-size:30px; font-weight:900; margin-bottom:6px; color:#111;}
+.login-sub{font-size:13px; color:#666; margin-bottom:24px; line-height:1.35;}
 .login-input{
-  width:100%;
-  box-sizing:border-box;
-  margin-bottom:16px;
-  padding:17px 18px;
-  border-radius:18px;
-  border:1.5px solid #ddd;
-  background:#fff;
-  font-size:17px;
-  outline:none;
+  width:100%; margin-bottom:14px; padding:15px 16px; border-radius:16px;
+  border:1px solid #ddd; font-size:15px; outline:none;
 }
-.login-input:focus{border-color:#e30613;box-shadow:0 0 0 4px rgba(227,6,19,.08)}
+.login-input:focus{border-color:#e30613;}
 .login-btn{
-  width:100%;
-  border:none;
-  border-radius:18px;
-  padding:18px;
-  background:linear-gradient(180deg,#ff1a24,#c4000c);
-  color:#fff;
-  font-size:20px;
-  font-weight:900;
-  cursor:pointer;
-  box-shadow:0 14px 28px rgba(227,6,19,.24);
+  width:100%; border:none; border-radius:18px; padding:16px;
+  background:linear-gradient(180deg,#ff1a24,#c4000c); color:#fff;
+  font-size:16px; font-weight:900; cursor:pointer;
+  box-shadow:0 10px 22px rgba(227,6,19,.25);
 }
-.login-error{
-  margin-top:16px;
-  color:#dc2626;
-  font-size:15px;
-  font-weight:900;
-  display:none;
+.login-error{margin-top:12px; color:#dc2626; font-size:13px; font-weight:800; display:none;}
+.session-actions{
+  position:fixed; top:12px; right:12px; z-index:9998;
+  display:none; gap:8px; flex-wrap:wrap; justify-content:flex-end;
 }
-.login-note{
-  margin-top:18px;
-  color:#666;
-  font-size:13px;
-  line-height:1.35;
+.session-actions button{
+  border:none; border-radius:999px; color:#fff; padding:10px 13px;
+  font-size:12px; font-weight:900; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.18);
 }
-.logout-btn{
-  position:fixed;
-  top:14px;
-  right:14px;
-  z-index:9999;
-  border:none;
-  border-radius:999px;
-  background:#111;
-  color:#fff;
-  padding:10px 14px;
-  font-size:12px;
-  font-weight:900;
-  cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,.18);
-  display:none;
+.logout-btn{background:#111;}
+.change-pass-top-btn{background:#e30613;}
+.password-modal{
+  position:fixed; inset:0; background:rgba(0,0,0,.62); display:none;
+  align-items:center; justify-content:center; z-index:100000; padding:20px;
 }
-.user-chip-login{
-  position:fixed;
-  top:14px;
-  left:14px;
-  z-index:9999;
-  background:#fff;
-  color:#111;
-  border:1px solid rgba(0,0,0,.08);
-  border-radius:999px;
-  padding:10px 14px;
-  font-size:12px;
-  font-weight:900;
-  box-shadow:0 8px 20px rgba(0,0,0,.12);
-  display:none;
+.password-box{
+  width:100%; max-width:380px; background:#fff; border-radius:24px;
+  padding:28px; box-shadow:0 18px 45px rgba(0,0,0,.25);
 }
-@media(max-width:450px){
-  .login-box{padding:32px 24px;border-radius:26px}
-  .login-title{font-size:29px}
+.password-box h2{margin:0 0 8px; font-size:24px;}
+.password-box p{margin:0 0 18px; color:#666; font-size:13px; line-height:1.35;}
+.password-box input{
+  width:100%; box-sizing:border-box; padding:14px; margin-bottom:12px;
+  border-radius:14px; border:1px solid #ddd; font-size:15px;
+}
+.password-box button{
+  width:100%; border:none; border-radius:14px; padding:14px;
+  margin-top:8px; font-weight:900; cursor:pointer;
+}
+.password-save-btn{background:#e30613; color:#fff;}
+.password-cancel-btn{background:#f3f4f6; color:#111;}
+.current-user-chip{
+  position:fixed; top:58px; right:12px; z-index:9998;
+  display:none; background:#fff; color:#111; border:1px solid #e5e7eb;
+  border-radius:999px; padding:8px 12px; font-size:11px; font-weight:900;
+  box-shadow:0 6px 14px rgba(0,0,0,.12);
 }
 
 </style>
 </head>
 <body>
 
-  <!-- ========================= LOGIN PRIVADO POR VENDEDOR ========================= -->
-  <div id="loginOverlay" class="login-overlay">
-    <div class="login-box">
-      <img class="login-logo" src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" alt="Coca-Cola">
-      <h2 class="login-title">Acceso Privado</h2>
-      <div class="login-sub">Gestión Volumen PDV 2026<br>Ingresá con tu usuario asignado</div>
-      <input id="userInput" class="login-input" type="text" placeholder="Usuario" autocomplete="username">
-      <input id="passInput" class="login-input" type="password" placeholder="Contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter') loginApp();">
-      <button class="login-btn" onclick="loginApp()">INGRESAR</button>
-      <div id="loginError" class="login-error">Usuario o contraseña incorrectos</div>
-      <div class="login-note">Acceso interno. Cada vendedor visualiza únicamente sus rutas asignadas.</div>
-    </div>
+<!-- ================= LOGIN PRIVADO POR VENDEDOR ================= -->
+<div id="loginOverlay" class="login-overlay">
+  <div class="login-box">
+    <img class="login-logo" src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" alt="Coca-Cola">
+    <div class="login-title">Acceso Privado</div>
+    <div class="login-sub">Gestión Volumen PDV 2026<br>Ingresá con tu usuario y contraseña.</div>
+    <input id="userInput" class="login-input" type="text" placeholder="Usuario" autocomplete="username">
+    <input id="passInput" class="login-input" type="password" placeholder="Contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter'){loginApp();}">
+    <button class="login-btn" onclick="loginApp()">INGRESAR</button>
+    <div id="loginError" class="login-error">Usuario o contraseña incorrectos</div>
   </div>
-  <div id="userChipLogin" class="user-chip-login"></div>
-  <button id="logoutBtn" class="logout-btn" onclick="logoutApp()">Cerrar sesión</button>
+</div>
+
+<div id="sessionActions" class="session-actions">
+  <button class="change-pass-top-btn" onclick="openPasswordModal()">🔑 Cambiar contraseña</button>
+  <button class="logout-btn" onclick="logoutApp()">Cerrar sesión</button>
+</div>
+
+<div id="currentUserChip" class="current-user-chip"></div>
+
+<div id="passwordModal" class="password-modal">
+  <div class="password-box">
+    <h2>Cambiar contraseña</h2>
+    <p>La nueva contraseña queda guardada en este dispositivo. Si se abre desde otro equipo, se usará la clave original del HTML.</p>
+    <input id="currentPass" type="password" placeholder="Contraseña actual">
+    <input id="newPass" type="password" placeholder="Nueva contraseña mínimo 4 caracteres">
+    <input id="repeatNewPass" type="password" placeholder="Repetir nueva contraseña">
+    <button class="password-save-btn" onclick="changePassword()">Guardar contraseña</button>
+    <button class="password-cancel-btn" onclick="closePasswordModal()">Cancelar</button>
+  </div>
+</div>
 
   <div class="app">
     <header class="hero-header">
@@ -763,100 +731,77 @@
 
   <script>
 
-    /* ========================= USUARIOS POR VENDEDOR ========================= */
+    /* ================= LOGIN PRIVADO POR VENDEDOR ================= */
     const USERS = [
-      { user:'admin',    pass:'coca2026', rutas:['*'],  nombre:'ADMINISTRADOR' },
-      { user:'cristian', pass:'1616',     rutas:['16'], nombre:'CRISTIAN AVELLANEDA' },
-      { user:'aldo',     pass:'1717',     rutas:['17'], nombre:'ROBLEDO ALDO' },
-      { user:'pablo',    pass:'4040',     rutas:['40'], nombre:'PABLO IBARRA' },
-      { user:'javier',   pass:'4141',     rutas:['41'], nombre:'JAVIER ARTAZA' },
-      { user:'mauro',    pass:'4242',     rutas:['42'], nombre:'MAURO PRESTI' },
-      { user:'diego',    pass:'4343',     rutas:['43'], nombre:'DIEGO ZARATE' },
-      { user:'carlos',   pass:'4444',     rutas:['44'], nombre:'CARLOS SALAS' },
-      { user:'adrian',   pass:'4545',     rutas:['45'], nombre:'ADRIAN VILLALBA' }
+      { user:'admin', pass:'coca2026', rutas:['*'], nombre:'Administrador' },
+      { user:'cristian', pass:'1616', rutas:['16'], nombre:'Cristian Avellaneda' },
+      { user:'aldo', pass:'1717', rutas:['17'], nombre:'Robledo Aldo' },
+      { user:'pablo', pass:'4040', rutas:['40'], nombre:'Pablo Ibarra' },
+      { user:'javier', pass:'4141', rutas:['41'], nombre:'Javier Artaza' },
+      { user:'mauro', pass:'4242', rutas:['42'], nombre:'Mauro Presti' },
+      { user:'diego', pass:'4343', rutas:['43'], nombre:'Diego Zarate' },
+      { user:'carlos', pass:'4444', rutas:['44'], nombre:'Carlos Salas' },
+      { user:'adrian', pass:'4545', rutas:['45'], nombre:'Adrian Villalba' }
     ];
 
     let currentUser = null;
 
-    function normalizeLoginText(value){
-      return String(value || '').trim().toLowerCase();
+    function getPasswordOverrides(){
+      try{ return JSON.parse(localStorage.getItem('app_password_overrides') || '{}'); }
+      catch(e){ return {}; }
     }
 
-    function isRouteAllowed(route){
-      if(!currentUser) return false;
-      if(currentUser.rutas.includes('*')) return true;
-      return currentUser.rutas.map(String).includes(String(route));
+    function setPasswordOverride(user, pass){
+      const overrides = getPasswordOverrides();
+      overrides[user] = pass;
+      localStorage.setItem('app_password_overrides', JSON.stringify(overrides));
     }
 
-    function saveMasterState(){
-      state.allRows = [...state.rows];
-      state.allRoutes = [...state.routes];
-      state.allClients = [...state.clients];
-      state.allAlerts = [...state.alerts];
-    }
-
-    function restoreMasterState(){
-      if(state.allRows) state.rows = [...state.allRows];
-      if(state.allRoutes) state.routes = [...state.allRoutes];
-      if(state.allClients) state.clients = [...state.allClients];
-      if(state.allAlerts) state.alerts = [...state.allAlerts];
-    }
-
-    function applyUserPermissions(){
-      if(!currentUser) return;
-      restoreMasterState();
-      if(!currentUser.rutas.includes('*')){
-        state.rows = state.rows.filter(r => isRouteAllowed(r.ruta));
-        state.routes = state.routes.filter(r => isRouteAllowed(r.ruta));
-        state.clients = state.clients.filter(c => isRouteAllowed(c.ruta));
-        state.alerts = state.alerts.filter(a => isRouteAllowed(a.ruta));
-      }
-      fillRouteFilter();
-      updateHomeKPIs();
-      renderRoutes();
-      renderClients();
-      renderAlerts();
-    }
-
-    function showLoggedState(){
-      const overlay = document.getElementById('loginOverlay');
-      const logoutBtn = document.getElementById('logoutBtn');
-      const chip = document.getElementById('userChipLogin');
-      if(overlay) overlay.style.display = 'none';
-      if(logoutBtn) logoutBtn.style.display = 'block';
-      if(chip){
-        chip.style.display = 'block';
-        const rutasTxt = currentUser?.rutas?.includes('*') ? 'Todas las rutas' : `Ruta ${currentUser.rutas.join(', ')}`;
-        chip.textContent = `${currentUser?.nombre || currentUser?.user || ''} · ${rutasTxt}`;
-      }
+    function getEffectivePass(userObj){
+      const overrides = getPasswordOverrides();
+      return overrides[userObj.user] || userObj.pass;
     }
 
     function loginApp(){
-      const user = normalizeLoginText(document.getElementById('userInput').value);
-      const pass = String(document.getElementById('passInput').value || '').trim();
-      const foundUser = USERS.find(u => normalizeLoginText(u.user) === user && String(u.pass) === pass);
-      if(foundUser){
-        currentUser = foundUser;
-        localStorage.setItem('app_login_user', JSON.stringify(foundUser));
-        const err = document.getElementById('loginError');
-        if(err) err.style.display = 'none';
-        showLoggedState();
-        applyUserPermissions();
-      }else{
-        const err = document.getElementById('loginError');
-        if(err) err.style.display = 'block';
+      const user = document.getElementById('userInput').value.trim().toLowerCase();
+      const pass = document.getElementById('passInput').value.trim();
+      const foundUser = USERS.find(u => u.user === user && getEffectivePass(u) === pass);
+
+      if(!foundUser){
+        document.getElementById('loginError').style.display = 'block';
+        return;
       }
+
+      currentUser = { ...foundUser, pass:getEffectivePass(foundUser) };
+      localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
+      startPrivateApp();
     }
 
-    function checkLogin(){
-      const savedUser = localStorage.getItem('app_login_user');
-      if(!savedUser) return;
+    function startPrivateApp(){
+      const overlay = document.getElementById('loginOverlay');
+      const app = document.querySelector('.app');
+      const actions = document.getElementById('sessionActions');
+      const chip = document.getElementById('currentUserChip');
+      if(overlay) overlay.style.display = 'none';
+      if(app) app.style.display = 'block';
+      if(actions) actions.style.display = 'flex';
+      if(chip){
+        const rutasTxt = currentUser.rutas.includes('*') ? 'Todas las rutas' : `Ruta ${currentUser.rutas.join(', ')}`;
+        chip.textContent = `${currentUser.nombre} · ${rutasTxt}`;
+        chip.style.display = 'block';
+      }
+      applyUserPermissions();
+    }
+
+    function initLogin(){
+      const saved = localStorage.getItem('app_login_user');
+      if(!saved) return;
       try{
-        const parsed = JSON.parse(savedUser);
-        const validUser = USERS.find(u => u.user === parsed.user && u.pass === parsed.pass);
-        if(validUser){
-          currentUser = validUser;
-          showLoggedState();
+        const savedObj = JSON.parse(saved);
+        const baseUser = USERS.find(u => u.user === savedObj.user);
+        if(baseUser){
+          currentUser = { ...baseUser, pass:getEffectivePass(baseUser) };
+          startPrivateApp();
         }else{
           localStorage.removeItem('app_login_user');
         }
@@ -865,9 +810,52 @@
       }
     }
 
+    function isAdminUser(){
+      return currentUser && currentUser.rutas.includes('*');
+    }
+
+    function applyUserPermissions(){
+      if(!currentUser || !state || !Array.isArray(state.rows)) return;
+      if(isAdminUser()) return;
+      const allowed = currentUser.rutas.map(String);
+      state.rows = state.rows.filter(r => allowed.includes(String(r.ruta)));
+      state.routes = state.routes.filter(r => allowed.includes(String(r.ruta)));
+      state.clients = state.clients.filter(c => allowed.includes(String(c.ruta)));
+      state.alerts = state.alerts.filter(a => allowed.includes(String(a.ruta)));
+    }
+
     function logoutApp(){
       localStorage.removeItem('app_login_user');
       location.reload();
+    }
+
+    function openPasswordModal(){
+      if(!currentUser){ alert('Primero tenés que iniciar sesión.'); return; }
+      document.getElementById('currentPass').value = '';
+      document.getElementById('newPass').value = '';
+      document.getElementById('repeatNewPass').value = '';
+      document.getElementById('passwordModal').style.display = 'flex';
+    }
+
+    function closePasswordModal(){
+      document.getElementById('passwordModal').style.display = 'none';
+    }
+
+    function changePassword(){
+      if(!currentUser){ alert('Primero tenés que iniciar sesión.'); return; }
+      const current = document.getElementById('currentPass').value.trim();
+      const newPass = document.getElementById('newPass').value.trim();
+      const repeat = document.getElementById('repeatNewPass').value.trim();
+
+      if(current !== currentUser.pass){ alert('La contraseña actual es incorrecta'); return; }
+      if(newPass.length < 4){ alert('La nueva contraseña debe tener al menos 4 caracteres'); return; }
+      if(newPass !== repeat){ alert('Las nuevas contraseñas no coinciden'); return; }
+
+      setPasswordOverride(currentUser.user, newPass);
+      currentUser.pass = newPass;
+      localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
+      alert('Contraseña actualizada correctamente en este dispositivo');
+      closePasswordModal();
     }
 
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
@@ -1797,8 +1785,7 @@ String(
         const raw = await fetchCSV(CSV_URL);
         await loadHistorico();
         buildData(raw);
-        saveMasterState();
-        if(currentUser) applyUserPermissions();
+        applyUserPermissions();
         fillRouteFilter();
         updateHomeKPIs();
         renderRoutes();
@@ -1863,8 +1850,8 @@ String(
       window.open(url, '_blank');
     }
 
-    checkLogin();
     bind();
+    initLogin();
     loadData();
   </script>
 </body>
