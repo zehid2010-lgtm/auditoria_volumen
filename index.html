@@ -795,15 +795,19 @@
     }
 
     function loginApp(){
-      const user = document.getElementById('userInput').value.trim().toLowerCase();
-      const pass = document.getElementById('passInput').value.trim();
+      const user = document.getElementById('userInput').value.trim().toLowerCase().replace(/\s+/g,'');
+      const pass = document.getElementById('passInput').value.trim().replace(/\s+/g,'');
+      const errEl = document.getElementById('loginError');
+      errEl.style.display = 'none';
+      if(!user || !pass){ errEl.textContent = 'Completá usuario y contraseña.'; errEl.style.display = 'block'; return; }
       const foundUser = USERS.find(u => u.user === user && getEffectivePass(u) === pass);
       if(!foundUser){
-        document.getElementById('loginError').style.display = 'block';
+        errEl.textContent = 'Usuario o contraseña incorrectos.';
+        errEl.style.display = 'block';
         return;
       }
       currentUser = { ...foundUser, pass:getEffectivePass(foundUser) };
-      localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
+      try{ localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user })); }catch(e){}
       startPrivateApp();
     }
 
