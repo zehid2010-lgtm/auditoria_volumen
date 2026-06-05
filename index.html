@@ -173,15 +173,14 @@
     .warn{background:var(--yellow-bg);color:var(--yellow-tx)}
     .bad{background:var(--red-bg);color:var(--red-tx)}
 
-    /* ── MEJORA 4: barra de progreso con máximo correcto (40 pts) ── */
     .progress{margin-top:10px;height:11px;background:#ececec;border-radius:999px;overflow:hidden}
-    .progress > span{display:block;height:100%;border-radius:999px;transition:width .4s ease}
+    .progress > span{display:block;height:100%;border-radius:999px}
     .progress.green > span{background:linear-gradient(90deg,#3cbf67,#159947)}
     .progress.yellow > span{background:linear-gradient(90deg,#ffcf4d,#f59e0b)}
     .progress.red > span{background:linear-gradient(90deg,#ff8a8a,#dc2626)}
 
     .mini-progress{margin-top:8px;height:8px;background:#ececec;border-radius:999px;overflow:hidden}
-    .mini-progress > span{display:block;height:100%;border-radius:999px;transition:width .4s ease}
+    .mini-progress > span{display:block;height:100%;border-radius:999px}
     .mini-progress.green > span{background:linear-gradient(90deg,#3cbf67,#159947)}
     .mini-progress.yellow > span{background:linear-gradient(90deg,#ffcf4d,#f59e0b)}
     .mini-progress.red > span{background:linear-gradient(90deg,#ff8a8a,#dc2626)}
@@ -228,6 +227,7 @@
       background:linear-gradient(180deg,#25D366 0%, #128C7E 100%);
       box-shadow:0 8px 18px rgba(18,140,126,.22);
     }
+
     .wa-btn:active{transform:scale(.99)}
 
     .client-card{cursor:pointer}
@@ -297,11 +297,7 @@
     .nav-btn.active{background:linear-gradient(180deg,#900009 0%, #6e0007 100%)}
     .nav-btn .nicon{font-size:24px}
 
-    .status-chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#555;transition:background .3s,color .3s}
-    .status-chip.loading{background:#fff4db;color:#b26a00;}
-    .status-chip.ok{background:#eaf7ee;color:#157347;}
-    .status-chip.error{background:#fdeaea;color:#c62828;}
-
+    .status-chip{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f3f4f6;font-size:12px;color:#555}
     .historico-select{margin-top:16px;width:100%}
     .historico-select select{width:100%;font-size:16px;padding:18px 20px;border:1.5px solid #ff2b32;border-radius:20px;background:#fff}
     .historico-note{margin-top:12px;font-size:12px;line-height:1.35;color:#666;background:#fafafa;border:1px solid #eee;border-radius:16px;padding:12px}
@@ -346,137 +342,6 @@
     .dot{display:inline-block;width:28px;height:28px;border-radius:50%;vertical-align:-1px}
     .dot-green{background:#16a34a}.dot-orange{background:#f97316}.dot-yellow{background:#eab308}.dot-red{background:#dc2626}
 
-    /* ── MEJORA 8: loading overlay ── */
-    .sync-overlay{
-      display:none;position:fixed;inset:0;z-index:99998;
-      background:rgba(0,0,0,.45);align-items:center;justify-content:center;flex-direction:column;gap:14px;
-    }
-    .sync-overlay.visible{display:flex;}
-    .sync-spinner{
-      width:56px;height:56px;border-radius:50%;
-      border:5px solid rgba(255,255,255,.25);
-      border-top-color:#fff;
-      animation:spin .8s linear infinite;
-    }
-    .sync-label{color:#fff;font-size:14px;font-weight:800;letter-spacing:.5px;}
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    .candado-alert{
-      grid-column:span 3;
-      margin-top:4px;
-      background:linear-gradient(180deg,#fff7ed,#ffedd5);
-      color:#9a3412;
-      border:1.5px solid #fdba74;
-      padding:14px 16px;
-      border-radius:18px;
-      font-size:13px;
-      font-weight:800;
-      line-height:1.35;
-      text-align:center;
-      box-shadow:0 6px 14px rgba(154,52,18,.10);
-    }
-    .candado-alert.ok{
-      background:linear-gradient(180deg,#ecfdf5,#dcfce7);
-      color:#166534;
-      border-color:#86efac;
-    }
-    .candado-alert b{font-size:14px}
-    .candado-mini{
-      display:inline-block;
-      margin-top:6px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#fff7ed;
-      color:#9a3412;
-      border:1px solid #fdba74;
-      font-size:11px;
-      font-weight:900;
-    }
-    .candado-mini.ok{
-      background:#ecfdf5;
-      color:#166534;
-      border-color:#86efac;
-    }
-
-    .banner-argentina{
-      width:100%;
-      margin:18px 0 4px;
-      border-radius:24px;
-      overflow:hidden;
-      box-shadow:0 10px 30px rgba(0,0,0,.15);
-      background:#fff;
-    }
-    .banner-argentina img{
-      width:100%;
-      height:220px;
-      object-fit:cover;
-      display:block;
-    }
-
-    /* ================= LOGIN PRIVADO POR VENDEDOR ================= */
-    .app{display:none;}
-    .login-overlay{
-      position:fixed; inset:0;
-      background:linear-gradient(180deg,#e30613 0%,#7a0007 100%);
-      z-index:99999; display:flex; align-items:center; justify-content:center;
-      padding:20px;
-    }
-    .login-box{
-      width:100%; max-width:380px; background:#fff; border-radius:28px;
-      padding:34px 26px; box-shadow:0 20px 50px rgba(0,0,0,.28); text-align:center;
-    }
-    .login-logo{width:96px; margin:0 auto 18px; display:block;}
-    .login-title{font-size:30px; font-weight:900; margin-bottom:6px; color:#111;}
-    .login-sub{font-size:13px; color:#666; margin-bottom:24px; line-height:1.35;}
-    .login-input{
-      width:100%; margin-bottom:14px; padding:15px 16px; border-radius:16px;
-      border:1px solid #ddd; font-size:15px; outline:none;
-    }
-    .login-input:focus{border-color:#e30613;}
-    .login-btn{
-      width:100%; border:none; border-radius:18px; padding:16px;
-      background:linear-gradient(180deg,#ff1a24,#c4000c); color:#fff;
-      font-size:16px; font-weight:900; cursor:pointer;
-      box-shadow:0 10px 22px rgba(227,6,19,.25);
-    }
-    .login-error{margin-top:12px; color:#dc2626; font-size:13px; font-weight:800; display:none;}
-    .session-actions{
-      position:fixed; top:12px; right:12px; z-index:9998;
-      display:none; gap:8px; flex-wrap:wrap; justify-content:flex-end;
-    }
-    .session-actions button{
-      border:none; border-radius:999px; color:#fff; padding:10px 13px;
-      font-size:12px; font-weight:900; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.18);
-    }
-    .logout-btn{background:#111;}
-    .change-pass-top-btn{background:#e30613;}
-    .password-modal{
-      position:fixed; inset:0; background:rgba(0,0,0,.62); display:none;
-      align-items:center; justify-content:center; z-index:100000; padding:20px;
-    }
-    .password-box{
-      width:100%; max-width:380px; background:#fff; border-radius:24px;
-      padding:28px; box-shadow:0 18px 45px rgba(0,0,0,.25);
-    }
-    .password-box h2{margin:0 0 8px; font-size:24px;}
-    .password-box p{margin:0 0 18px; color:#666; font-size:13px; line-height:1.35;}
-    .password-box input{
-      width:100%; box-sizing:border-box; padding:14px; margin-bottom:12px;
-      border-radius:14px; border:1px solid #ddd; font-size:15px;
-    }
-    .password-box button{
-      width:100%; border:none; border-radius:14px; padding:14px;
-      margin-top:8px; font-weight:900; cursor:pointer;
-    }
-    .password-save-btn{background:#e30613; color:#fff;}
-    .password-cancel-btn{background:#f3f4f6; color:#111;}
-    .current-user-chip{
-      position:fixed; top:58px; right:12px; z-index:9998;
-      display:none; background:#fff; color:#111; border:1px solid #e5e7eb;
-      border-radius:999px; padding:8px 12px; font-size:11px; font-weight:900;
-      box-shadow:0 6px 14px rgba(0,0,0,.12);
-    }
-
     @media (min-width:451px) and (max-width:540px){
       .historico-panel{padding:18px 12px !important;}
       .historico-main{padding:24px 10px;}
@@ -489,18 +354,9 @@
       .historico-legend{font-size:16px;}
     }
 
+    @media (max-width:450px){.historico-grid{grid-template-columns:1fr}.score-breakdown{grid-template-columns:1fr 1fr}.score-mini.total{grid-column:span 2}.client-kpi-card .v{font-size:30px !important}.back-btn{font-size:16px;padding:14px 22px}.historico-main{min-height:250px}.historico-select select{font-size:16px}.historico-legend{font-size:15px}.historico-legend-row{grid-template-columns:38px 1fr 1fr;padding:14px 12px}.historico-legend-row.imp{grid-template-columns:38px 1fr}.dot{width:24px;height:24px}}
+
     @media (max-width:450px){
-      .historico-grid{grid-template-columns:1fr}
-      .score-breakdown{grid-template-columns:1fr 1fr}
-      .score-mini.total{grid-column:span 2}
-      .client-kpi-card .v{font-size:30px !important}
-      .back-btn{font-size:16px;padding:14px 22px}
-      .historico-main{min-height:250px}
-      .historico-select select{font-size:16px}
-      .historico-legend{font-size:15px}
-      .historico-legend-row{grid-template-columns:38px 1fr 1fr;padding:14px 12px}
-      .historico-legend-row.imp{grid-template-columns:38px 1fr}
-      .dot{width:24px;height:24px}
       .brand-left img{height:32px}
       .divider{height:48px}
       .brand-copy h1{font-size:16px}
@@ -508,15 +364,132 @@
       .route-kpi{grid-template-columns:1fr 1fr 1fr}
       .hero-card{min-height:210px}
     }
-  </style>
+  
+
+
+.candado-alert{
+  grid-column:span 3;
+  margin-top:4px;
+  background:linear-gradient(180deg,#fff7ed,#ffedd5);
+  color:#9a3412;
+  border:1.5px solid #fdba74;
+  padding:14px 16px;
+  border-radius:18px;
+  font-size:13px;
+  font-weight:800;
+  line-height:1.35;
+  text-align:center;
+  box-shadow:0 6px 14px rgba(154,52,18,.10);
+}
+.candado-alert.ok{
+  background:linear-gradient(180deg,#ecfdf5,#dcfce7);
+  color:#166534;
+  border-color:#86efac;
+}
+.candado-alert b{font-size:14px}
+.candado-mini{
+  display:inline-block;
+  margin-top:6px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:#fff7ed;
+  color:#9a3412;
+  border:1px solid #fdba74;
+  font-size:11px;
+  font-weight:900;
+}
+.candado-mini.ok{
+  background:#ecfdf5;
+  color:#166534;
+  border-color:#86efac;
+}
+
+
+.banner-argentina{
+  width:100%;
+  margin:18px 0 4px;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+  background:#fff;
+}
+
+.banner-argentina img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+
+
+/* ================= LOGIN PRIVADO POR VENDEDOR ================= */
+.app{display:none;}
+.login-overlay{
+  position:fixed; inset:0;
+  background:linear-gradient(180deg,#e30613 0%,#7a0007 100%);
+  z-index:99999; display:flex; align-items:center; justify-content:center;
+  padding:20px;
+}
+.login-box{
+  width:100%; max-width:380px; background:#fff; border-radius:28px;
+  padding:34px 26px; box-shadow:0 20px 50px rgba(0,0,0,.28); text-align:center;
+}
+.login-logo{width:96px; margin:0 auto 18px; display:block;}
+.login-title{font-size:30px; font-weight:900; margin-bottom:6px; color:#111;}
+.login-sub{font-size:13px; color:#666; margin-bottom:24px; line-height:1.35;}
+.login-input{
+  width:100%; margin-bottom:14px; padding:15px 16px; border-radius:16px;
+  border:1px solid #ddd; font-size:15px; outline:none;
+}
+.login-input:focus{border-color:#e30613;}
+.login-btn{
+  width:100%; border:none; border-radius:18px; padding:16px;
+  background:linear-gradient(180deg,#ff1a24,#c4000c); color:#fff;
+  font-size:16px; font-weight:900; cursor:pointer;
+  box-shadow:0 10px 22px rgba(227,6,19,.25);
+}
+.login-error{margin-top:12px; color:#dc2626; font-size:13px; font-weight:800; display:none;}
+.session-actions{
+  position:fixed; top:12px; right:12px; z-index:9998;
+  display:none; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+}
+.session-actions button{
+  border:none; border-radius:999px; color:#fff; padding:10px 13px;
+  font-size:12px; font-weight:900; cursor:pointer; box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+.logout-btn{background:#111;}
+.change-pass-top-btn{background:#e30613;}
+.password-modal{
+  position:fixed; inset:0; background:rgba(0,0,0,.62); display:none;
+  align-items:center; justify-content:center; z-index:100000; padding:20px;
+}
+.password-box{
+  width:100%; max-width:380px; background:#fff; border-radius:24px;
+  padding:28px; box-shadow:0 18px 45px rgba(0,0,0,.25);
+}
+.password-box h2{margin:0 0 8px; font-size:24px;}
+.password-box p{margin:0 0 18px; color:#666; font-size:13px; line-height:1.35;}
+.password-box input{
+  width:100%; box-sizing:border-box; padding:14px; margin-bottom:12px;
+  border-radius:14px; border:1px solid #ddd; font-size:15px;
+}
+.password-box button{
+  width:100%; border:none; border-radius:14px; padding:14px;
+  margin-top:8px; font-weight:900; cursor:pointer;
+}
+.password-save-btn{background:#e30613; color:#fff;}
+.password-cancel-btn{background:#f3f4f6; color:#111;}
+.current-user-chip{
+  position:fixed; top:58px; right:12px; z-index:9998;
+  display:none; background:#fff; color:#111; border:1px solid #e5e7eb;
+  border-radius:999px; padding:8px 12px; font-size:11px; font-weight:900;
+  box-shadow:0 6px 14px rgba(0,0,0,.12);
+}
+
+</style>
 </head>
 <body>
-
-<!-- ── MEJORA 8: overlay de carga ── -->
-<div id="syncOverlay" class="sync-overlay">
-  <div class="sync-spinner"></div>
-  <div class="sync-label">Sincronizando datos...</div>
-</div>
 
 <!-- ================= LOGIN PRIVADO POR VENDEDOR ================= -->
 <div id="loginOverlay" class="login-overlay">
@@ -688,11 +661,9 @@
 
         <div class="panel">
           <div class="item-meta" id="routeDetailMeta"></div>
-          <!-- MEJORA 1: imagen bandera con URL absoluta de GitHub -->
+
           <div class="banner-argentina">
-            <img src="https://zehid2010-lgtm.github.io/app-Referencias2026/bandera_argentina.png"
-                 onerror="this.parentElement.style.display='none'"
-                 alt="Argentina Campeón del Mundo">
+            <img src="bandera_argentina.png" alt="Argentina Campeón del Mundo">
           </div>
         </div>
 
@@ -775,9 +746,6 @@
 
     let currentUser = null;
 
-    /* ── MEJORA 3: state raw separado del filtrado ── */
-    const rawState = { rows: [], routes: [], clients: [], alerts: [] };
-
     function getPasswordOverrides(){
       try{ return JSON.parse(localStorage.getItem('app_password_overrides') || '{}'); }
       catch(e){ return {}; }
@@ -798,10 +766,12 @@
       const user = document.getElementById('userInput').value.trim().toLowerCase();
       const pass = document.getElementById('passInput').value.trim();
       const foundUser = USERS.find(u => u.user === user && getEffectivePass(u) === pass);
+
       if(!foundUser){
         document.getElementById('loginError').style.display = 'block';
         return;
       }
+
       currentUser = { ...foundUser, pass:getEffectivePass(foundUser) };
       localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
       startPrivateApp();
@@ -820,8 +790,7 @@
         chip.textContent = `${currentUser.nombre} · ${rutasTxt}`;
         chip.style.display = 'block';
       }
-      /* ── MEJORA 2: loadData sólo se llama después del login ── */
-      loadData();
+      applyUserPermissions();
     }
 
     function initLogin(){
@@ -845,11 +814,14 @@
       return currentUser && currentUser.rutas.includes('*');
     }
 
-    /* ── MEJORA 3: filtrar en el render, NO mutar rawState ── */
-    function getAllowedRows(rows){
-      if(!currentUser || isAdminUser()) return rows;
+    function applyUserPermissions(){
+      if(!currentUser || !state || !Array.isArray(state.rows)) return;
+      if(isAdminUser()) return;
       const allowed = currentUser.rutas.map(String);
-      return rows.filter(r => allowed.includes(String(r.ruta)));
+      state.rows = state.rows.filter(r => allowed.includes(String(r.ruta)));
+      state.routes = state.routes.filter(r => allowed.includes(String(r.ruta)));
+      state.clients = state.clients.filter(c => allowed.includes(String(c.ruta)));
+      state.alerts = state.alerts.filter(a => allowed.includes(String(a.ruta)));
     }
 
     function logoutApp(){
@@ -872,11 +844,13 @@
     function changePassword(){
       if(!currentUser){ alert('Primero tenés que iniciar sesión.'); return; }
       const current = document.getElementById('currentPass').value.trim();
-      const newPass  = document.getElementById('newPass').value.trim();
-      const repeat   = document.getElementById('repeatNewPass').value.trim();
+      const newPass = document.getElementById('newPass').value.trim();
+      const repeat = document.getElementById('repeatNewPass').value.trim();
+
       if(current !== currentUser.pass){ alert('La contraseña actual es incorrecta'); return; }
       if(newPass.length < 4){ alert('La nueva contraseña debe tener al menos 4 caracteres'); return; }
       if(newPass !== repeat){ alert('Las nuevas contraseñas no coinciden'); return; }
+
       setPasswordOverride(currentUser.user, newPass);
       currentUser.pass = newPass;
       localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
@@ -886,8 +860,8 @@
 
     const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
     const CSV_HISTORICO_URLS = [
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=1389632754&single=true&output=csv'
-    ];
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=1389632754&single=true&output=csv'
+];
     const HISTORICO_PUNTOS_FALLBACK = [];
 
     const CATEGORY_CONFIG = [
@@ -923,428 +897,592 @@
       'Saborizada': { icon: 'https://zehid2010-lgtm.github.io/auditoria_volumen/img/aquarius.png', bubble: '#eefcf1', bubbleBorder: '#bfe4c6', refBg: '#eefcf3', refBorder: '#c0e6ca' }
     };
 
-    /* ── state con rawState base + vista filtrada ── */
-    const state = {
-      get rows(){ return getAllowedRows(rawState.rows); },
-      get routes(){ return buildRoutesFrom(getAllowedRows(rawState.rows)); },
-      get clients(){ return [...getAllowedRows(rawState.rows)].sort((a,b)=>String(a.cliente).localeCompare(String(b.cliente),'es')); },
-      get alerts(){ return buildAlertsFrom(getAllowedRows(rawState.rows)); },
-      historico: [], historicoByNumero: new Map(), historicoByCliente: new Map(),
-      mesesHistorico: [], selectedMesHistorico: '', selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients'
-    };
+    const state = { rows: [], routes: [], clients: [], alerts: [], historico: [], historicoByNumero: new Map(), historicoByCliente: new Map(), mesesHistorico: [], selectedMesHistorico: '', selectedRoute: '', selectedClientKey: '', clientBackMode: 'clients' };
 
     function normalizeKey(str){
-      return String(str || '').trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[_\-]+/g,' ').replace(/\s+/g,' ').toUpperCase();
+      return String(str || '')
+        .trim()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'')
+        .replace(/[_\-]+/g,' ')
+        .replace(/\s+/g,' ')
+        .toUpperCase();
     }
 
     function cleanNumberKey(value){
       let s = String(value ?? '').trim();
       if(!s) return '';
-      s = s.replace(/\u00A0/g,'').replace(',','.');
+      s = s.replace(/\u00A0/g,'').replace(',', '.');
       const n = Number(s);
       if(Number.isFinite(n)) return String(Math.trunc(n));
-      const m = s.match(/^(\d+)\.0+$/);
-      if(m) return m[1];
+      const decimalMatch = s.match(/^(\d+)\.0+$/);
+      if(decimalMatch) return decimalMatch[1];
       return s.replace(/\D/g,'').trim();
     }
 
     function cleanClientKey(value){
       return normalizeKey(value)
-        .replace(/\bS\s*A\s*S\b/g,'').replace(/\bS\s*R\s*L\b/g,'').replace(/\bSRL\b/g,'')
-        .replace(/\bSAS\b/g,'').replace(/\bS\s*A\b/g,'').replace(/\bSA\b/g,'')
-        .replace(/\bHNOS\b/g,'HERMANOS').replace(/\s+/g,' ').trim();
+        .replace(/\bS\s*A\s*S\b/g,'')
+        .replace(/\bS\s*R\s*L\b/g,'')
+        .replace(/\bSRL\b/g,'')
+        .replace(/\bSAS\b/g,'')
+        .replace(/\bS\s*A\b/g,'')
+        .replace(/\bSA\b/g,'')
+        .replace(/\bHNOS\b/g,'HERMANOS')
+        .replace(/\s+/g,' ')
+        .trim();
     }
 
     function escapeHtml(str){
-      return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+      return String(str || '')
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
     }
 
     function toNumber(value){
-      if(value===null||value===undefined||value==='') return 0;
-      let s = String(value).trim().replace(/\s/g,'');
+      if(value === null || value === undefined || value === '') return 0;
+      let s = String(value).trim().replace(/\s/g, '');
       if(!s) return 0;
-      if(s.includes(',')&&s.includes('.')){
-        s = s.lastIndexOf(',')>s.lastIndexOf('.') ? s.replace(/\./g,'').replace(',','.') : s.replace(/,/g,'');
-      } else if(s.includes(',')){ s=s.replace(',','.'); }
+
+      if(s.includes(',') && s.includes('.')){
+        if(s.lastIndexOf(',') > s.lastIndexOf('.')){
+          s = s.replace(/\./g, '').replace(',', '.');
+        } else {
+          s = s.replace(/,/g, '');
+        }
+      } else if(s.includes(',')) {
+        s = s.replace(',', '.');
+      }
+
       const n = parseFloat(s);
-      return Number.isFinite(n)?n:0;
+      return Number.isFinite(n) ? n : 0;
     }
 
-    function formatNumber(n){ return Number(n||0).toLocaleString('es-AR',{maximumFractionDigits:0}); }
-    function formatPct(n){ return `${Math.round(Number(n||0))}%`; }
-    function clamp(n,min,max){ return Math.max(min,Math.min(max,n)); }
+    function formatNumber(n){ return Number(n || 0).toLocaleString('es-AR', { maximumFractionDigits: 0 }); }
+    function formatPct(n){ return `${Math.round(Number(n || 0))}%`; }
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
-    function getSemaforo(c){ return c>=80?'green':c>=50?'yellow':'red'; }
-    function getSemaforoBadge(c){ return c>=80?'ok':c>=50?'warn':'bad'; }
-    function getSemaforoText(c){ return c>=80?'VERDE':c>=50?'AMARILLO':'ROJO'; }
-    /* ── MEJORA 4: max correcto = 40 pts ── */
-    function getRoutePointsBadgeClass(p){ return p>=40?'ok':p>=30?'warn':'bad'; }
-    function getBadgePointsClass(c){ const p=Number(c?.totalPuntos||0); return p>=40?'ok':p>=30?'warn':'bad'; }
-    function getPointsText(c){ return `${Number(c?.totalPuntos||0)} pts`; }
-    function getPointsProgressClass(p){ return p>=40?'green':p>=30?'yellow':'red'; }
+    function getSemaforo(cumplimiento){
+      if(cumplimiento >= 80) return 'green';
+      if(cumplimiento >= 50) return 'yellow';
+      return 'red';
+    }
+    function getSemaforoBadge(cumplimiento){ return cumplimiento >= 80 ? 'ok' : cumplimiento >= 50 ? 'warn' : 'bad'; }
+    function getSemaforoText(cumplimiento){ return cumplimiento >= 80 ? 'VERDE' : cumplimiento >= 50 ? 'AMARILLO' : 'ROJO'; }
+    function getRoutePointsBadgeClass(points){ return points >= 40 ? 'ok' : points >= 30 ? 'warn' : 'bad'; }
+    function getBadgePointsClass(client){ const p = Number(client?.totalPuntos || 0); return p >= 40 ? 'ok' : p >= 30 ? 'warn' : 'bad'; }
+    function getPointsText(client){ return `${Number(client?.totalPuntos || 0)} pts`; }
+    function getPointsProgressClass(points){ return points >= 40 ? 'green' : points >= 30 ? 'yellow' : 'red'; }
 
-    function getScoreStyle(points,maxPoints=40){
-      const p=Number(points||0), max=Number(maxPoints||40);
-      const pct=max>0?(p/max)*100:0;
-      if(pct>=100) return {bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)',border:'#86efac',color:'#15803d',sub:'Score completo'};
-      if(pct>=75)  return {bg:'linear-gradient(180deg,#fef3c7,#fde68a)',border:'#fcd34d',color:'#b45309',sub:'Score intermedio'};
-      return {bg:'linear-gradient(180deg,#fee2e2,#fecaca)',border:'#fca5a5',color:'#dc2626',sub:'Score bajo'};
+    function getScoreStyle(points, maxPoints=40){
+      const p = Number(points || 0);
+      const max = Number(maxPoints || 40);
+      const pct = max > 0 ? (p / max) * 100 : 0;
+      if(pct >= 100) return { bg: 'linear-gradient(180deg,#dcfce7,#bbf7d0)', border: '#86efac', color: '#15803d', sub: 'Score completo' };
+      if(pct >= 75) return { bg: 'linear-gradient(180deg,#fef3c7,#fde68a)', border: '#fcd34d', color: '#b45309', sub: 'Score intermedio' };
+      return { bg: 'linear-gradient(180deg,#fee2e2,#fecaca)', border: '#fca5a5', color: '#dc2626', sub: 'Score bajo' };
     }
 
     function parseCSVLine(line){
-      const out=[];let cur='';let inQ=false;
-      for(let i=0;i<line.length;i++){
-        const ch=line[i],nx=line[i+1];
-        if(ch==='"'){ if(inQ&&nx==='"'){cur+='"';i++;}else{inQ=!inQ;} }
-        else if(ch===','&&!inQ){out.push(cur);cur='';}
-        else{cur+=ch;}
+      const out = [];
+      let cur = '';
+      let inQuotes = false;
+      for(let i = 0; i < line.length; i++){
+        const ch = line[i];
+        const next = line[i + 1];
+        if(ch === '"'){
+          if(inQuotes && next === '"'){
+            cur += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if(ch === ',' && !inQuotes) {
+          out.push(cur);
+          cur = '';
+        } else {
+          cur += ch;
+        }
       }
       out.push(cur);
-      return out.map(v=>v.replace(/^\uFEFF/,'').trim());
+      return out.map(v => v.replace(/^\uFEFF/, '').trim());
     }
 
     function csvToObjects(text){
-      const lines=String(text||'').replace(/\r/g,'').split('\n').filter(l=>l.trim()!=='');
+      const lines = String(text || '').replace(/\r/g, '').split('\n').filter(l => l.trim() !== '');
       if(!lines.length) return [];
-      let hi=lines.findIndex(line=>{
-        const c=parseCSVLine(line).map(normalizeKey);
-        return c.includes('CLIENTE')&&(c.includes('NUMERO')||c.includes('OUTNUM')||c.includes('RU')||c.includes('VENDEDOR')||c.includes('JEFE'));
+
+      let headerIndex = lines.findIndex(line => {
+        const cells = parseCSVLine(line).map(normalizeKey);
+        return cells.includes('CLIENTE') && (cells.includes('NUMERO') || cells.includes('OUTNUM') || cells.includes('RU') || cells.includes('VENDEDOR') || cells.includes('JEFE'));
       });
-      if(hi<0) hi=0;
-      const headers=parseCSVLine(lines[hi]);
-      const objects=[];
-      for(let i=hi+1;i<lines.length;i++){
-        const cols=parseCSVLine(lines[i]);
-        if(cols.every(c=>String(c).trim()==='')) continue;
-        const obj={};
-        headers.forEach((h,idx)=>{obj[h]=cols[idx]??'';});
-        obj.__COL_D_TELEFONO=cols[3]??'';
+      if(headerIndex < 0) headerIndex = 0;
+
+      const headers = parseCSVLine(lines[headerIndex]);
+      const objects = [];
+      for(let i = headerIndex + 1; i < lines.length; i++){
+        const cols = parseCSVLine(lines[i]);
+        if(cols.every(c => String(c).trim() === '')) continue;
+        const obj = {};
+        headers.forEach((h, idx) => { obj[h] = cols[idx] ?? ''; });
+        obj.__COL_D_TELEFONO = cols[3] ?? '';
         objects.push(obj);
       }
       return objects;
     }
 
     async function fetchCSV(url){
-      const finalUrl=`${url}${url.includes('?')?'&':'?'}t=${Date.now()}`;
-      const res=await fetch(finalUrl,{method:'GET',cache:'no-store'});
+      const finalUrl = `${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`;
+      const res = await fetch(finalUrl, { method: 'GET', cache: 'no-store' });
       if(!res.ok) throw new Error(`No se pudo cargar el CSV (${res.status})`);
-      const text=await res.text();
-      const rows=csvToObjects(text);
+      const text = await res.text();
+      const rows = csvToObjects(text);
       if(!rows.length) throw new Error('El CSV llegó vacío');
       return rows;
     }
 
-    function getCell(row,...possibleKeys){
-      const map=new Map(Object.keys(row).map(k=>[normalizeKey(k),row[k]]));
+    function getCell(row, ...possibleKeys){
+      const map = new Map(Object.keys(row).map(k => [normalizeKey(k), row[k]]));
       for(const key of possibleKeys){
-        const n=normalizeKey(key);
-        if(map.has(n)) return map.get(n);
+        const normalized = normalizeKey(key);
+        if(map.has(normalized)) return map.get(normalized);
       }
       return '';
     }
 
-    function getHistCell(row,...keys){ return getCell(row,...keys); }
-
-    function normalizeMonthText(value){ return String(value||'').trim().replace(/\s+/g,' '); }
-
-    function isMayoValue(value){
-      const v=normalizeKey(value);
-      return v.includes('MAYO')||v==='05'||v==='5'||v.includes('2026 05')||v.includes('05 2026');
+    function getHistCell(row, ...possibleKeys){
+      return getCell(row, ...possibleKeys);
     }
 
-    function getMesActualApp(){ return 'Mayo 2026'; }
+    function normalizeMonthText(value){
+      return String(value || '').trim().replace(/\s+/g,' ');
+    }
+
+    function isMayoValue(value){
+      const v = normalizeKey(value);
+      return v.includes('MAYO') || v === '05' || v === '5' || v.includes('2026 05') || v.includes('05 2026');
+    }
+
+    function getMesActualApp(){
+      return 'Mayo 2026';
+    }
+
+    function getHistoricoMonth(row){
+      return normalizeMonthText(getHistCell(row,'MES','Mes','mes','PERIODO','Periodo','MES_CIERRE','Cierre'));
+    }
 
     function getImperdonableAutoservicios(row){
-      const pd=getCell(row,'IMPERDONABLE AUTOSERVICIOS PUNTOS','IMPERDONABLE_AUTOSERVICIOS_PUNTOS','PUNTOS IMPERDONABLE','PUNTOS_IMPERDONABLE');
-      if(pd!==''&&pd!==undefined){ return toNumber(pd)>0?10:0; }
-      const sv=getCell(row,'IMPERDONABLE AUTOSERVICIOS','IMPERDONABLE_AUTOSERVICIOS','SKU AUTOSERVICIOS','SKU_AUTOSERVICIOS','20 SKU','20_SKU','SKU','SKUS','SKU REAL','SKU_REAL','SKU AVANCE','SKU_AVANCE');
-      return toNumber(sv)>=20?10:0;
+      const puntosDirectos = getCell(row,
+        'IMPERDONABLE AUTOSERVICIOS PUNTOS','IMPERDONABLE_AUTOSERVICIOS_PUNTOS','PUNTOS IMPERDONABLE','PUNTOS_IMPERDONABLE'
+      );
+      if(puntosDirectos !== '' && puntosDirectos !== undefined){
+        const puntos = toNumber(puntosDirectos);
+        return puntos > 0 ? 10 : 0;
+      }
+
+      const skuValue = getCell(row,
+        'IMPERDONABLE AUTOSERVICIOS','IMPERDONABLE_AUTOSERVICIOS','SKU AUTOSERVICIOS','SKU_AUTOSERVICIOS',
+        '20 SKU','20_SKU','SKU','SKUS','SKU REAL','SKU_REAL','SKU AVANCE','SKU_AVANCE'
+      );
+      const sku = toNumber(skuValue);
+      return sku >= 20 ? 10 : 0;
     }
 
     function buildHistorico(rawRows){
-      state.historico=rawRows.map(r=>{
-        const mes=getMesActualApp();
-        const numero=String(getHistCell(r,'NUMERO','NÚMERO','Numero','CLIENTE_ID','ID','OUTNUM','Outnum','outnum')||'').trim();
-        const cliente=String(getHistCell(r,'CLIENTE','Cliente')||'').trim();
-        const ruta=String(getHistCell(r,'RUTA','RU','Ruta','ruta')||'').trim();
-        const vendedor=String(getHistCell(r,'VENDEDOR','Vendedor','JEFE','Jefe')||'').trim();
-        const nivel=String(getHistCell(r,'NIVEL','Nivel')||'').trim();
-        const condicion=String(getHistCell(r,'CONDICION','Condición','Condicion')||'').trim();
-        const volumen=toNumber(getHistCell(r,'VOLUMEN','Volumen'));
-        const referencias=toNumber(getHistCell(r,'REFERENCIAS','Referencias'));
-        const pedidoSugerido=toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO'));
-        const ejecucion=toNumber(getHistCell(r,'EJECUCION','Ejecucion','EJECUCIÓN','Ejecución'));
-        const objetivo=toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
-        const avance=toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
-        const imperdonableAutoservicios=getImperdonableAutoservicios(r);
-        const pd=getHistCell(r,'PUNTOS TOTALES','Puntos Totales','PUNTOS_TOTALES','PUNTOS ACTUALES','Puntos Actuales','PUNTOS_ACTUALES','PUNTOS A LA FECHA','Puntos a la fecha','PUNTOS_A_LA_FECHA','PUNTOS','Puntos','SCORE','Score');
-        const puntos=pd!==''?toNumber(pd):(volumen+referencias+pedidoSugerido+ejecucion+imperdonableAutoservicios);
-        const cr=getHistCell(r,'%','% CUMPLIMIENTO','CUMPLIMIENTO','Cumplimiento','PORCENTAJE');
-        const cumplimiento=cr!==''?toNumber(cr):puntos;
-        return {mes,numero,cliente,ruta,vendedor,nivel,condicion,objetivo,avance,puntos,cumplimiento,volumen,referencias,pedidoSugerido,ejecucion,imperdonableAutoservicios};
-      }).filter(r=>r.mes&&(r.numero||r.cliente));
+      state.historico = rawRows.map(r => {
+        const mes = getMesActualApp();
+        const numero = String(getHistCell(r,'NUMERO','NÚMERO','Numero','CLIENTE_ID','ID','OUTNUM','Outnum','outnum') || '').trim();
+        const cliente = String(getHistCell(r,'CLIENTE','Cliente') || '').trim();
+        const ruta = String(getHistCell(r,'RUTA','RU','Ruta','ruta') || '').trim();
+        const vendedor = String(getHistCell(r,'VENDEDOR','Vendedor','JEFE','Jefe') || '').trim();
+        const nivel = String(getHistCell(r,'NIVEL','Nivel') || '').trim();
+        const condicion = String(getHistCell(r,'CONDICION','Condición','Condicion') || '').trim();
+        const volumen = toNumber(getHistCell(r,'VOLUMEN','Volumen'));
+        const referencias = toNumber(getHistCell(r,'REFERENCIAS','Referencias'));
+        const pedidoSugerido = toNumber(getHistCell(r,'PEDIDO SUGERIDO','Pedido Sugerido','PEDIDO_SUGERIDO'));
+        const ejecucion = toNumber(getHistCell(r,'EJECUCION','Ejecucion','EJECUCIÓN','Ejecución'));
+        const objetivo = toNumber(getHistCell(r,'OBJETIVO','Objetivo','OBJETIVO CF','OBJETIVO_CAJA','OBJETIVO CAJAS FÍSICAS'));
+        const avance = toNumber(getHistCell(r,'AVANCE','Avance','REAL','Real','VENDIDO','Vendido','CAJAS FÍSICAS','CAJAS FISICAS'));
+        const imperdonableAutoservicios = getImperdonableAutoservicios(r);
+        const puntosDetectados = getHistCell(
+          r,
+          'PUNTOS TOTALES','Puntos Totales','PUNTOS_TOTALES',
+          'PUNTOS ACTUALES','Puntos Actuales','PUNTOS_ACTUALES',
+          'PUNTOS A LA FECHA','Puntos a la fecha','PUNTOS_A_LA_FECHA',
+          'PUNTOS','Puntos','SCORE','Score'
+        );
+        // IMPORTANTE: Referencias, Pedido Sugerido y Ejecución vienen de HISTORICO_PUNTOS. Volumen se recalcula en el detalle del cliente.
+        const puntos = puntosDetectados !== '' ? toNumber(puntosDetectados) : (volumen + referencias + pedidoSugerido + ejecucion + imperdonableAutoservicios);
+        const cumplimientoRaw = getHistCell(r,'%','% CUMPLIMIENTO','CUMPLIMIENTO','Cumplimiento','PORCENTAJE');
+        const cumplimiento = cumplimientoRaw !== '' ? toNumber(cumplimientoRaw) : puntos;
+        return { mes, numero, cliente, ruta, vendedor, nivel, condicion, objetivo, avance, puntos, cumplimiento, volumen, referencias, pedidoSugerido, ejecucion, imperdonableAutoservicios };
+      }).filter(r => r.mes && (r.numero || r.cliente));
 
-      state.historicoByNumero=new Map();
-      state.historicoByCliente=new Map();
-      state.historico.forEach(h=>{
-        const nk=cleanNumberKey(h.numero);
-        const ck=cleanClientKey(h.cliente);
-        if(nk) state.historicoByNumero.set(`${normalizeKey(h.mes)}|${nk}`,h);
-        if(ck) state.historicoByCliente.set(`${normalizeKey(h.mes)}|${ck}`,h);
+      state.historicoByNumero = new Map();
+      state.historicoByCliente = new Map();
+      state.historico.forEach(h => {
+        const numeroKey = cleanNumberKey(h.numero);
+        const clienteKey = cleanClientKey(h.cliente);
+        if(numeroKey) state.historicoByNumero.set(`${normalizeKey(h.mes)}|${numeroKey}`, h);
+        if(clienteKey) state.historicoByCliente.set(`${normalizeKey(h.mes)}|${clienteKey}`, h);
       });
 
-      state.mesesHistorico=[...new Set(state.historico.map(r=>r.mes))].filter(Boolean);
-      if(!state.selectedMesHistorico&&state.mesesHistorico.length){
-        const mayo=state.mesesHistorico.find(m=>isMayoValue(m));
-        state.selectedMesHistorico=mayo||getMesActualApp();
+      state.mesesHistorico = [...new Set(state.historico.map(r => r.mes))].filter(Boolean);
+      if(!state.selectedMesHistorico && state.mesesHistorico.length){
+        const mayo = state.mesesHistorico.find(m => isMayoValue(m));
+        state.selectedMesHistorico = mayo || getMesActualApp();
       }
     }
 
     function getHistoricoCliente(client){
-      if(!client||!state.historico.length) return null;
-      const mes=normalizeKey(state.selectedMesHistorico||getMesActualApp());
-      const nk=cleanNumberKey(client.numero);
-      const ck=cleanClientKey(client.cliente);
-      if(nk){ const f=state.historicoByNumero.get(`${mes}|${nk}`); if(f) return f; }
-      if(nk){ const f=state.historico.find(h=>cleanNumberKey(h.numero)===nk); if(f) return f; }
-      if(ck){ const f=state.historicoByCliente.get(`${mes}|${ck}`); if(f) return f; }
-      if(ck){ const f=state.historico.find(h=>cleanClientKey(h.cliente)===ck); if(f) return f; }
+      if(!client || !state.historico.length) return null;
+
+      const mes = normalizeKey(state.selectedMesHistorico || getMesActualApp());
+      const numeroKey = cleanNumberKey(client.numero);
+      const clienteKey = cleanClientKey(client.cliente);
+
+      // 1) Cruce principal por Outnum / número de cliente.
+      if(numeroKey){
+        const foundByNumero = state.historicoByNumero.get(`${mes}|${numeroKey}`);
+        if(foundByNumero) return foundByNumero;
+      }
+
+      // 2) Búsqueda directa en toda la base histórica por si el Map quedó armado con otro formato.
+      if(numeroKey){
+        const foundRaw = state.historico.find(h => cleanNumberKey(h.numero) === numeroKey);
+        if(foundRaw) return foundRaw;
+      }
+
+      // 3) Cruce secundario por nombre limpio EXACTO.
+      if(clienteKey){
+        const foundByCliente = state.historicoByCliente.get(`${mes}|${clienteKey}`);
+        if(foundByCliente) return foundByCliente;
+      }
+
+      // 4) Búsqueda por nombre exacto en la base.
+      if(clienteKey){
+        const foundClienteRaw = state.historico.find(h => cleanClientKey(h.cliente) === clienteKey);
+        if(foundClienteRaw) return foundClienteRaw;
+      }
+
       return null;
     }
 
     function getCierreStyle(points){
-      const p=Number(points||0);
-      if(p>=80) return {bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)',border:'#86efac',color:'#15803d',sub:'Excelente a la fecha',tag:'EXCELENTE',icon:'✅'};
-      if(p>=70) return {bg:'linear-gradient(180deg,#ffedd5,#fed7aa)',border:'#fb923c',color:'#ea580c',sub:'Medio a la fecha',tag:'MEDIO',icon:'⚠️'};
-      if(p>=60) return {bg:'linear-gradient(180deg,#fef9c3,#fde68a)',border:'#facc15',color:'#a16207',sub:'Bajo a la fecha',tag:'BAJO',icon:'⚠️'};
-      return {bg:'linear-gradient(180deg,#fee2e2,#fecaca)',border:'#fca5a5',color:'#dc2626',sub:'Fuera de rango',tag:'FUERA DE RANGO',icon:'🚨'};
+      const p = Number(points || 0);
+      if(p >= 80) return {
+        bg:'linear-gradient(180deg,#dcfce7,#bbf7d0)', border:'#86efac', color:'#15803d',
+        sub:'Excelente a la fecha', tag:'EXCELENTE', icon:'✅'
+      };
+      if(p >= 70) return {
+        bg:'linear-gradient(180deg,#ffedd5,#fed7aa)', border:'#fb923c', color:'#ea580c',
+        sub:'Medio a la fecha', tag:'MEDIO', icon:'⚠️'
+      };
+      if(p >= 60) return {
+        bg:'linear-gradient(180deg,#fef9c3,#fde68a)', border:'#facc15', color:'#a16207',
+        sub:'Bajo a la fecha', tag:'BAJO', icon:'⚠️'
+      };
+      return {
+        bg:'linear-gradient(180deg,#fee2e2,#fecaca)', border:'#fca5a5', color:'#dc2626',
+        sub:'Fuera de rango', tag:'FUERA DE RANGO', icon:'🚨'
+      };
     }
 
-    function getCierreText(points,mes){
-      const p=Number(points||0), m=String(mes||getMesActualApp()).replace(/^Cierre\s+/i,'');
-      if(p>=80) return `Cliente viene excelente ${m}: 80 puntos o más`;
-      if(p>=70) return `Cliente viene en nivel medio ${m}: 70 a 79 puntos`;
-      if(p>=60) return `Cliente viene en nivel bajo ${m}: 60 a 69 puntos`;
+    function getCierreText(points, mes){
+      const p = Number(points || 0);
+      const m = String(mes || getMesActualApp()).replace(/^Cierre\s+/i,'');
+      if(p >= 80) return `Cliente viene excelente ${m}: 80 puntos o más`;
+      if(p >= 70) return `Cliente viene en nivel medio ${m}: 70 a 79 puntos`;
+      if(p >= 60) return `Cliente viene en nivel bajo ${m}: 60 a 69 puntos`;
       return `Cliente viene por debajo de 60 puntos ${m}`;
     }
 
     async function loadHistorico(){
-      let lastErr=null;
+      let lastErr = null;
       for(const url of CSV_HISTORICO_URLS){
         try{
-          const raw=await fetchCSV(url);
+          const raw = await fetchCSV(url);
           buildHistorico(raw);
           if(state.historico.length) return;
-        }catch(err){ lastErr=err; console.warn('No se pudo cargar HISTORICO_PUNTOS:',url,err); }
+        }catch(err){
+          lastErr = err;
+          console.warn('No se pudo cargar HISTORICO_PUNTOS con esta URL:', url, err);
+        }
       }
+
+      // Respaldo interno tomado del Excel cargado por el usuario.
+      // Si el CSV publicado no responde o no coincide, se usa esta base para no dejar las pastillas en cero.
       try{
-        if(Array.isArray(HISTORICO_PUNTOS_FALLBACK)&&HISTORICO_PUNTOS_FALLBACK.length){
+        if(Array.isArray(HISTORICO_PUNTOS_FALLBACK) && HISTORICO_PUNTOS_FALLBACK.length){
           buildHistorico(HISTORICO_PUNTOS_FALLBACK);
           if(state.historico.length) return;
         }
-      }catch(err){ console.warn('Fallback histórico falló:',err); }
-      console.error('Error al cargar histórico:',lastErr);
-      state.historico=[];
-      state.mesesHistorico=[];
+      }catch(err){
+        console.warn('No se pudo usar el respaldo interno de HISTORICO_PUNTOS:', err);
+      }
+
+      console.error('Error al cargar histórico:', lastErr);
+      state.historico = [];
+      state.mesesHistorico = [];
     }
 
-    function detectObjectiveValue(row,categoryKeys){
-      const variants=[];
-      categoryKeys.forEach(k=>{
-        variants.push(`${k}_OBJ`,`${k} OBJ`,`${k}_OB`,`${k} OB`,`${k}_OBJETIVO`,`${k} OBJETIVO`,`${k}_objetivo`,`${k} objetivo`);
+    function detectObjectiveValue(row, categoryKeys){
+      const variants = [];
+      categoryKeys.forEach(baseKey => {
+        variants.push(
+          `${baseKey}_OBJ`, `${baseKey} OBJ`, `${baseKey}_OB`, `${baseKey} OB`,
+          `${baseKey}_OBJETIVO`, `${baseKey} OBJETIVO`, `${baseKey}_objetivo`, `${baseKey} objetivo`
+        );
       });
-      for(const v of variants){ const val=getCell(row,v); if(val!==''&&val!==undefined) return toNumber(val); }
+      for(const variant of variants){
+        const value = getCell(row, variant);
+        if(value !== '' && value !== undefined) return toNumber(value);
+      }
       return 0;
     }
 
-    function detectAdvanceValue(row,categoryKeys){
-      const variants=[];
-      categoryKeys.forEach(k=>{
-        variants.push(`${k}_CF_REAL`,`${k} CF REAL`,`${k}_REAL`,`${k} REAL`,`${k}_avance`,`${k} avance`,`${k}_real`,`${k} real`);
+    function detectAdvanceValue(row, categoryKeys){
+      const variants = [];
+      categoryKeys.forEach(baseKey => {
+        variants.push(
+          `${baseKey}_CF_REAL`, `${baseKey} CF REAL`, `${baseKey}_REAL`, `${baseKey} REAL`,
+          `${baseKey}_avance`, `${baseKey} avance`, `${baseKey}_real`, `${baseKey} real`
+        );
       });
-      for(const v of variants){ const val=getCell(row,v); if(val!==''&&val!==undefined) return toNumber(val); }
+      for(const variant of variants){
+        const value = getCell(row, variant);
+        if(value !== '' && value !== undefined) return toNumber(value);
+      }
       return 0;
     }
 
-    function detectPointsValue(row,categoryKeys,objetivo,real){
-      const variants=[];
-      categoryKeys.forEach(k=>{
-        variants.push(`${k}_PUNTOS`,`${k} PUNTOS`,`${k}_puntos`,`${k} puntos`);
+    function detectPointsValue(row, categoryKeys, objetivo, real){
+      const variants = [];
+      categoryKeys.forEach(baseKey => {
+        variants.push(`${baseKey}_PUNTOS`, `${baseKey} PUNTOS`, `${baseKey}_puntos`, `${baseKey} puntos`);
       });
-      for(const v of variants){ const val=getCell(row,v); if(val!==''&&val!==undefined) return toNumber(val); }
-      return real>=objetivo&&objetivo>0?5:0;
+      for(const variant of variants){
+        const value = getCell(row, variant);
+        if(value !== '' && value !== undefined) return toNumber(value);
+      }
+      return real >= objetivo && objetivo > 0 ? 5 : 0;
     }
 
     function dedupeRows(rows){
-      const map=new Map();
-      rows.forEach(r=>{
-        const numero=getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
-        const cliente=getCell(r,'CLIENTE');
-        const ruta=getCell(r,'RU','RUTA','Ruta','ruta');
-        const key=`${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
-        if(key!=='||') map.set(key,r);
+      const map = new Map();
+      rows.forEach(r => {
+        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
+        const cliente = getCell(r,'CLIENTE');
+        const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
+        const key = `${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
+        if(key !== '||') map.set(key, r);
       });
       return [...map.values()];
     }
 
     function buildData(rawRows){
-      const uniqueRows=dedupeRows(rawRows);
-      rawState.rows=uniqueRows.map(r=>{
-        const numero=getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
-        const cliente=getCell(r,'CLIENTE');
-        const ruta=String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona')||'').trim()||'SIN ASIGNAR';
-        const vendedor=getCell(r,'VENDEDOR','Vendedor');
-        const repositor=getCell(r,'REPOSITOR','Repositor');
-        const telefono=String(getCell(r,'TELEFONO','TELÉFONO','Telefono','teléfono',' TELEFONO ','TELEFONO ',' TELEFONO','CELULAR','Celular','WHATSAPP','Whatsapp')||r.__COL_D_TELEFONO||'').trim();
+      const uniqueRows = dedupeRows(rawRows);
 
-        const categories=CATEGORY_CONFIG.map(cat=>{
-          const objetivo=detectObjectiveValue(r,cat.keys);
-          const real=detectAdvanceValue(r,cat.keys);
-          const puntos=detectPointsValue(r,cat.keys,objetivo,real);
-          const cumplimiento=objetivo>0?(real/objetivo)*100:0;
-          const desvio=objetivo-real;
-          return {key:cat.label,label:cat.label,objetivo,real,puntos,cumplimiento,desvio,semaforo:getSemaforo(cumplimiento),semaforoText:getSemaforoText(cumplimiento)};
-        }).filter(c=>c.objetivo>0||c.real>0);
+      state.rows = uniqueRows.map(r => {
+        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
+        const cliente = getCell(r,'CLIENTE');
+        const ruta = String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
+        const vendedor = getCell(r,'VENDEDOR','Vendedor');
+        const repositor = getCell(r,'REPOSITOR','Repositor');
+        const telefono =
+String(
+  getCell(
+    r,
+    'TELEFONO',
+    'TELÉFONO',
+    'Telefono',
+    'teléfono',
+    ' TELEFONO ',
+    'TELEFONO ',
+    ' TELEFONO',
+    'CELULAR',
+    'Celular',
+    'WHATSAPP',
+    'Whatsapp'
+  ) || r.__COL_D_TELEFONO || ''
+).trim();
 
-        const totalObjetivo=categories.reduce((a,c)=>a+c.objetivo,0);
-        const totalReal=categories.reduce((a,c)=>a+c.real,0);
-        const imperdonableAutoservicios=getImperdonableAutoservicios(r);
-        const cumplimientoTotal=totalObjetivo>0?(totalReal/totalObjetivo)*100:0;
-        const desvioTotal=totalObjetivo-totalReal;
-        const volumenGeneralCumplido=totalObjetivo>0&&totalReal>=totalObjetivo;
-        const puntosVolumenGanados=categories.reduce((a,c)=>a+c.puntos,0)+imperdonableAutoservicios;
-        const totalPuntos=volumenGeneralCumplido?puntosVolumenGanados:0;
-        const puntosBloqueados=volumenGeneralCumplido?0:puntosVolumenGanados;
+        const categories = CATEGORY_CONFIG.map(cat => {
+          const objetivo = detectObjectiveValue(r, cat.keys);
+          const real = detectAdvanceValue(r, cat.keys);
+          const puntos = detectPointsValue(r, cat.keys, objetivo, real);
+          const cumplimiento = objetivo > 0 ? (real / objetivo) * 100 : 0;
+          const desvio = objetivo - real;
+          return {
+            key: cat.label,
+            label: cat.label,
+            objetivo, real, puntos, cumplimiento, desvio,
+            semaforo: getSemaforo(cumplimiento),
+            semaforoText: getSemaforoText(cumplimiento)
+          };
+        }).filter(c => c.objetivo > 0 || c.real > 0);
+
+        const totalObjetivo = categories.reduce((a,c) => a + c.objetivo, 0);
+        const totalReal = categories.reduce((a,c) => a + c.real, 0);
+        const imperdonableAutoservicios = getImperdonableAutoservicios(r);
+        const cumplimientoTotal = totalObjetivo > 0 ? (totalReal / totalObjetivo) * 100 : 0;
+        const desvioTotal = totalObjetivo - totalReal;
+
+        // 🔒 CLÁUSULA CANDADO:
+        // Los puntos de volumen se calculan, pero sólo se liberan cuando el cliente cumple el volumen general.
+        const volumenGeneralCumplido = totalObjetivo > 0 && totalReal >= totalObjetivo;
+        const puntosVolumenGanados = categories.reduce((a,c) => a + c.puntos, 0) + imperdonableAutoservicios;
+        const totalPuntos = volumenGeneralCumplido ? puntosVolumenGanados : 0;
+        const puntosBloqueados = volumenGeneralCumplido ? 0 : puntosVolumenGanados;
 
         return {
-          key:`${numero}|${cliente}|${ruta}`,
-          numero,cliente,ruta,vendedor,repositor,telefono,categories,
-          totalObjetivo,totalReal,totalPuntos,puntosVolumenGanados,puntosBloqueados,
-          volumenGeneralCumplido,imperdonableAutoservicios,cumplimientoTotal,desvioTotal,
-          semaforo:getSemaforo(cumplimientoTotal),semaforoText:getSemaforoText(cumplimientoTotal)
+          key: `${numero}|${cliente}|${ruta}`,
+          numero, cliente, ruta, vendedor, repositor, telefono, categories,
+          totalObjetivo, totalReal, totalPuntos, puntosVolumenGanados, puntosBloqueados, volumenGeneralCumplido, imperdonableAutoservicios, cumplimientoTotal, desvioTotal,
+          semaforo: getSemaforo(cumplimientoTotal),
+          semaforoText: getSemaforoText(cumplimientoTotal)
         };
-      }).filter(r=>r.numero||r.cliente);
+      }).filter(r => r.numero || r.cliente);
+
+      buildRoutes();
+      buildClients();
+      buildAlerts();
     }
 
-    /* ── MEJORA 3: buildRoutes y buildAlerts ahora reciben rows como param ── */
-    function buildRoutesFrom(rows){
-      const map=new Map();
-      rows.forEach(r=>{
-        const key=r.ruta||'SIN ASIGNAR';
-        if(!map.has(key)) map.set(key,{ruta:key,vendedor:r.vendedor||'',clients:0,objetivo:0,real:0,desvio:0,cumplimiento:0,rows:[]});
-        const route=map.get(key);
-        route.clients+=1;
-        route.objetivo+=r.totalObjetivo;
-        route.real+=r.totalReal;
-        route.desvio+=r.desvioTotal;
-        if(!route.vendedor&&r.vendedor) route.vendedor=r.vendedor;
+    function buildRoutes(){
+      const map = new Map();
+      state.rows.forEach(r => {
+        const key = r.ruta || 'SIN ASIGNAR';
+        if(!map.has(key)){
+          map.set(key, { ruta: key, vendedor: r.vendedor || '', clients: 0, objetivo: 0, real: 0, desvio: 0, cumplimiento: 0, rows: [] });
+        }
+        const route = map.get(key);
+        route.clients += 1;
+        route.objetivo += r.totalObjetivo;
+        route.real += r.totalReal;
+        route.desvio += r.desvioTotal;
+        if(!route.vendedor && r.vendedor) route.vendedor = r.vendedor;
         route.rows.push(r);
       });
-      return [...map.values()].map(r=>{
-        r.cumplimiento=r.objetivo>0?(r.real/r.objetivo)*100:0;
-        r.semaforo=getSemaforo(r.cumplimiento);
-        r.semaforoText=getSemaforoText(r.cumplimiento);
+
+      state.routes = [...map.values()].map(r => {
+        r.cumplimiento = r.objetivo > 0 ? (r.real / r.objetivo) * 100 : 0;
+        r.semaforo = getSemaforo(r.cumplimiento);
+        r.semaforoText = getSemaforoText(r.cumplimiento);
         return r;
-      }).sort((a,b)=>{
-        const ar=Number(a.ruta),br=Number(b.ruta);
-        if(!Number.isNaN(ar)&&!Number.isNaN(br)) return ar-br;
-        return String(a.ruta).localeCompare(String(b.ruta),'es');
+      }).sort((a,b) => {
+        const ar = Number(a.ruta), br = Number(b.ruta);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a.ruta).localeCompare(String(b.ruta), 'es');
       });
     }
 
-    function buildAlertsFrom(rows){
-      const alerts=[];
-      rows.forEach(client=>{
-        client.categories.forEach(cat=>{
+    function buildClients(){
+      state.clients = [...state.rows].sort((a,b) => String(a.cliente).localeCompare(String(b.cliente), 'es'));
+    }
+
+    function buildAlerts(){
+      const alerts = [];
+      state.rows.forEach(client => {
+        client.categories.forEach(cat => {
           alerts.push({
-            ruta:client.ruta,vendedor:client.vendedor,cliente:client.cliente,numero:client.numero,
-            categoria:cat.label,objetivo:cat.objetivo,real:cat.real,desvio:cat.desvio,
-            cumplimiento:cat.cumplimiento,puntosCliente:client.totalPuntos,
-            level:cat.cumplimiento<50?'critico':cat.cumplimiento<80?'medio':'controlado',
-            text:`${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS · ${client.totalPuntos}/40 pts`,
-            refKey:client.key
+            ruta: client.ruta,
+            vendedor: client.vendedor,
+            cliente: client.cliente,
+            numero: client.numero,
+            categoria: cat.label,
+            objetivo: cat.objetivo,
+            real: cat.real,
+            desvio: cat.desvio,
+            cumplimiento: cat.cumplimiento,
+            puntosCliente: client.totalPuntos,
+            level: cat.cumplimiento < 50 ? 'critico' : cat.cumplimiento < 80 ? 'medio' : 'controlado',
+            text: `${client.cliente} · ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} CAJAS FÍSICAS · ${client.totalPuntos}/40 pts`,
+            refKey: client.key
           });
         });
       });
-      return alerts.sort((a,b)=>{
-        const rank={critico:0,medio:1,controlado:2};
-        if(rank[a.level]!==rank[b.level]) return rank[a.level]-rank[b.level];
-        return (b.desvio||0)-(a.desvio||0);
+
+      state.alerts = alerts.sort((a,b) => {
+        const rank = {critico:0, medio:1, controlado:2};
+        if(rank[a.level] !== rank[b.level]) return rank[a.level] - rank[b.level];
+        return (b.desvio || 0) - (a.desvio || 0);
       });
     }
 
     function updateHomeKPIs(){
-      const routes=state.routes;
-      const rows=state.rows;
-      document.getElementById('kpiRoutes').textContent=routes.length;
-      document.getElementById('kpiClients').textContent=rows.length;
-      document.getElementById('kpiObjetivo').textContent=formatNumber(rows.reduce((a,r)=>a+r.totalObjetivo,0));
-      document.getElementById('kpiDesvios').textContent=state.alerts.filter(a=>a.level==='critico').length;
+      document.getElementById('kpiRoutes').textContent = state.routes.length;
+      document.getElementById('kpiClients').textContent = state.clients.length;
+      document.getElementById('kpiObjetivo').textContent = formatNumber(state.rows.reduce((a,r)=>a+r.totalObjetivo,0));
+      document.getElementById('kpiDesvios').textContent = state.alerts.filter(a => a.level === 'critico').length;
       renderHomeAlerts();
     }
 
-    function severityText(level){ return level==='critico'?'CRÍTICO':level==='medio'?'MEDIO':'CONTROLADO'; }
+    function severityText(level){ return level === 'critico' ? 'CRÍTICO' : level === 'medio' ? 'MEDIO' : 'CONTROLADO'; }
 
     function renderHomeAlerts(){
-      const box=document.getElementById('homeAlerts');
-      const top=state.alerts.slice(0,5);
-      if(!top.length){ box.innerHTML='<div class="empty">No hay alertas para mostrar.</div>'; return; }
-      box.innerHTML=top.map(a=>`
-        <div class="alert-box ${a.level==='critico'?'alert-high':a.level==='medio'?'alert-mid':'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','home')">
-          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta||'-')}<br>
+      const box = document.getElementById('homeAlerts');
+      const top = state.alerts.slice(0,5);
+      if(!top.length){ box.innerHTML = '<div class="empty">No hay alertas para mostrar.</div>'; return; }
+      box.innerHTML = top.map(a => `
+        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','home')">
+          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')}<br>
           ${escapeHtml(a.text)}
         </div>
       `).join('');
     }
 
     function goTo(page){
-      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-      document.getElementById('page-'+page).classList.add('active');
-      document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-      const nav=document.getElementById('nav-'+page);
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const nav = document.getElementById('nav-' + page);
       if(nav) nav.classList.add('active');
-      window.scrollTo({top:0,behavior:'smooth'});
-      if(page==='alertas') renderAlerts();
+      window.scrollTo({top:0, behavior:'smooth'});
+      if(page === 'alertas') renderAlerts();
     }
 
     function goToRoutes(){ goTo('routes'); document.getElementById('nav-routes').classList.add('active'); renderRoutes(); }
     function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
     function renderRoutes(){
-      const q=normalizeKey(document.getElementById('routeSearch').value);
-      const sort=document.getElementById('routeSort').value;
-      let data=state.routes.filter(r=>!q||[r.ruta,r.vendedor].some(v=>normalizeKey(v).includes(q)));
+      const q = normalizeKey(document.getElementById('routeSearch').value);
+      const sort = document.getElementById('routeSort').value;
 
-      if(sort==='objetivo') data.sort((a,b)=>b.objetivo-a.objetivo);
-      else if(sort==='clientes') data.sort((a,b)=>b.clients-a.clients);
-      else if(sort==='avance') data.sort((a,b)=>b.cumplimiento-a.cumplimiento);
-      else data.sort((a,b)=>{
-        const ar=Number(a.ruta),br=Number(b.ruta);
-        if(!Number.isNaN(ar)&&!Number.isNaN(br)) return ar-br;
-        return String(a.ruta).localeCompare(String(b.ruta),'es');
+      let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
+
+      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
+      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
+      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
+      else data.sort((a,b)=> {
+        const ar = Number(a.ruta), br = Number(b.ruta);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a.ruta).localeCompare(String(b.ruta), 'es');
       });
 
-      const box=document.getElementById('routeResults');
-      const empty=document.getElementById('routeEmpty');
-      if(!data.length){ box.innerHTML=''; empty.style.display='block'; return; }
-      empty.style.display='none';
+      const box = document.getElementById('routeResults');
+      const empty = document.getElementById('routeEmpty');
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
 
-      box.innerHTML=data.map(r=>{
-        const puntosRuta=r.clients>0?r.rows.reduce((a,c)=>a+c.totalPuntos,0)/r.clients:0;
-        const clientesCumplen40=r.rows.filter(c=>c.totalPuntos>=40).length;
-        const progressClass=puntosRuta>=40?'green':puntosRuta>=30?'yellow':'red';
-        /* ── MEJORA 4: clamp contra 40 pts, no 50 ── */
+      box.innerHTML = data.map(r => {
+        const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0;
+        const clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length;
+        const progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
         return `
           <div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
             <div class="client-head">
               <div>
                 <div class="item-title">Ruta ${escapeHtml(r.ruta)}</div>
                 <div class="item-meta">
-                  Vendedor: ${escapeHtml(r.vendedor||'-')}<br>
+                  Vendedor: ${escapeHtml(r.vendedor || '-')}<br>
                   🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>
                   ✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes
                 </div>
-                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta/40)*100,0,100)}%"></span></div>
+                <div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 50) * 100,0,100)}%"></span></div>
               </div>
               <div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div>
             </div>
@@ -1354,35 +1492,61 @@
     }
 
     function openRouteDetail(ruta){
-      state.selectedRoute=ruta;
-      const route=state.routes.find(r=>String(r.ruta)===String(ruta));
+      state.selectedRoute = ruta;
+      const route = state.routes.find(r => String(r.ruta) === String(ruta));
       if(!route) return;
 
-      document.getElementById('routeDetailTitle').textContent=`Ruta ${route.ruta}`;
-      document.getElementById('routeDetailSub').textContent=`Vendedor: ${route.vendedor||'-'} · Seguimiento ejecutivo de volumen`;
-      document.getElementById('routeDetailMeta').innerHTML=`<b>Ruta:</b> ${escapeHtml(route.ruta)}<br><b>Vendedor:</b> ${escapeHtml(route.vendedor||'-')}<br><b>Semáforo:</b> ${route.semaforoText}`;
+      document.getElementById('routeDetailTitle').textContent = `Ruta ${route.ruta}`;
+      document.getElementById('routeDetailSub').textContent = `Vendedor: ${route.vendedor || '-'} · Seguimiento ejecutivo de volumen`;
+      document.getElementById('routeDetailMeta').innerHTML = `<b>Ruta:</b> ${escapeHtml(route.ruta)}<br><b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br><b>Semáforo:</b> ${route.semaforoText}`;
 
-      const clientesCumplen40=route.rows.filter(c=>c.totalPuntos>=40).length;
-      const totalClientes=route.clients;
-      const ratio=totalClientes>0?(clientesCumplen40/totalClientes)*100:0;
-      const isGreen=(ratio>=100||clientesCumplen40===totalClientes);
-      const isYellow=ratio>=60&&!isGreen;
-      const bgColor=isGreen?'linear-gradient(135deg,#dcfce7,#bbf7d0)':isYellow?'linear-gradient(135deg,#fef3c7,#fde68a)':'linear-gradient(135deg,#fee2e2,#fecaca)';
-      const borderColor=isGreen?'#86efac':isYellow?'#fcd34d':'#fca5a5';
-      const valueColor=isGreen?'#15803d':isYellow?'#b45309':'#dc2626';
+      const clientesCumplen40 = route.rows.filter(c => c.totalPuntos >= 40).length;
+      const totalClientes = route.clients;
+      const ratio = totalClientes > 0 ? (clientesCumplen40 / totalClientes) * 100 : 0;
+      const isGreen = (ratio >= 100 || clientesCumplen40 === totalClientes);
+      const isYellow = ratio >= 60 && !isGreen;
+      const bgColor = isGreen ? 'linear-gradient(135deg, #dcfce7, #bbf7d0)' : isYellow ? 'linear-gradient(135deg, #fef3c7, #fde68a)' : 'linear-gradient(135deg, #fee2e2, #fecaca)';
+      const borderColor = isGreen ? '#86efac' : isYellow ? '#fcd34d' : '#fca5a5';
+      const valueColor = isGreen ? '#15803d' : isYellow ? '#b45309' : '#dc2626';
 
-      document.getElementById('routeClients').innerHTML=route.rows.slice().sort((a,b)=>String(a.cliente).localeCompare(String(b.cliente),'es')).map(c=>`
+      const rdClientsEl = document.getElementById('rdClients'); if(rdClientsEl) rdClientsEl.textContent = formatNumber(route.clients);
+      const rdObjetivoEl = document.getElementById('rdObjetivo'); if(rdObjetivoEl) rdObjetivoEl.textContent = formatNumber(route.objetivo);
+      const el = document.getElementById('rdCumplen40');
+      const sub = document.getElementById('rdCumplen40Sub');
+      if(el && sub){
+        const box = el.closest('.box');
+        el.textContent = `${clientesCumplen40} / ${totalClientes}`;
+        el.style.color = valueColor;
+        sub.textContent = `${formatPct(ratio)} cumplimiento clientes`;
+        if(box){
+          box.style.background = bgColor;
+          box.style.border = `1px solid ${borderColor}`;
+          box.style.boxShadow = '0 10px 24px rgba(0,0,0,.10)';
+        }
+      }
+
+      const routeAlertsEl = document.getElementById('routeAlerts');
+      if(routeAlertsEl){
+        const routeAlerts = route.rows.slice().sort((a,b)=> b.desvioTotal - a.desvioTotal).slice(0,8);
+        routeAlertsEl.innerHTML = routeAlerts.length ? routeAlerts.map(c => `
+          <div class="alert-box ${c.cumplimientoTotal < 50 ? 'alert-high' : c.cumplimientoTotal < 80 ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+            <b>${c.semaforoText}</b> · ${escapeHtml(c.cliente)}<br>
+            🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS · 🏆 Puntos: ${formatNumber(c.totalPuntos)}
+          </div>
+        `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
+      }
+
+      document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
           <div class="client-head">
             <div>
               <div class="item-title">${escapeHtml(c.cliente)}</div>
               <div class="item-meta">
-                Número: ${escapeHtml(c.numero||'-')}<br>
-                Ruta: ${escapeHtml(c.ruta||'-')} · Vendedor: ${escapeHtml(c.vendedor||'-')}<br>
+                Número: ${escapeHtml(c.numero || '-')}<br>
+                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
                 🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
-              <!-- MEJORA 4: barra contra 40 pts -->
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos/40)*100,0,100)}%"></span></div>
+              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 50) * 100,0,100)}%"></span></div>
             </div>
             <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
@@ -1393,30 +1557,29 @@
     }
 
     function renderClients(){
-      const q=normalizeKey(document.getElementById('clientSearch').value);
-      const routeFilter=document.getElementById('clientRouteFilter').value;
-      const data=state.clients.filter(c=>{
-        const matchesText=!q||[c.numero,c.cliente,c.ruta,c.vendedor].some(v=>normalizeKey(v).includes(q));
-        const matchesRoute=!routeFilter||String(c.ruta)===String(routeFilter);
-        return matchesText&&matchesRoute;
+      const q = normalizeKey(document.getElementById('clientSearch').value);
+      const routeFilter = document.getElementById('clientRouteFilter').value;
+      const data = state.clients.filter(c => {
+        const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q));
+        const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter);
+        return matchesText && matchesRoute;
       });
 
-      const box=document.getElementById('clientResults');
-      const empty=document.getElementById('clientEmpty');
-      if(!data.length){ box.innerHTML=''; empty.style.display='block'; return; }
-      empty.style.display='none';
-      box.innerHTML=data.map(c=>`
+      const box = document.getElementById('clientResults');
+      const empty = document.getElementById('clientEmpty');
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      box.innerHTML = data.map(c => `
         <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
           <div class="client-head">
             <div>
               <div class="item-title">${escapeHtml(c.cliente)}</div>
               <div class="item-meta">
-                Número: ${escapeHtml(c.numero||'-')}<br>
-                Ruta: ${escapeHtml(c.ruta||'-')} · Vendedor: ${escapeHtml(c.vendedor||'-')}<br>
+                Número: ${escapeHtml(c.numero || '-')}<br>
+                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
                 🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
               </div>
-              <!-- MEJORA 4: barra contra 40 pts -->
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos/40)*100,0,100)}%"></span></div>
+              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 50) * 100,0,100)}%"></span></div>
             </div>
             <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
@@ -1424,49 +1587,52 @@
       `).join('');
     }
 
-    function openClientDetail(key,backMode='clients'){
-      state.selectedClientKey=key;
-      state.clientBackMode=backMode;
-      const client=state.clients.find(c=>c.key===key);
+    function openClientDetail(key, backMode='clients'){
+      state.selectedClientKey = key;
+      state.clientBackMode = backMode;
+      const client = state.clients.find(c => c.key === key);
       if(!client) return;
 
-      document.getElementById('clientDetailTitle').textContent=client.cliente||'Cliente';
-      document.getElementById('clientDetailSub').textContent=`Número ${client.numero||'-'} · Ruta ${client.ruta||'-'} · ${client.vendedor||'-'}`;
-      document.getElementById('clientDetailMeta').innerHTML=`
-        <b>Cliente:</b> ${escapeHtml(client.cliente||'-')}<br>
-        <b>Número:</b> ${escapeHtml(client.numero||'-')}<br>
-        <b>Ruta:</b> ${escapeHtml(client.ruta||'-')}<br>
-        <b>Vendedor:</b> ${escapeHtml(client.vendedor||'-')}<br>
-        <b>Repositor:</b> ${escapeHtml(client.repositor||'-')}<br>
-        <b>Teléfono:</b> ${escapeHtml(client.telefono||'-')}<br>
+      document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente';
+      document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
+      document.getElementById('clientDetailMeta').innerHTML = `
+        <b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br>
+        <b>Número:</b> ${escapeHtml(client.numero || '-')}<br>
+        <b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br>
+        <b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br>
+        <b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br>
+        <b>Teléfono:</b> ${escapeHtml(client.telefono || '-')}<br>
         <b>Semáforo general:</b> ${client.semaforoText}
       `;
 
-      const maxPuntos=(client.categories.length*5)+10;
-      const historicoCliente=getHistoricoCliente(client);
-      const mesCierre=state.selectedMesHistorico||getMesActualApp();
+      const maxPuntos = (client.categories.length * 5) + 10;
+      const historicoCliente = getHistoricoCliente(client);
+      const mesCierre = state.selectedMesHistorico || getMesActualApp();
+      const mesesOptions = `<option value="${escapeHtml(getMesActualApp())}" selected>${escapeHtml(getMesActualApp())}</option>`;
+      const detalleHistorico = '';
 
-      /* ── MEJORA 5: selector de mes dinámico desde state.mesesHistorico ── */
-      const mesesOptions=state.mesesHistorico.length
-        ? state.mesesHistorico.map(m=>`<option value="${escapeHtml(m)}"${m===(state.selectedMesHistorico||getMesActualApp())?'selected':''}>${escapeHtml(m)}</option>`).join('')
-        : `<option value="${escapeHtml(getMesActualApp())}" selected>${escapeHtml(getMesActualApp())}</option>`;
+      // VOLUMEN: se calcula desde las categorías que el cliente ya va logrando en la app.
+      // 🔒 Cláusula candado: sólo se libera cuando cumple el volumen general.
+      const volumenGeneralCumplido = !!client.volumenGeneralCumplido;
+      const hVolumenGanado = Number(client.puntosVolumenGanados || 0);
+      const hVolumen = volumenGeneralCumplido ? hVolumenGanado : 0;
+      const hVolumenBloqueado = volumenGeneralCumplido ? 0 : hVolumenGanado;
 
-      const volumenGeneralCumplido=!!client.volumenGeneralCumplido;
-      const hVolumenGanado=Number(client.puntosVolumenGanados||0);
-      const hVolumen=volumenGeneralCumplido?hVolumenGanado:0;
-      const hVolumenBloqueado=volumenGeneralCumplido?0:hVolumenGanado;
+      // REFERENCIAS, PEDIDO SUGERIDO Y EJECUCIÓN: vienen directo de HISTORICO_PUNTOS.
+      const hReferencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
+      const hPedidoSugerido = historicoCliente ? Number(historicoCliente.pedidoSugerido || 0) : 0;
+      const hEjecucion = historicoCliente ? Number(historicoCliente.ejecucion || 0) : 0;
+      const hImperdonable = historicoCliente ? Number(historicoCliente.imperdonableAutoservicios || 0) : 0;
 
-      const hReferencias=historicoCliente?Number(historicoCliente.referencias||0):0;
-      const hPedidoSugerido=historicoCliente?Number(historicoCliente.pedidoSugerido||0):0;
-      const hEjecucion=historicoCliente?Number(historicoCliente.ejecucion||0):0;
-      const hImperdonable=historicoCliente?Number(historicoCliente.imperdonableAutoservicios||0):0;
-      const hPuntosTotales=hVolumen+hReferencias+hPedidoSugerido+hEjecucion+hImperdonable;
-      const hMaxTotal=hImperdonable>0?110:100;
-      const puntosCierre=hPuntosTotales;
-      const cierreStyle=getCierreStyle(puntosCierre);
+      // PUNTOS TOTALES: suma Volumen calculado + datos de HISTORICO_PUNTOS.
+      const hPuntosTotales = hVolumen + hReferencias + hPedidoSugerido + hEjecucion + hImperdonable;
+      const hMaxTotal = hImperdonable > 0 ? 110 : 100;
+      const maxCierre = historicoCliente ? hMaxTotal : maxPuntos;
+      const puntosCierre = hPuntosTotales;
+      const cierreStyle = getCierreStyle(puntosCierre);
+      const cierreTexto = getCierreText(puntosCierre, mesCierre);
 
-      /* ── MEJORA 6: WhatsApp incluye puntos del cliente ── */
-      document.getElementById('clientDetailSummary').innerHTML=`
+      document.getElementById('clientDetailSummary').innerHTML = `
         <div class="box client-kpi-card kpi-objetivo">
           <div class="t">Objetivo CAJAS FÍSICAS</div>
           <div class="v">🎯 ${formatNumber(client.totalObjetivo)}</div>
@@ -1480,10 +1646,10 @@
           <div class="v">🏅 ${formatNumber(hPuntosTotales)} / ${hMaxTotal}</div>
         </div>
 
-        <div class="candado-alert ${volumenGeneralCumplido?'ok':''}">
+        <div class="candado-alert ${volumenGeneralCumplido ? 'ok' : ''}">
           ${volumenGeneralCumplido
-            ?`🔓 <b>Cláusula candado liberada</b><br>El cliente cumplió el volumen general. Se liberan ${formatNumber(hVolumenGanado)} puntos de volumen.`
-            :`🔒 <b>Cláusula candado activa</b><br>Los puntos de volumen están bloqueados hasta cumplir el volumen general. Puntos retenidos: ${formatNumber(hVolumenBloqueado)}.`}
+            ? `🔓 <b>Cláusula candado liberada</b><br>El cliente cumplió el volumen general. Se liberan ${formatNumber(hVolumenGanado)} puntos de volumen.`
+            : `🔒 <b>Cláusula candado activa</b><br>Los puntos de volumen están bloqueados hasta cumplir el volumen general. Puntos retenidos: ${formatNumber(hVolumenBloqueado)}.`}
         </div>
 
         <div class="box historico-panel" style="background:${cierreStyle.bg}; border:1px solid ${cierreStyle.border};">
@@ -1496,7 +1662,7 @@
             <div class="historico-main" style="color:${cierreStyle.color};">
               <div style="font-size:20px;font-weight:900;text-transform:uppercase;">Avance de ${escapeHtml(mesCierre)}</div>
               <div class="score-breakdown">
-                <div class="score-mini vol"><div class="mini-title">Volumen</div><div class="mini-ico">${volumenGeneralCumplido?'🔓':'🔒'}</div><div class="mini-num">${formatNumber(hVolumen)}</div><div class="mini-den">/ 40</div><span class="candado-mini ${volumenGeneralCumplido?'ok':''}">${volumenGeneralCumplido?'Liberado':'Bloqueado'}</span></div>
+                <div class="score-mini vol"><div class="mini-title">Volumen</div><div class="mini-ico">${volumenGeneralCumplido ? '🔓' : '🔒'}</div><div class="mini-num">${formatNumber(hVolumen)}</div><div class="mini-den">/ 40</div><span class="candado-mini ${volumenGeneralCumplido ? 'ok' : ''}">${volumenGeneralCumplido ? 'Liberado' : 'Bloqueado'}</span></div>
                 <div class="score-mini ref"><div class="mini-title">Referencias</div><div class="mini-ico">📦</div><div class="mini-num">${formatNumber(hReferencias)}</div><div class="mini-den">/ 20</div></div>
                 <div class="score-mini ps"><div class="mini-title">Pedido<br>Sugerido</div><div class="mini-ico">📋</div><div class="mini-num">${formatNumber(hPedidoSugerido)}</div><div class="mini-den">/ 20</div></div>
                 <div class="score-mini ejec"><div class="mini-title">Ejecución</div><div class="mini-ico">✅</div><div class="mini-num">${formatNumber(hEjecucion)}</div><div class="mini-den">/ 20</div></div>
@@ -1513,27 +1679,27 @@
           </div>
         </div>
 
-        <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo, avance y puntos por WhatsApp</button></div>
+        <div class="box" style="grid-column:span 3;"><button class="wa-btn" onclick="enviarWhatsAppCliente('${client.key}')">Enviar objetivo y avance por WhatsApp</button></div>
       `;
 
-      const cats=document.getElementById('clientCategories');
-      const catsEmpty=document.getElementById('clientCategoriesEmpty');
-      if(!client.categories.length){ cats.innerHTML=''; catsEmpty.style.display='block'; }
-      else{
-        catsEmpty.style.display='none';
-        cats.innerHTML=client.categories.slice().sort((a,b)=>b.objetivo-a.objetivo).map(cat=>{
-          const cumple=cat.cumplimiento>=100;
-          const puntosGanadosCategoria=cumple?5:0;
-          const puntos=volumenGeneralCumplido?puntosGanadosCategoria:0;
-          const badgeClass=getSemaforoBadge(cat.cumplimiento);
-          const progressClass=cat.semaforo;
-          const visual=categoryVisualMap[cat.key]||{icon:'📦',bubble:'#f3f4f6',bubbleBorder:'#d7dbe0',refBg:'#f8fafc',refBorder:'#d9dee5'};
+      const cats = document.getElementById('clientCategories');
+      const catsEmpty = document.getElementById('clientCategoriesEmpty');
+      if(!client.categories.length){ cats.innerHTML = ''; catsEmpty.style.display = 'block'; }
+      else {
+        catsEmpty.style.display = 'none';
+        cats.innerHTML = client.categories.slice().sort((a,b)=> b.objetivo - a.objetivo).map(cat => {
+          const cumple = cat.cumplimiento >= 100;
+          const puntosGanadosCategoria = cumple ? 5 : 0;
+          const puntos = volumenGeneralCumplido ? puntosGanadosCategoria : 0;
+          const badgeClass = getSemaforoBadge(cat.cumplimiento);
+          const progressClass = cat.semaforo;
+          const visual = categoryVisualMap[cat.key] || { icon: '📦', bubble: '#f3f4f6', bubbleBorder: '#d7dbe0', refBg: '#f8fafc', refBorder: '#d9dee5' };
           return `
-            <div class="cat-card" style="${cumple?'border:2px solid #16a34a; background:#f0fdf4;':''}">
+            <div class="cat-card" style="${cumple ? 'border:2px solid #16a34a; background:#f0fdf4;' : ''}">
               <div class="cat-row">
                 <div class="cat-main">
                   <div class="cat-bottle" style="background:${visual.bubble};border-color:${visual.bubbleBorder};">
-                    ${String(visual.icon).includes('http')?`<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">`:visual.icon}
+                    ${String(visual.icon).includes('http') ? `<img src="${visual.icon}" style="width:55px;height:55px;object-fit:contain;">` : visual.icon}
                   </div>
                   <div>
                     <div class="cat-name">${escapeHtml(cat.label)}</div>
@@ -1541,19 +1707,18 @@
                       🎯 Objetivo: <b>${formatNumber(cat.objetivo)} CAJAS FÍSICAS</b><br>
                       📦 Avance: <b>${formatNumber(cat.real)} CAJAS FÍSICAS</b><br>
                       📊 Cumplimiento: <b>${formatPct(cat.cumplimiento)}</b><br>
-                      🏆 Puntos: <b style="color:${volumenGeneralCumplido&&cumple?'#16a34a':'#999'}">+${puntos}</b>${(!volumenGeneralCumplido&&puntosGanadosCategoria>0)?` <span class="candado-mini">🔒 retenidos +${puntosGanadosCategoria}</span>`:''}
+                      🏆 Puntos: <b style="color:${volumenGeneralCumplido && cumple ? '#16a34a' : '#999'}">+${puntos}</b>${(!volumenGeneralCumplido && puntosGanadosCategoria > 0) ? ` <span class="candado-mini">🔒 retenidos +${puntosGanadosCategoria}</span>` : ''}
                     </div>
                     <div class="cat-ref" style="background:${visual.refBg};border-color:${visual.refBorder};">
                       <div class="cat-ref-title">💡 <span>Referencia de cálculo</span></div>
-                      <div>${referenciaMap[cat.key]||'Producto base de la categoría'}</div>
+                      <div>${referenciaMap[cat.key] || 'Producto base de la categoría'}</div>
                     </div>
                   </div>
                 </div>
-                <div class="badge ${volumenGeneralCumplido?badgeClass:'bad'}">${puntos} pts</div>
+                <div class="badge ${volumenGeneralCumplido ? badgeClass : 'bad'}">${puntos} pts</div>
               </div>
-              <!-- MEJORA 4: barra contra 100% real de cumplimiento ── -->
               <div class="progress ${progressClass}" style="height:12px;"><span style="width:${clamp(cat.cumplimiento,0,100)}%"></span></div>
-              ${cumple?'<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>':''}
+              ${cumple ? '<div style="margin-top:6px;font-size:11px;color:#16a34a;font-weight:700;">✔ Objetivo cumplido</div>' : ''}
             </div>
           `;
         }).join('');
@@ -1563,149 +1728,131 @@
     }
 
     function cambiarMesHistorico(mes){
-      state.selectedMesHistorico=mes;
-      if(state.selectedClientKey) openClientDetail(state.selectedClientKey,state.clientBackMode);
+      state.selectedMesHistorico = mes;
+      if(state.selectedClientKey){
+        openClientDetail(state.selectedClientKey, state.clientBackMode);
+      }
     }
 
     function backFromClientDetail(){
-      if(state.clientBackMode==='route') openRouteDetail(state.selectedRoute);
-      else if(state.clientBackMode==='home') goTo('home');
-      else if(state.clientBackMode==='alertas') goTo('alertas');
+      if(state.clientBackMode === 'route') openRouteDetail(state.selectedRoute);
+      else if(state.clientBackMode === 'home') goTo('home');
+      else if(state.clientBackMode === 'alertas') goTo('alertas');
       else goToClients();
     }
 
     function renderAlerts(){
-      const q=normalizeKey(document.getElementById('alertSearch').value);
-      const level=document.getElementById('alertLevelFilter').value;
-      const data=state.alerts.filter(a=>{
-        const matchesLevel=!level||a.level===level;
-        const matchesText=!q||[a.cliente,a.ruta,a.vendedor,a.categoria,a.numero].some(v=>normalizeKey(v).includes(q));
-        return matchesLevel&&matchesText;
+      const q = normalizeKey(document.getElementById('alertSearch').value);
+      const level = document.getElementById('alertLevelFilter').value;
+      const data = state.alerts.filter(a => {
+        const matchesLevel = !level || a.level === level;
+        const matchesText = !q || [a.cliente, a.ruta, a.vendedor, a.categoria, a.numero].some(v => normalizeKey(v).includes(q));
+        return matchesLevel && matchesText;
       });
 
-      const box=document.getElementById('alertResults');
-      const empty=document.getElementById('alertEmpty');
-      if(!data.length){ box.innerHTML=''; empty.style.display='block'; return; }
-      empty.style.display='none';
-      box.innerHTML=data.map(a=>`
-        <div class="alert-box ${a.level==='critico'?'alert-high':a.level==='medio'?'alert-mid':'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')">
-          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta||'-')} · ${escapeHtml(a.vendedor||'-')}<br>
+      const box = document.getElementById('alertResults');
+      const empty = document.getElementById('alertEmpty');
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      box.innerHTML = data.map(a => `
+        <div class="alert-box ${a.level === 'critico' ? 'alert-high' : a.level === 'medio' ? 'alert-mid' : 'alert-low'}" onclick="openClientDetail('${escapeHtml(a.refKey)}','alertas')">
+          <b>${severityText(a.level)}</b> · Ruta ${escapeHtml(a.ruta || '-')} · ${escapeHtml(a.vendedor || '-')}<br>
           ${escapeHtml(a.text)}
         </div>
       `).join('');
     }
 
     function fillRouteFilter(){
-      const select=document.getElementById('clientRouteFilter');
-      const routes=[...new Set(state.routes.map(r=>r.ruta))].sort((a,b)=>{
-        const ar=Number(a),br=Number(b);
-        if(!Number.isNaN(ar)&&!Number.isNaN(br)) return ar-br;
-        return String(a).localeCompare(String(b),'es');
+      const select = document.getElementById('clientRouteFilter');
+      const routes = [...new Set(state.routes.map(r => r.ruta))].sort((a,b) => {
+        const ar = Number(a), br = Number(b);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a).localeCompare(String(b), 'es');
       });
-      select.innerHTML='<option value="">Todas las rutas</option>'+routes.map(r=>`<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
+      select.innerHTML = '<option value="">Todas las rutas</option>' + routes.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('');
     }
 
-    /* ── MEJORA 8: setStatus con clases y overlay ── */
-    function setStatus(text,type=''){
-      const el=document.getElementById('syncStatus');
-      el.textContent=text;
-      el.className='status-chip '+(type||'');
+    function setStatus(text, isError=false){
+      const el = document.getElementById('syncStatus');
+      el.textContent = text;
+      el.style.background = isError ? '#fee2e2' : '#f3f4f6';
+      el.style.color = isError ? '#991b1b' : '#555';
     }
-
-    function showOverlay(){ document.getElementById('syncOverlay').classList.add('visible'); }
-    function hideOverlay(){ document.getElementById('syncOverlay').classList.remove('visible'); }
 
     async function loadData(showAlert=false){
-      showOverlay();
-      setStatus('Sincronizando...','loading');
       try{
-        const raw=await fetchCSV(CSV_URL);
+        setStatus('Cargando datos...');
+        const raw = await fetchCSV(CSV_URL);
         await loadHistorico();
         buildData(raw);
+        applyUserPermissions();
         fillRouteFilter();
         updateHomeKPIs();
         renderRoutes();
         renderClients();
         renderAlerts();
-        setStatus(`✓ ${raw.length} clientes cargados`,'ok');
+        setStatus(`Datos cargados: ${raw.length} filas`);
         if(showAlert) alert('Datos sincronizados correctamente');
-      }catch(err){
-        console.error('Error al cargar:',err);
-        setStatus('No se pudieron cargar los datos','error');
+      } catch(err){
+        console.error('Error al cargar:', err);
+        setStatus('No se pudieron cargar los datos', true);
         alert('No se pudieron cargar los datos. Revisá que la hoja esté compartida y que el link CSV sea correcto.');
-      }finally{
-        hideOverlay();
       }
     }
 
-    /* ── MEJORA 7: fecha fija en formato Argentina sin depender del locale del dispositivo ── */
-    function formatDateAR(d){
-      const months=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-      return `${d.getDate()} de ${months[d.getMonth()]} de ${d.getFullYear()}`;
-    }
-
     function bind(){
-      document.getElementById('todayChip').textContent=formatDateAR(new Date());
-      document.getElementById('routeSearch').addEventListener('input',renderRoutes);
-      document.getElementById('routeSort').addEventListener('change',renderRoutes);
-      document.getElementById('clientSearch').addEventListener('input',renderClients);
-      document.getElementById('clientRouteFilter').addEventListener('change',renderClients);
-      document.getElementById('alertLevelFilter').addEventListener('change',renderAlerts);
-      document.getElementById('alertSearch').addEventListener('input',renderAlerts);
+      document.getElementById('todayChip').textContent = new Date().toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
+      document.getElementById('routeSearch').addEventListener('input', renderRoutes);
+      document.getElementById('routeSort').addEventListener('change', renderRoutes);
+      document.getElementById('clientSearch').addEventListener('input', renderClients);
+      document.getElementById('clientRouteFilter').addEventListener('change', renderClients);
+      document.getElementById('alertLevelFilter').addEventListener('change', renderAlerts);
+      document.getElementById('alertSearch').addEventListener('input', renderAlerts);
     }
 
     function normalizarTelefonoAR(raw){
-      let tel=String(raw||'').replace(/\D/g,'');
+      let tel = String(raw || '').replace(/\D/g,'');
       if(!tel) return '';
       if(tel.startsWith('549')) return tel;
-      if(tel.startsWith('54')) return '9'+tel;
-      if(tel.startsWith('9')) return '54'+tel;
-      if(tel.startsWith('0')) tel=tel.replace(/^0+/,'');
-      return '549'+tel;
+      if(tel.startsWith('54')) return '9' + tel;
+      if(tel.startsWith('9')) return '54' + tel;
+      if(tel.startsWith('0')) tel = tel.replace(/^0+/, '');
+      return '549' + tel;
     }
 
-    /* ── MEJORA 6: WhatsApp ahora incluye puntos del cliente ── */
     function enviarWhatsAppCliente(key){
-      const client=state.clients.find(c=>c.key===key);
+      const client = state.clients.find(c => c.key === key);
       if(!client){ alert('No se encontró el cliente'); return; }
-      const telefonoBase=String(client.telefono||'').trim();
+      const telefonoBase = String(client.telefono || '').trim();
       if(!telefonoBase){ alert('Este cliente no tiene teléfono cargado en la base. Revisá que la columna D sea TELEFONO y volvé a sincronizar.'); return; }
-      const telefono=normalizarTelefonoAR(telefonoBase);
+      const telefono = normalizarTelefonoAR(telefonoBase);
       if(!telefono){ alert('El teléfono del cliente no es válido'); return; }
 
-      const objetivo=Number(client.totalObjetivo||0);
-      const avance=Number(client.totalReal||0);
-      const cumplimiento=objetivo>0?(avance/objetivo)*100:0;
-      const faltante=Math.max(0,objetivo-avance);
-      const historicoCliente=getHistoricoCliente(client);
-      const hVolumen=client.volumenGeneralCumplido?Number(client.puntosVolumenGanados||0):0;
-      const hReferencias=historicoCliente?Number(historicoCliente.referencias||0):0;
-      const hPedidoSugerido=historicoCliente?Number(historicoCliente.pedidoSugerido||0):0;
-      const hEjecucion=historicoCliente?Number(historicoCliente.ejecucion||0):0;
-      const hImperdonable=historicoCliente?Number(historicoCliente.imperdonableAutoservicios||0):0;
-      const hPuntosTotales=hVolumen+hReferencias+hPedidoSugerido+hEjecucion+hImperdonable;
-      const hMaxTotal=hImperdonable>0?110:100;
+      const objetivo = Number(client.totalObjetivo || 0);
+      const avance = Number(client.totalReal || 0);
+      const cumplimiento = objetivo > 0 ? (avance / objetivo) * 100 : 0;
+      const faltante = Math.max(0, objetivo - avance);
 
-      const iconos={'Colas':'🥤','Agua':'💧','Bebida Energética':'⚡','Isotónica':'🏃','Jugos':'🧃','Sabores':'🍊','Saborizada':'🍹','Multicategoría':'🧺'};
-      let detalleCategorias='';
-      client.categories.forEach(cat=>{
-        const porcentaje=cat.objetivo>0?(cat.real/cat.objetivo)*100:0;
-        const icono=iconos[cat.label]||'📦';
-        detalleCategorias+=`\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
+      const iconos = {
+        'Colas': '🥤', 'Agua': '💧', 'Bebida Energética': '⚡', 'Isotónica': '🏃',
+        'Jugos': '🧃', 'Sabores': '🍊', 'Saborizada': '🍹', 'Multicategoría': '🧺'
+      };
+
+      let detalleCategorias = '';
+      client.categories.forEach(cat => {
+        const porcentaje = cat.objetivo > 0 ? (cat.real / cat.objetivo) * 100 : 0;
+        const icono = iconos[cat.label] || '📦';
+        detalleCategorias += `\n${icono} ${cat.label}: ${formatNumber(cat.real)} / ${formatNumber(cat.objetivo)} (${Math.round(porcentaje)}%)`;
       });
 
-      const candadoTxt=client.volumenGeneralCumplido
-        ?'✅ Volumen general cumplido — puntos de volumen liberados.'
-        :`🔒 Volumen general no cumplido aún — faltan ${formatNumber(faltante)} cajas para liberar los puntos de volumen.`;
-
-      const mensaje=`Hola ${client.cliente} 👋\n\nTe compartimos tu avance actualizado:\n\n📊 Avance por categoría (cajas físicas):${detalleCategorias}\n\n📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})\n${candadoTxt}\n\n🏅 Puntos a la fecha:\n• Volumen: ${formatNumber(hVolumen)} / 40\n• Referencias: ${formatNumber(hReferencias)} / 20\n• Pedido Sugerido: ${formatNumber(hPedidoSugerido)} / 20\n• Ejecución: ${formatNumber(hEjecucion)} / 20${hImperdonable>0?`\n• Imperdonable: ${formatNumber(hImperdonable)} / 10`:''}\n• *TOTAL: ${formatNumber(hPuntosTotales)} / ${hMaxTotal} puntos*\n\nSeguimos trabajando juntos para cumplir el objetivo. 💪`;
-      const url=`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url,'_blank');
+      const mensaje = `Hola ${client.cliente} 👋\n\nTe compartimos tu avance de volumen actual:\n\n📊 Avance por categoría (cajas físicas):${detalleCategorias}\n\n📈 Volumen total: ${formatNumber(avance)} / ${formatNumber(objetivo)} cajas (${formatPct(cumplimiento)})\n📉 Volumen faltante: ${formatNumber(faltante)} cajas\n\nSeguimos trabajando juntos para cumplir el objetivo. 💪`;
+      const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
     }
 
     bind();
-    /* ── MEJORA 2: initLogin llama a loadData internamente, no se llama acá ── */
     initLogin();
+    loadData();
   </script>
 </body>
 </html>
