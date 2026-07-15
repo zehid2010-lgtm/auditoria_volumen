@@ -1245,18 +1245,27 @@
     }
 
     function detectAdvanceValue(row, categoryKeys){
-      const variants = [];
+      // Puede haber más de una variante de columna REAL en la planilla.
+      // Antes se devolvía la primera encontrada, incluso cuando era 0,
+      // dejando de leer otra columna que sí tenía la venta actualizada.
+      const values = [];
       categoryKeys.forEach(baseKey => {
-        variants.push(
+        const variants = [
           `${baseKey}_CF_REAL`, `${baseKey} CF REAL`, `${baseKey}_REAL`, `${baseKey} REAL`,
-          `${baseKey}_avance`, `${baseKey} avance`, `${baseKey}_real`, `${baseKey} real`
-        );
+          `${baseKey}_REAL_CF`, `${baseKey} REAL CF`, `${baseKey}_CF`, `${baseKey} CF`,
+          `${baseKey}_AVANCE`, `${baseKey} AVANCE`, `${baseKey}_VENDIDO`, `${baseKey} VENDIDO`,
+          `${baseKey}_VENTA_REAL`, `${baseKey} VENTA REAL`, `${baseKey}_VENTAS_REALES`, `${baseKey} VENTAS REALES`
+        ];
+        variants.forEach(variant => {
+          const value = getCell(row, variant);
+          if(value !== '' && value !== undefined && value !== null){
+            values.push(toNumber(value));
+          }
+        });
       });
-      for(const variant of variants){
-        const value = getCell(row, variant);
-        if(value !== '' && value !== undefined) return toNumber(value);
-      }
-      return 0;
+      // Las variantes suelen representar el mismo dato. Se usa el mayor valor
+      // para evitar que una columna vieja o vacía pise la venta real vigente.
+      return values.length ? Math.max(...values) : 0;
     }
 
     function detectPointsValue(row, categoryKeys, objetivo, real){
@@ -1277,8 +1286,33 @@
         const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
         const cliente = getCell(r,'CLIENTE');
         const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
-        const key = `${String(numero).trim()}|${String(cliente).trim()}|${String(ruta).trim()}`;
-        if(key !== '||') map.set(key, r);
+        const key = `${cleanNumberKey(numero)}|${cleanClientKey(cliente)}|${String(ruta).trim()}`;
+        if(key === '||') return;
+
+        if(!map.has(key)){
+          map.set(key, { ...r });
+          return;
+        }
+
+        // Si el CSV trae el mismo cliente más de una vez, antes la última fila
+        // reemplazaba completamente a la anterior. Una fila incompleta podía
+        // borrar las ventas reales. Ahora se combinan conservando el mejor dato.
+        const current = map.get(key);
+        Object.keys(r).forEach(col => {
+          const incoming = r[col];
+          const existing = current[col];
+          if(incoming === '' || incoming === undefined || incoming === null) return;
+
+          const normalizedCol = normalizeKey(col);
+          const isNumericMeasure = /(^| )(REAL|CF|AVANCE|VENDIDO|VENTA|OBJ|OBJETIVO|PUNTOS)( |$)/.test(normalizedCol);
+          if(isNumericMeasure){
+            const incomingNum = toNumber(incoming);
+            const existingNum = toNumber(existing);
+            current[col] = incomingNum >= existingNum ? incoming : existing;
+          }else if(existing === '' || existing === undefined || existing === null){
+            current[col] = incoming;
+          }
+        });
       });
       return [...map.values()];
     }
