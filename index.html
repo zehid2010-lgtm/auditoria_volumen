@@ -866,9 +866,8 @@
       closePasswordModal();
     }
     const CSV_URLS = [
-      // Fuente principal: VENTAS BI, la solapa que se reemplaza y actualiza.
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/gviz/tq?tqx=out:csv&sheet=VENTAS%20BI',
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv&sheet=VENTAS%20BI'
+      // Fuente principal: VENTAS BI. GID confirmado desde Google Sheets: 939577373.
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=939577373&single=true&output=csv'
     ];
     const CSV_HISTORICO_URLS = [
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=751533669&single=true&output=csv'
@@ -1915,7 +1914,7 @@ String(
       } catch(err){
         console.error('Error al cargar:', err);
         setStatus('No se pudieron cargar los datos', true);
-        alert('No se pudo cargar la solapa VENTAS BI. Revisá que conserve exactamente ese nombre y que el archivo continúe publicado en la Web.');
+        alert('No se pudo cargar VENTAS BI (gid 939577373). Revisá que la planilla continúe publicada en la Web.');
       }
     }
 
