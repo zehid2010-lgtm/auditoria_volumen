@@ -866,7 +866,12 @@
       closePasswordModal();
     }
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?single=true&output=csv&sheet=VENTAS_FINAL_APP';
+    const CSV_URLS = [
+      // Endpoint principal: respeta obligatoriamente el nombre de la solapa.
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/gviz/tq?tqx=out:csv&sheet=VENTAS_FINAL_APP',
+      // Respaldo por si Google cambia temporalmente el endpoint de visualización.
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv&sheet=VENTAS_FINAL_APP'
+    ];
     const CSV_HISTORICO_URLS = [
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=1389632754&single=true&output=csv'
 ];
@@ -1827,7 +1832,37 @@ String(
     async function loadData(showAlert=false){
       try{
         setStatus('Cargando datos...');
-        const raw = await fetchCSV(CSV_URL);
+        let raw = null;
+        let lastCsvError = null;
+
+        for(const url of CSV_URLS){
+          try{
+            const candidate = await fetchCSV(url);
+            const headers = Object.keys(candidate[0] || {}).map(normalizeKey);
+            const isVentasFinalApp =
+              headers.includes('NUMERO') &&
+              headers.includes('CLIENTE') &&
+              headers.includes('VENTA TOTAL') &&
+              headers.includes('OBJETIVO TOTAL') &&
+              headers.some(h => h.includes('COLAS REAL')) &&
+              headers.some(h => h.includes('JUGOS REAL'));
+
+            if(!isVentasFinalApp){
+              throw new Error('Google devolvió una solapa distinta de VENTAS_FINAL_APP');
+            }
+
+            raw = candidate;
+            break;
+          }catch(csvErr){
+            lastCsvError = csvErr;
+            console.warn('Fuente CSV rechazada:', url, csvErr);
+          }
+        }
+
+        if(!raw){
+          throw lastCsvError || new Error('No se pudo cargar VENTAS_FINAL_APP');
+        }
+
         await loadHistorico();
         buildData(raw);
         applyUserPermissions();
@@ -1836,12 +1871,12 @@ String(
         renderRoutes();
         renderClients();
         renderAlerts();
-        setStatus(`Datos cargados: ${raw.length} filas`);
+        setStatus(`VENTAS_FINAL_APP cargada: ${raw.length} filas`);
         if(showAlert) alert('Datos sincronizados correctamente');
       } catch(err){
         console.error('Error al cargar:', err);
         setStatus('No se pudieron cargar los datos', true);
-        alert('No se pudieron cargar los datos. Revisá que la hoja esté compartida y que el link CSV sea correcto.');
+        alert('No se pudo cargar la solapa VENTAS_FINAL_APP. Revisá que esté publicada y conservá exactamente ese nombre.');
       }
     }
 
