@@ -865,15 +865,14 @@
       alert('Contraseña actualizada correctamente en este dispositivo');
       closePasswordModal();
     }
-
     const CSV_URLS = [
-      // Endpoint principal: respeta obligatoriamente el nombre de la solapa.
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/gviz/tq?tqx=out:csv&sheet=VENTAS_FINAL_APP',
-      // Respaldo por si Google cambia temporalmente el endpoint de visualización.
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv&sheet=VENTAS_FINAL_APP'
+      // Fuente principal: la solapa BASE_APP_OK, que es la que se actualiza permanentemente.
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/gviz/tq?tqx=out:csv&sheet=BASE_APP_OK',
+      // Respaldo alternativo por nombre de hoja.
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv&sheet=BASE_APP_OK'
     ];
     const CSV_HISTORICO_URLS = [
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=1389632754&single=true&output=csv'
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=751533669&single=true&output=csv'
 ];
     const HISTORICO_PUNTOS_FALLBACK = [];
 
@@ -1839,16 +1838,16 @@ String(
           try{
             const candidate = await fetchCSV(url);
             const headers = Object.keys(candidate[0] || {}).map(normalizeKey);
-            const isVentasFinalApp =
+            const isBaseAppOk =
               headers.includes('NUMERO') &&
               headers.includes('CLIENTE') &&
-              headers.includes('VENTA TOTAL') &&
-              headers.includes('OBJETIVO TOTAL') &&
+              headers.includes('RU') &&
               headers.some(h => h.includes('COLAS REAL')) &&
-              headers.some(h => h.includes('JUGOS REAL'));
+              headers.some(h => h.includes('JUGOS REAL')) &&
+              headers.some(h => h.includes('AGUA OBJ'));
 
-            if(!isVentasFinalApp){
-              throw new Error('Google devolvió una solapa distinta de VENTAS_FINAL_APP');
+            if(!isBaseAppOk){
+              throw new Error('Google devolvió una solapa distinta de BASE_APP_OK');
             }
 
             raw = candidate;
@@ -1860,7 +1859,7 @@ String(
         }
 
         if(!raw){
-          throw lastCsvError || new Error('No se pudo cargar VENTAS_FINAL_APP');
+          throw lastCsvError || new Error('No se pudo cargar BASE_APP_OK');
         }
 
         await loadHistorico();
@@ -1871,12 +1870,12 @@ String(
         renderRoutes();
         renderClients();
         renderAlerts();
-        setStatus(`VENTAS_FINAL_APP cargada: ${raw.length} filas`);
+        setStatus(`BASE_APP_OK cargada: ${raw.length} filas`);
         if(showAlert) alert('Datos sincronizados correctamente');
       } catch(err){
         console.error('Error al cargar:', err);
         setStatus('No se pudieron cargar los datos', true);
-        alert('No se pudo cargar la solapa VENTAS_FINAL_APP. Revisá que esté publicada y conservá exactamente ese nombre.');
+        alert('No se pudo cargar la solapa BASE_APP_OK. Revisá que conserve exactamente ese nombre y que el archivo continúe publicado en la Web.');
       }
     }
 
