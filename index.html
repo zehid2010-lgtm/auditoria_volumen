@@ -866,10 +866,9 @@
       closePasswordModal();
     }
     const CSV_URLS = [
-      // Fuente principal: la solapa BASE_APP_OK, que es la que se actualiza permanentemente.
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/gviz/tq?tqx=out:csv&sheet=BASE_APP_OK',
-      // Respaldo alternativo por nombre de hoja.
-      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv&sheet=BASE_APP_OK'
+      // Fuente principal: VENTAS BI, la solapa que se reemplaza y actualiza.
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/gviz/tq?tqx=out:csv&sheet=VENTAS%20BI',
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv&sheet=VENTAS%20BI'
     ];
     const CSV_HISTORICO_URLS = [
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=751533669&single=true&output=csv'
@@ -1027,16 +1026,51 @@
       const lines = String(text || '').replace(/\r/g, '').split('\n').filter(l => l.trim() !== '');
       if(!lines.length) return [];
 
-      let headerIndex = lines.findIndex(line => {
-        const cells = parseCSVLine(line).map(normalizeKey);
-        return cells.includes('CLIENTE') && (cells.includes('NUMERO') || cells.includes('OUTNUM') || cells.includes('RU') || cells.includes('VENDEDOR') || cells.includes('JEFE'));
-      });
-      if(headerIndex < 0) headerIndex = 0;
+      const parsed = lines.map(parseCSVLine);
 
-      const headers = parseCSVLine(lines[headerIndex]);
+      // VENTAS BI tiene dos filas de encabezado:
+      // fila 1 = categoría (Agua, Colas, Jugos...)
+      // fila 2 = Ventas / Objetivo / Logrado.
+      const ventasBiHeaderIndex = parsed.findIndex(cells => {
+        const n = cells.map(normalizeKey);
+        return n.includes('TERRITORIO') && n.includes('JEFE') &&
+          n.some(v => v.includes('CODIGO RUTA')) && n.includes('OUT CL');
+      });
+
+      let headers = [];
+      let dataStart = 0;
+
+      if(ventasBiHeaderIndex > 0){
+        const top = parsed[ventasBiHeaderIndex - 1];
+        const bottom = parsed[ventasBiHeaderIndex];
+        let currentGroup = '';
+
+        headers = bottom.map((sub, idx) => {
+          const topValue = String(top[idx] || '').trim();
+          if(topValue) currentGroup = topValue;
+          const subValue = String(sub || '').trim();
+
+          // Columnas identificatorias de la izquierda.
+          if(idx <= 3) return subValue || topValue || `COL_${idx+1}`;
+
+          // Encabezado combinado y único: Agua_Ventas, Agua_Objetivo, etc.
+          const group = currentGroup || topValue || `GRUPO_${idx+1}`;
+          return `${group}_${subValue || `VALOR_${idx+1}`}`;
+        });
+        dataStart = ventasBiHeaderIndex + 1;
+      }else{
+        let headerIndex = parsed.findIndex(cells => {
+          const n = cells.map(normalizeKey);
+          return n.includes('CLIENTE') && (n.includes('NUMERO') || n.includes('OUTNUM') || n.includes('RU') || n.includes('VENDEDOR') || n.includes('JEFE'));
+        });
+        if(headerIndex < 0) headerIndex = 0;
+        headers = parsed[headerIndex];
+        dataStart = headerIndex + 1;
+      }
+
       const objects = [];
-      for(let i = headerIndex + 1; i < lines.length; i++){
-        const cols = parseCSVLine(lines[i]);
+      for(let i = dataStart; i < parsed.length; i++){
+        const cols = parsed[i];
         if(cols.every(c => String(c).trim() === '')) continue;
         const obj = {};
         headers.forEach((h, idx) => { obj[h] = cols[idx] ?? ''; });
@@ -1266,7 +1300,8 @@
           `${baseKey}_CF_REAL`, `${baseKey} CF REAL`, `${baseKey}_REAL`, `${baseKey} REAL`,
           `${baseKey}_REAL_CF`, `${baseKey} REAL CF`, `${baseKey}_CF`, `${baseKey} CF`,
           `${baseKey}_AVANCE`, `${baseKey} AVANCE`, `${baseKey}_VENDIDO`, `${baseKey} VENDIDO`,
-          `${baseKey}_VENTA_REAL`, `${baseKey} VENTA REAL`, `${baseKey}_VENTAS_REALES`, `${baseKey} VENTAS REALES`
+          `${baseKey}_VENTA_REAL`, `${baseKey} VENTA REAL`, `${baseKey}_VENTAS_REALES`, `${baseKey} VENTAS REALES`,
+          `${baseKey}_VENTAS`, `${baseKey} VENTAS`, `${baseKey}_VENTA`, `${baseKey} VENTA`
         ];
         variants.forEach(variant => {
           const value = getCell(row, variant);
@@ -1295,9 +1330,11 @@
     function dedupeRows(rows){
       const map = new Map();
       rows.forEach(r => {
-        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
-        const cliente = getCell(r,'CLIENTE');
-        const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
+        const outCl = String(getCell(r,'OUT CL','OUT_CL','OUTCL') || '').trim();
+        const outMatch = outCl.match(/^\s*(\d+)\s*-\s*(.*)$/);
+        const numero = outMatch ? outMatch[1] : getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
+        const cliente = outMatch ? outMatch[2].trim() : getCell(r,'CLIENTE');
+        const ruta = getCell(r,'CODIGO RUTA PREVENTA','CÓDIGO RUTA PREVENTA','RU','RUTA','Ruta','ruta');
         const numeroKey = cleanNumberKey(numero);
         // El número de cliente es la clave principal. Así, agregar o mover una fila no mezcla clientes
         // y una diferencia de formato de ruta (43 / 3143) no genera duplicados.
@@ -1336,10 +1373,12 @@
       const uniqueRows = dedupeRows(rawRows);
 
       state.rows = uniqueRows.map(r => {
-        const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
-        const cliente = getCell(r,'CLIENTE');
-        const ruta = String(getCell(r,'RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
-        const vendedor = getCell(r,'VENDEDOR','Vendedor');
+        const outCl = String(getCell(r,'OUT CL','OUT_CL','OUTCL') || '').trim();
+        const outMatch = outCl.match(/^\s*(\d+)\s*-\s*(.*)$/);
+        const numero = outMatch ? outMatch[1] : getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
+        const cliente = outMatch ? outMatch[2].trim() : getCell(r,'CLIENTE');
+        const ruta = String(getCell(r,'CODIGO RUTA PREVENTA','CÓDIGO RUTA PREVENTA','RU','RUTA','Ruta','ruta','COD_RUTA','CODIGO_RUTA','ZONA','Zona') || '').trim() || 'SIN ASIGNAR';
+        const vendedor = getCell(r,'JEFE','Jefe','VENDEDOR','Vendedor');
         const repositor = getCell(r,'REPOSITOR','Repositor');
         const telefono =
 String(
@@ -1838,16 +1877,17 @@ String(
           try{
             const candidate = await fetchCSV(url);
             const headers = Object.keys(candidate[0] || {}).map(normalizeKey);
-            const isBaseAppOk =
-              headers.includes('NUMERO') &&
-              headers.includes('CLIENTE') &&
-              headers.includes('RU') &&
-              headers.some(h => h.includes('COLAS REAL')) &&
-              headers.some(h => h.includes('JUGOS REAL')) &&
-              headers.some(h => h.includes('AGUA OBJ'));
+            const isVentasBi =
+              headers.includes('TERRITORIO') &&
+              headers.includes('JEFE') &&
+              headers.some(h => h.includes('CODIGO RUTA PREVENTA')) &&
+              headers.includes('OUT CL') &&
+              headers.some(h => h.includes('COLAS VENTAS')) &&
+              headers.some(h => h.includes('JUGOS VENTAS')) &&
+              headers.some(h => h.includes('AGUA OBJETIVO'));
 
-            if(!isBaseAppOk){
-              throw new Error('Google devolvió una solapa distinta de BASE_APP_OK');
+            if(!isVentasBi){
+              throw new Error('Google devolvió una solapa distinta de VENTAS BI');
             }
 
             raw = candidate;
@@ -1859,7 +1899,7 @@ String(
         }
 
         if(!raw){
-          throw lastCsvError || new Error('No se pudo cargar BASE_APP_OK');
+          throw lastCsvError || new Error('No se pudo cargar VENTAS BI');
         }
 
         await loadHistorico();
@@ -1870,12 +1910,12 @@ String(
         renderRoutes();
         renderClients();
         renderAlerts();
-        setStatus(`BASE_APP_OK cargada: ${raw.length} filas`);
+        setStatus(`VENTAS BI cargada: ${raw.length} filas`);
         if(showAlert) alert('Datos sincronizados correctamente');
       } catch(err){
         console.error('Error al cargar:', err);
         setStatus('No se pudieron cargar los datos', true);
-        alert('No se pudo cargar la solapa BASE_APP_OK. Revisá que conserve exactamente ese nombre y que el archivo continúe publicado en la Web.');
+        alert('No se pudo cargar la solapa VENTAS BI. Revisá que conserve exactamente ese nombre y que el archivo continúe publicado en la Web.');
       }
     }
 
