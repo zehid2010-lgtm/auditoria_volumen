@@ -814,14 +814,22 @@
       return currentUser && currentUser.rutas.includes('*');
     }
 
+    function normalizeRoutePermission(value){
+      const digits = String(value ?? '').trim().replace(/\D/g,'');
+      if(!digits) return normalizeKey(value);
+      // En el BI las rutas pueden venir como 3143, mientras que el usuario tiene asignada 43.
+      return String(Number(digits.slice(-2)));
+    }
+
     function applyUserPermissions(){
       if(!currentUser || !state || !Array.isArray(state.rows)) return;
       if(isAdminUser()) return;
-      const allowed = currentUser.rutas.map(String);
-      state.rows = state.rows.filter(r => allowed.includes(String(r.ruta)));
-      state.routes = state.routes.filter(r => allowed.includes(String(r.ruta)));
-      state.clients = state.clients.filter(c => allowed.includes(String(c.ruta)));
-      state.alerts = state.alerts.filter(a => allowed.includes(String(a.ruta)));
+      const allowed = currentUser.rutas.map(normalizeRoutePermission);
+      const canSee = item => allowed.includes(normalizeRoutePermission(item?.ruta));
+      state.rows = state.rows.filter(canSee);
+      state.routes = state.routes.filter(canSee);
+      state.clients = state.clients.filter(canSee);
+      state.alerts = state.alerts.filter(canSee);
     }
 
     function logoutApp(){
@@ -858,7 +866,7 @@
       closePasswordModal();
     }
 
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?single=true&output=csv&sheet=VENTAS_FINAL_APP';
     const CSV_HISTORICO_URLS = [
   'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=1389632754&single=true&output=csv'
 ];
@@ -1286,8 +1294,11 @@
         const numero = getCell(r,'NUMERO','NÚMERO','Numero','ID','OUTNUM','Outnum','outnum');
         const cliente = getCell(r,'CLIENTE');
         const ruta = getCell(r,'RU','RUTA','Ruta','ruta');
-        const key = `${cleanNumberKey(numero)}|${cleanClientKey(cliente)}|${String(ruta).trim()}`;
-        if(key === '||') return;
+        const numeroKey = cleanNumberKey(numero);
+        // El número de cliente es la clave principal. Así, agregar o mover una fila no mezcla clientes
+        // y una diferencia de formato de ruta (43 / 3143) no genera duplicados.
+        const key = numeroKey || `${cleanClientKey(cliente)}|${normalizeRoutePermission(ruta)}`;
+        if(!key || key === '|') return;
 
         if(!map.has(key)){
           map.set(key, { ...r });
