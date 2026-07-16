@@ -873,6 +873,10 @@
       // Fuente de puntos históricos. GID confirmado: 1389632754.
       'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?gid=1389632754&single=true&output=csv'
     ];
+    // Directorio de teléfonos: la primera solapa publicada es Volumen,
+    // donde NUMERO está en la columna A y TELEFONO en la columna D.
+    const CSV_TELEFONOS_URL =
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vReyf4FRyFuR3-t8gC5YapyMpPgCe0HWzbloGDa3kC6Ud0s50fgxyrnBw-bwcLEyQ/pub?output=csv';
     const HISTORICO_PUNTOS_FALLBACK = [];
 
     const CATEGORY_CONFIG = [
@@ -1395,7 +1399,7 @@ String(
     'Celular',
     'WHATSAPP',
     'Whatsapp'
-  ) || r.__COL_D_TELEFONO || ''
+  ) || ''
 ).trim();
 
         const categories = CATEGORY_CONFIG.map(cat => {
@@ -1867,6 +1871,30 @@ String(
       el.style.color = isError ? '#991b1b' : '#555';
     }
 
+    async function loadTelefonosMap(){
+      const phoneMap = new Map();
+      try{
+        const rows = await fetchCSV(CSV_TELEFONOS_URL);
+        rows.forEach(r => {
+          const numero = cleanNumberKey(getCell(r,'NUMERO','NÚMERO','Numero','OUTNUM','Outnum'));
+          const telefono = String(getCell(r,'TELEFONO','TELÉFONO','Telefono','Celular','CELULAR','Whatsapp','WHATSAPP') || '').trim();
+          if(numero && telefono) phoneMap.set(numero, telefono);
+        });
+      }catch(err){
+        console.warn('No se pudo cargar el directorio de teléfonos desde Volumen:', err);
+      }
+      return phoneMap;
+    }
+
+    function aplicarTelefonosDesdeVolumen(rows, phoneMap){
+      return rows.map(r => {
+        const outCl = String(getCell(r,'OUT CL','OUT_CL','OUTCL') || '').trim();
+        const match = outCl.match(/^\s*(\d+)\s*-\s*/);
+        const numero = cleanNumberKey(match ? match[1] : getCell(r,'NUMERO','NÚMERO','Outnum','OUTNUM'));
+        return { ...r, TELEFONO: numero ? (phoneMap.get(numero) || '') : '' };
+      });
+    }
+
     async function loadData(showAlert=false){
       try{
         setStatus('Cargando datos...');
@@ -1902,6 +1930,8 @@ String(
           throw lastCsvError || new Error('No se pudo cargar VENTAS BI');
         }
 
+        const telefonosMap = await loadTelefonosMap();
+        raw = aplicarTelefonosDesdeVolumen(raw, telefonosMap);
         await loadHistorico();
         buildData(raw);
         applyUserPermissions();
@@ -1943,7 +1973,7 @@ String(
       const client = state.clients.find(c => c.key === key);
       if(!client){ alert('No se encontró el cliente'); return; }
       const telefonoBase = String(client.telefono || '').trim();
-      if(!telefonoBase){ alert('Este cliente no tiene teléfono cargado en la base. Revisá que la columna D sea TELEFONO y volvé a sincronizar.'); return; }
+      if(!telefonoBase){ alert('Este cliente no tiene teléfono cargado en la base. Revisá el teléfono del cliente en la solapa Volumen y volvé a sincronizar.'); return; }
       const telefono = normalizarTelefonoAR(telefonoBase);
       if(!telefono){ alert('El teléfono del cliente no es válido'); return; }
 
