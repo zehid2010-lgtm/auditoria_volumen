@@ -173,22 +173,79 @@
     .warn{background:var(--yellow-bg);color:var(--yellow-tx)}
     .bad{background:var(--red-bg);color:var(--red-tx)}
 
-    /* Puntaje total visible en las tarjetas de cliente */
-    .score-badge{
-      min-width:94px;
-      text-align:center;
-      padding:9px 11px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:900;
-      white-space:nowrap;
-      line-height:1.15;
+    /* ================= TARJETA GRANDE DE PUNTOS POR CLIENTE ================= */
+    .client-score-layout{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 156px;
+      gap:14px;
+      align-items:start;
     }
-    .score-badge.excelente{background:#eaf7ee;color:#157347}
-    .score-badge.medio{background:#fff0e5;color:#ea580c}
-    .score-badge.bajo{background:#fef9c3;color:#a16207}
-    .score-badge.fuera{background:#fdeaea;color:#c62828}
-    .score-caption{margin-top:5px;font-size:10px;font-weight:800;opacity:.78;text-align:center}
+    .client-score-info{min-width:0;}
+
+    .client-score-box{
+      width:156px;
+      min-height:96px;
+      border-radius:20px;
+      border:1px solid;
+      padding:12px 10px 10px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      box-shadow:0 6px 14px rgba(0,0,0,.05);
+    }
+    .client-score-line{
+      display:flex;
+      align-items:baseline;
+      justify-content:center;
+      gap:4px;
+      white-space:nowrap;
+      line-height:1;
+    }
+    .client-score-points{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-1px;
+    }
+    .client-score-max{
+      font-size:14px;
+      font-weight:900;
+    }
+    .client-score-status{
+      width:100%;
+      margin-top:9px;
+      padding:6px 7px;
+      border-radius:999px;
+      font-size:10px;
+      line-height:1;
+      font-weight:900;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+
+    .client-score-box.excelente{background:linear-gradient(180deg,#f0fdf4,#dcfce7);border-color:#bbf7d0;color:#15803d}
+    .client-score-box.excelente .client-score-status{background:#16a34a;color:#fff}
+
+    .client-score-box.medio{background:linear-gradient(180deg,#fff7ed,#ffedd5);border-color:#fed7aa;color:#ea580c}
+    .client-score-box.medio .client-score-status{background:#f97316;color:#fff}
+
+    .client-score-box.bajo{background:linear-gradient(180deg,#fffbea,#fef3c7);border-color:#fde68a;color:#e3a008}
+    .client-score-box.bajo .client-score-status{background:#facc15;color:#7c5c00}
+
+    .client-score-box.fuera{background:linear-gradient(180deg,#fff1f2,#fee2e2);border-color:#fecaca;color:#dc2626}
+    .client-score-box.fuera .client-score-status{background:#e30613;color:#fff}
+
+    /* Barra naranja para nivel Medio */
+    .mini-progress.orange > span{background:linear-gradient(90deg,#fb923c,#f97316)}
+
+    @media (max-width:410px){
+      .client-score-layout{grid-template-columns:minmax(0,1fr) 138px;gap:10px}
+      .client-score-box{width:138px;min-height:90px;padding:10px 8px 9px}
+      .client-score-points{font-size:30px}
+      .client-score-max{font-size:12px}
+      .client-score-status{font-size:9px;padding:6px 5px}
+    }
 
     .progress{margin-top:10px;height:11px;background:#ececec;border-radius:999px;overflow:hidden}
     .progress > span{display:block;height:100%;border-radius:999px}
@@ -1045,6 +1102,7 @@
     function getClientScoreProgressClass(points){
       const p = Number(points || 0);
       if(p >= 80) return 'green';
+      if(p >= 70) return 'orange';
       if(p >= 60) return 'yellow';
       return 'red';
     }
@@ -1692,8 +1750,8 @@ String(
           const score = getClientMonthlyScore(c);
           return `
             <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-              <div class="client-head">
-                <div style="min-width:0;flex:1;">
+              <div class="client-score-layout">
+                <div class="client-score-info">
                   <div class="item-title">${escapeHtml(c.cliente)}</div>
                   <div class="item-meta">
                     Número: ${escapeHtml(c.numero || '-')}<br>
@@ -1702,9 +1760,13 @@ String(
                   </div>
                   <div class="mini-progress ${getClientScoreProgressClass(score.total)}"><span style="width:${clamp((score.total / score.max) * 100,0,100)}%"></span></div>
                 </div>
-                <div>
-                  <div class="score-badge ${getClientScoreBadgeClass(score.total)}">🏅 ${formatNumber(score.total)} / ${score.max} pts</div>
-                  <div class="score-caption">${getClientScoreStatus(score.total)}</div>
+
+                <div class="client-score-box ${getClientScoreBadgeClass(score.total)}">
+                  <div class="client-score-line">
+                    <span class="client-score-points">${formatNumber(score.total)}</span>
+                    <span class="client-score-max">/ ${score.max} pts</span>
+                  </div>
+                  <div class="client-score-status">${getClientScoreStatus(score.total)}</div>
                 </div>
               </div>
             </div>
@@ -1731,8 +1793,8 @@ String(
         const score = getClientMonthlyScore(c);
         return `
           <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
-            <div class="client-head">
-              <div style="min-width:0;flex:1;">
+            <div class="client-score-layout">
+              <div class="client-score-info">
                 <div class="item-title">${escapeHtml(c.cliente)}</div>
                 <div class="item-meta">
                   Número: ${escapeHtml(c.numero || '-')}<br>
@@ -1741,9 +1803,13 @@ String(
                 </div>
                 <div class="mini-progress ${getClientScoreProgressClass(score.total)}"><span style="width:${clamp((score.total / score.max) * 100,0,100)}%"></span></div>
               </div>
-              <div>
-                <div class="score-badge ${getClientScoreBadgeClass(score.total)}">🏅 ${formatNumber(score.total)} / ${score.max} pts</div>
-                <div class="score-caption">${getClientScoreStatus(score.total)}</div>
+
+              <div class="client-score-box ${getClientScoreBadgeClass(score.total)}">
+                <div class="client-score-line">
+                  <span class="client-score-points">${formatNumber(score.total)}</span>
+                  <span class="client-score-max">/ ${score.max} pts</span>
+                </div>
+                <div class="client-score-status">${getClientScoreStatus(score.total)}</div>
               </div>
             </div>
           </div>
