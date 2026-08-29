@@ -173,6 +173,23 @@
     .warn{background:var(--yellow-bg);color:var(--yellow-tx)}
     .bad{background:var(--red-bg);color:var(--red-tx)}
 
+    /* Puntaje total visible en las tarjetas de cliente */
+    .score-badge{
+      min-width:94px;
+      text-align:center;
+      padding:9px 11px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+      line-height:1.15;
+    }
+    .score-badge.excelente{background:#eaf7ee;color:#157347}
+    .score-badge.medio{background:#fff0e5;color:#ea580c}
+    .score-badge.bajo{background:#fef9c3;color:#a16207}
+    .score-badge.fuera{background:#fdeaea;color:#c62828}
+    .score-caption{margin-top:5px;font-size:10px;font-weight:800;opacity:.78;text-align:center}
+
     .progress{margin-top:10px;height:11px;background:#ececec;border-radius:999px;overflow:hidden}
     .progress > span{display:block;height:100%;border-radius:999px}
     .progress.green > span{background:linear-gradient(90deg,#3cbf67,#159947)}
@@ -992,6 +1009,46 @@
     function getPointsText(client){ return `${Number(client?.totalPuntos || 0)} pts`; }
     function getPointsProgressClass(points){ return points >= 40 ? 'green' : points >= 30 ? 'yellow' : 'red'; }
 
+    // Puntaje total del cliente a la fecha: Volumen + Referencias + Pedido Sugerido + Ejecución.
+    // Si el histórico trae Imperdonable Autoservicios, suma 10 puntos y el máximo pasa a 110.
+    function getClientMonthlyScore(client){
+      const historicoCliente = getHistoricoCliente(client);
+
+      const volumenGeneralCumplido = !!client?.volumenGeneralCumplido;
+      const volumen = volumenGeneralCumplido ? Number(client?.puntosVolumenGanados || 0) : 0;
+      const referencias = historicoCliente ? Number(historicoCliente.referencias || 0) : 0;
+      const pedidoSugerido = historicoCliente ? Number(historicoCliente.pedidoSugerido || 0) : 0;
+      const ejecucion = historicoCliente ? Number(historicoCliente.ejecucion || 0) : 0;
+      const imperdonable = historicoCliente ? Number(historicoCliente.imperdonableAutoservicios || 0) : 0;
+
+      const total = volumen + referencias + pedidoSugerido + ejecucion + imperdonable;
+      const max = imperdonable > 0 ? 110 : 100;
+      return { total, max };
+    }
+
+    function getClientScoreBadgeClass(points){
+      const p = Number(points || 0);
+      if(p >= 80) return 'excelente';
+      if(p >= 70) return 'medio';
+      if(p >= 60) return 'bajo';
+      return 'fuera';
+    }
+
+    function getClientScoreStatus(points){
+      const p = Number(points || 0);
+      if(p >= 80) return 'Excelente';
+      if(p >= 70) return 'Medio';
+      if(p >= 60) return 'Bajo';
+      return 'Fuera de rango';
+    }
+
+    function getClientScoreProgressClass(points){
+      const p = Number(points || 0);
+      if(p >= 80) return 'green';
+      if(p >= 60) return 'yellow';
+      return 'red';
+    }
+
     function getScoreStyle(points, maxPoints=40){
       const p = Number(points || 0);
       const max = Number(maxPoints || 40);
@@ -1628,22 +1685,31 @@ String(
         `).join('') : '<div class="empty">No hay alertas para esta ruta.</div>';
       }
 
-      document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => `
-        <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
-          <div class="client-head">
-            <div>
-              <div class="item-title">${escapeHtml(c.cliente)}</div>
-              <div class="item-meta">
-                Número: ${escapeHtml(c.numero || '-')}<br>
-                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+      document.getElementById('routeClients').innerHTML = route.rows
+        .slice()
+        .sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es'))
+        .map(c => {
+          const score = getClientMonthlyScore(c);
+          return `
+            <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')">
+              <div class="client-head">
+                <div style="min-width:0;flex:1;">
+                  <div class="item-title">${escapeHtml(c.cliente)}</div>
+                  <div class="item-meta">
+                    Número: ${escapeHtml(c.numero || '-')}<br>
+                    Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
+                    🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+                  </div>
+                  <div class="mini-progress ${getClientScoreProgressClass(score.total)}"><span style="width:${clamp((score.total / score.max) * 100,0,100)}%"></span></div>
+                </div>
+                <div>
+                  <div class="score-badge ${getClientScoreBadgeClass(score.total)}">🏅 ${formatNumber(score.total)} / ${score.max} pts</div>
+                  <div class="score-caption">${getClientScoreStatus(score.total)}</div>
+                </div>
               </div>
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 50) * 100,0,100)}%"></span></div>
             </div>
-            <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
-          </div>
-        </div>
-      `).join('');
+          `;
+        }).join('');
 
       goTo('route-detail');
     }
@@ -1661,22 +1727,28 @@ String(
       const empty = document.getElementById('clientEmpty');
       if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
       empty.style.display = 'none';
-      box.innerHTML = data.map(c => `
-        <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
-          <div class="client-head">
-            <div>
-              <div class="item-title">${escapeHtml(c.cliente)}</div>
-              <div class="item-meta">
-                Número: ${escapeHtml(c.numero || '-')}<br>
-                Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
-                🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+      box.innerHTML = data.map(c => {
+        const score = getClientMonthlyScore(c);
+        return `
+          <div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')">
+            <div class="client-head">
+              <div style="min-width:0;flex:1;">
+                <div class="item-title">${escapeHtml(c.cliente)}</div>
+                <div class="item-meta">
+                  Número: ${escapeHtml(c.numero || '-')}<br>
+                  Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>
+                  🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS
+                </div>
+                <div class="mini-progress ${getClientScoreProgressClass(score.total)}"><span style="width:${clamp((score.total / score.max) * 100,0,100)}%"></span></div>
               </div>
-              <div class="mini-progress ${getPointsProgressClass(c.totalPuntos)}"><span style="width:${clamp((c.totalPuntos / 50) * 100,0,100)}%"></span></div>
+              <div>
+                <div class="score-badge ${getClientScoreBadgeClass(score.total)}">🏅 ${formatNumber(score.total)} / ${score.max} pts</div>
+                <div class="score-caption">${getClientScoreStatus(score.total)}</div>
+              </div>
             </div>
-            <div class="badge ${getBadgePointsClass(c)}">${getPointsText(c)}</div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     function openClientDetail(key, backMode='clients'){
