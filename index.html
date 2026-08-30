@@ -2,446 +2,1259 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
   <title>Gestión Volumen PDV 2026</title>
+
   <meta name="theme-color" content="#e30613">
 
   <style>
+
+    /* ======================================================
+       COLORES GENERALES
+    ====================================================== */
+
     :root {
       --red: #e30613;
-      --red-light: #ff3b43;
-      --red-soft: #fff1f2;
-      --green: #00ad78;
-      --green-light: #13c991;
-      --green-soft: #ebfff8;
-      --background: #f5f6f8;
+      --red-2: #ff3038;
+      --red-dark: #ca2028;
+
+      --red-soft: #fff0f1;
+
+      --green: #00b87a;
+      --green-soft: #eafbf5;
+
+      --bg: #f5f6f8;
       --white: #ffffff;
-      --text: #161616;
-      --muted: #69707d;
-      --border: #e7e7e7;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+
+      --text: #171717;
+      --muted: #686868;
+
+      --border: #e8e8e8;
+
+      --shadow:
+        0 10px 30px rgba(0, 0, 0, 0.07);
+
+      --radius: 22px;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
+    /* ======================================================
+       RESET
+    ====================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
       padding: 0;
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      background: linear-gradient(180deg, #fafafa 0%, #f3f5f7 100%);
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          180deg,
+          #f8f8f8 0%,
+          #f3f5f7 100%
+        );
+
       color: var(--text);
+
+      min-height: 100vh;
     }
 
-    button, input, select { font: inherit; }
-    button { cursor: pointer; }
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+
+    /* ======================================================
+       CONTENEDOR PRINCIPAL
+    ====================================================== */
 
     .app {
+
       width: 100%;
-      max-width: 720px;
+      max-width: 650px;
+
       margin: 0 auto;
-      padding: 24px 16px 135px;
+
+      padding:
+        26px
+        20px
+        120px;
+
     }
 
-    .page-header { margin-bottom: 18px; }
+
+    /* ======================================================
+       TITULO
+    ====================================================== */
+
+    .page-header {
+
+      margin-bottom: 20px;
+
+    }
+
     .page-header h1 {
+
       margin: 0;
+
       font-size: 25px;
-      line-height: 1.15;
       font-weight: 900;
+
     }
+
     .page-header p {
-      margin: 6px 0 0;
+
+      margin:
+        5px
+        0
+        0;
+
       font-size: 14px;
+
       color: var(--muted);
+
     }
+
+
+    /* ======================================================
+       BUSCADOR
+    ====================================================== */
 
     .filters {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 220px;
-      gap: 12px;
-      padding: 18px;
-      margin-bottom: 18px;
-      background: #ffffff;
+
+      background: white;
+
       border-radius: 28px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.07);
+
+      padding: 20px;
+
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap: 14px;
+
+      box-shadow:
+        0 18px 45px rgba(0,0,0,0.08);
+
+      margin-bottom: 18px;
+
     }
 
-    .search-input, .route-select {
+
+    .search-input,
+    .route-select {
+
       width: 100%;
+
       height: 56px;
-      padding: 0 17px;
-      border: 1px solid #dddddd;
+
+      border:
+        1px solid
+        #dedede;
+
       border-radius: 18px;
+
       background: white;
-      color: #262626;
-      outline: none;
+
+      padding:
+        0
+        17px;
+
       font-size: 16px;
+
+      outline: none;
+
+      color: #333;
+
     }
-    .search-input::placeholder { color: #777; }
-    .search-input:focus, .route-select:focus {
+
+
+    .search-input:focus,
+    .route-select:focus {
+
       border-color: var(--red);
-      box-shadow: 0 0 0 3px rgba(227, 6, 19, 0.08);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(227,6,19,0.08);
+
     }
+
+
+    /* ======================================================
+       TARJETA CLIENTE
+    ====================================================== */
 
     .client-card {
-      width: 100%;
-      padding: 22px;
+
+      background: white;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 20px;
+
       margin-bottom: 16px;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+
+      box-shadow:
+        0 5px 16px
+        rgba(0,0,0,0.035);
+
     }
+
+
+    /* ======================================================
+       PARTE SUPERIOR
+    ====================================================== */
 
     .client-top {
+
       display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-start;
+
       gap: 18px;
+
     }
-    .client-data { flex: 1; min-width: 0; }
+
+
+    .client-data {
+
+      flex: 1;
+
+      min-width: 0;
+
+    }
+
+
     .client-name {
-      margin: 0 0 8px;
-      color: #171717;
-      font-size: 21px;
-      line-height: 1.2;
+
+      margin:
+        0
+        0
+        7px;
+
+      font-size: 20px;
+
       font-weight: 900;
+
+      line-height: 1.15;
+
+      color: #181818;
+
     }
+
+
     .client-number {
+
       color: var(--muted);
+
       font-size: 14px;
-      line-height: 1.55;
+
+      line-height: 1.45;
+
     }
+
+
     .vendor {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+
       margin-top: 7px;
-      color: #35205d;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      color: #342357;
+
       font-size: 14px;
-      line-height: 1.35;
-      font-weight: 750;
-    }
-    .vendor-icon { flex-shrink: 0; }
 
-    /* PUNTAJE CIRCULAR */
-    .points-circle {
-      position: relative;
-      flex: 0 0 138px;
-      width: 138px;
-      height: 138px;
+      font-weight: 650;
+
+    }
+
+
+    /* ======================================================
+       PUNTAJE DERECHO
+    ====================================================== */
+
+    .points-card {
+
+      flex-shrink: 0;
+
+      min-width: 165px;
+
+      min-height: 118px;
+
+      padding:
+        16px
+        13px;
+
+      border-radius: 23px;
+
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #fffafa, #ffe7e9);
-      border: 3px solid #ffb8bd;
-      box-shadow: 0 10px 24px rgba(227, 6, 19, 0.10);
+
       text-align: center;
+
+      border:
+        1px solid
+        #ffbfc3;
+
+      background:
+        linear-gradient(
+          145deg,
+          #fff6f6,
+          #ffe8e9
+        );
+
     }
-    .points-circle::before {
-      content: "";
-      position: absolute;
-      inset: 7px;
-      border-radius: 50%;
-      border: 1px solid rgba(227, 6, 19, 0.08);
-      pointer-events: none;
-    }
-    .points-content {
-      position: relative;
-      z-index: 2;
+
+
+    .points-line {
+
       display: flex;
-      align-items: baseline;
+
+      align-items:
+        baseline;
+
       justify-content: center;
-      gap: 4px;
-      color: #e51e29;
+
+      gap: 5px;
+
+      color: #e62129;
+
       white-space: nowrap;
+
     }
+
+
     .points-number {
-      font-size: 45px;
-      line-height: 1;
+
+      font-size: 46px;
+
       font-weight: 950;
+
+      line-height: 1;
+
     }
+
+
     .points-total {
-      font-size: 13px;
+
+      font-size: 18px;
+
       font-weight: 900;
+
     }
-    .score-status {
-      position: relative;
-      z-index: 2;
-      margin-top: 8px;
-      padding: 6px 11px;
-      border-radius: 999px;
-      background: var(--red);
+
+
+    .status-badge {
+
+      margin-top: 10px;
+
+      background: #ef0012;
+
       color: white;
-      font-size: 9px;
-      line-height: 1;
-      font-weight: 900;
-      white-space: nowrap;
-    }
 
-    .points-circle.good {
-      background: linear-gradient(145deg, #effff9, #ddf8ef);
-      border-color: #00ad78;
-      box-shadow: 0 10px 24px rgba(0, 173, 120, 0.12);
-    }
-    .points-circle.good::before { border-color: rgba(0, 173, 120, 0.10); }
-    .points-circle.good .points-content { color: #009b6b; }
-    .points-circle.good .score-status { background: #00a875; }
+      padding:
+        7px
+        18px;
 
-    /* OBJETIVO / AVANCE */
-    .objective-panel {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      margin-top: 18px;
-      padding: 17px 20px;
-      border-radius: 18px;
-      background: #f5f7fa;
-    }
-    .objective-item { min-width: 0; }
-    .objective-title {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: #64748b;
+      border-radius: 999px;
+
       font-size: 12px;
-      font-weight: 850;
-      text-transform: uppercase;
-      letter-spacing: 0.25px;
-    }
-    .objective-icon { font-size: 13px; }
-    .objective-value {
-      margin-top: 7px;
-      color: #080808;
-      font-size: 17px;
-      line-height: 1.2;
+
       font-weight: 900;
+
+      white-space: nowrap;
+
     }
 
-    /* CÍRCULO + BARRA */
-    .progress-row {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-top: 18px;
+
+    /* ======================================================
+       PUNTAJE VERDE
+    ====================================================== */
+
+    .points-card.good {
+
+      background:
+        linear-gradient(
+          145deg,
+          #edfff8,
+          #e5faf3
+        );
+
+      border-color:
+        #9be7cc;
+
     }
-    .circle-value {
-      flex: 0 0 72px;
-      width: 72px;
-      height: 72px;
+
+
+    .points-card.good
+    .points-line {
+
+      color:
+        #009c69;
+
+    }
+
+
+    .points-card.good
+    .status-badge {
+
+      background:
+        #00a874;
+
+    }
+
+
+    /* ======================================================
+       NUEVO BLOQUE OBJETIVO / AVANCE
+       estilo inspirado en la segunda imagen
+    ====================================================== */
+
+    .objective-panel {
+
+      margin-top: 17px;
+
+      background:
+        #f6f8fb;
+
+      border-radius: 17px;
+
+      padding:
+        15px
+        17px;
+
       display: grid;
-      place-items: center;
-      border-radius: 50%;
-      border: 1px solid #d7d7d7;
-      background: linear-gradient(145deg, #ffffff, #eeeeee);
-      color: #111111;
-      font-size: 23px;
-      font-weight: 950;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap: 18px;
+
     }
+
+
+    .objective-item {
+
+      min-width: 0;
+
+    }
+
+
+    .objective-title {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      color:
+        #64748b;
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        .25px;
+
+    }
+
+
+    .objective-value {
+
+      margin-top:
+        6px;
+
+      color:
+        #0b0b0b;
+
+      font-size:
+        16px;
+
+      line-height:
+        1.25;
+
+      font-weight:
+        900;
+
+    }
+
+
+    /* ======================================================
+       SECCION INFERIOR:
+       CIRCULO + BARRA
+    ====================================================== */
+
+    .progress-row {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 16px;
+
+      margin-top: 17px;
+
+    }
+
+
+    /* ======================================================
+       CIRCULO DE VALOR
+    ====================================================== */
+
+    .circle-value {
+
+      width:
+        72px;
+
+      height:
+        72px;
+
+      flex:
+        0 0
+        72px;
+
+      border-radius:
+        50%;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #ebebeb
+        );
+
+      border:
+        1px solid
+        #d6d6d6;
+
+      box-shadow:
+        0 6px 16px
+        rgba(0,0,0,.06);
+
+      font-size:
+        23px;
+
+      font-weight:
+        950;
+
+      color:
+        #111;
+
+    }
+
+
+    /* ======================================================
+       BARRA DE CUMPLIMIENTO
+    ====================================================== */
 
     .progress-area {
-      flex: 1;
-      min-width: 0;
-      height: 73px;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 10px 19px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #fb4147, #ed242c);
-      box-shadow: 0 10px 24px rgba(227, 6, 19, 0.13);
+
+      flex:
+        1;
+
+      height:
+        73px;
+
+      border-radius:
+        40px;
+
+      padding:
+        10px
+        20px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        15px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #f83d43,
+          #ee262d
+        );
+
+      min-width:
+        0;
+
+      box-shadow:
+        0 10px 24px
+        rgba(
+          227,
+          6,
+          19,
+          .14
+        );
+
     }
+
+
     .progress-percent {
-      flex-shrink: 0;
-      min-width: 64px;
-      color: white;
-      font-size: 20px;
-      font-weight: 950;
+
+      min-width:
+        68px;
+
+      color:
+        white;
+
+      font-size:
+        20px;
+
+      font-weight:
+        950;
+
+      text-align:
+        left;
+
     }
+
+
     .progress-track {
-      position: relative;
-      flex: 1;
-      height: 37px;
-      overflow: hidden;
-      border-radius: 999px;
-      background: rgba(133, 0, 5, 0.31);
+
+      position:
+        relative;
+
+      flex:
+        1;
+
+      height:
+        36px;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(
+          145,
+          0,
+          6,
+          .30
+        );
+
+      overflow:
+        hidden;
+
     }
+
+
     .progress-fill {
-      height: 100%;
-      min-width: 12px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.94);
-      transition: width 0.35s ease;
+
+      height:
+        100%;
+
+      min-width:
+        12px;
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          .92
+        );
+
+      transition:
+        width
+        .4s
+        ease;
+
     }
+
+
+    /* ======================================================
+       BARRA VERDE
+    ====================================================== */
+
     .progress-area.good {
-      background: linear-gradient(90deg, #0bc58a, #009d70);
-      box-shadow: 0 10px 24px rgba(0, 157, 112, 0.14);
-    }
-    .progress-area.good .progress-track { background: rgba(0, 77, 54, 0.27); }
 
-    .no-results {
-      display: none;
-      padding: 30px 20px;
-      text-align: center;
-      background: white;
-      border-radius: 20px;
-      color: var(--muted);
-      font-size: 14px;
-      font-weight: 700;
+      background:
+        linear-gradient(
+          90deg,
+          #00be84,
+          #009e70
+        );
+
+      box-shadow:
+        0 10px 24px
+        rgba(
+          0,
+          166,
+          117,
+          .15
+        );
+
     }
 
-    /* NAVEGACIÓN */
+
+    .progress-area.good
+    .progress-track {
+
+      background:
+        rgba(
+          0,
+          78,
+          55,
+          .28
+        );
+
+    }
+
+
+    /* ======================================================
+       NAVEGACION INFERIOR
+    ====================================================== */
+
     .bottom-nav {
-      position: fixed;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      z-index: 100;
-      width: calc(100% - 24px);
-      max-width: 680px;
-      height: 112px;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      padding: 12px 16px 15px;
-      border: 1px solid #e9e9e9;
-      border-radius: 32px 32px 0 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.08);
+
+      position:
+        fixed;
+
+      left:
+        50%;
+
+      bottom:
+        0;
+
+      transform:
+        translateX(-50%);
+
+      width:
+        calc(100% - 20px);
+
+      max-width:
+        625px;
+
+      height:
+        128px;
+
+      padding:
+        17px
+        20px
+        18px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          .96
+        );
+
+      backdrop-filter:
+        blur(20px);
+
+      border:
+        1px solid
+        #ececec;
+
+      border-radius:
+        32px
+        32px
+        0
+        0;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(
+          4,
+          1fr
+        );
+
+      gap:
+        10px;
+
+      box-shadow:
+        0 -10px 38px
+        rgba(
+          0,
+          0,
+          0,
+          .08
+        );
+
+      z-index:
+        100;
+
     }
+
+
     .nav-button {
-      border: none;
-      border-radius: 23px;
-      background: transparent;
-      color: #697386;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-size: 13px;
-      font-weight: 850;
-      transition: transform 0.15s ease, background 0.15s ease;
+
+      border:
+        none;
+
+      background:
+        transparent;
+
+      border-radius:
+        24px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      gap:
+        8px;
+
+      color:
+        #697386;
+
+      font-size:
+        14px;
+
+      font-weight:
+        850;
+
+      cursor:
+        pointer;
+
     }
-    .nav-button:active { transform: scale(0.97); }
+
+
     .nav-icon {
-      width: 39px;
-      height: 39px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      background: #f7f8fa;
-      font-size: 21px;
+
+      width:
+        42px;
+
+      height:
+        42px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border-radius:
+        13px;
+
+      background:
+        #f6f8fa;
+
+      font-size:
+        23px;
+
     }
+
+
     .nav-button.active {
-      color: white;
-      background: linear-gradient(180deg, #ff2d36, #df0010);
-      box-shadow: 0 10px 22px rgba(227, 6, 19, 0.20);
-    }
-    .nav-button.active .nav-icon { background: rgba(255, 255, 255, 0.15); }
 
-    @media (max-width: 600px) {
-      .app { padding: 16px 12px 118px; }
+      background:
+        linear-gradient(
+          180deg,
+          #ff2933,
+          #d8000e
+        );
+
+      color:
+        white;
+
+      box-shadow:
+        0 10px 20px
+        rgba(
+          227,
+          6,
+          19,
+          .20
+        );
+
+    }
+
+
+    .nav-button.active
+    .nav-icon {
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          .16
+        );
+
+    }
+
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media
+    (max-width: 520px) {
+
+      .app {
+
+        padding:
+          15px
+          12px
+          115px;
+
+      }
+
+
       .filters {
-        grid-template-columns: 1fr;
-        padding: 13px;
-        border-radius: 22px;
+
+        padding:
+          12px;
+
+        grid-template-columns:
+          1fr;
+
       }
-      .search-input, .route-select { height: 52px; font-size: 15px; }
-      .client-card { padding: 16px; border-radius: 21px; }
-      .client-top { gap: 12px; }
-      .client-name { font-size: 18px; }
-      .client-number, .vendor { font-size: 13px; }
-      .points-circle {
-        flex: 0 0 118px;
-        width: 118px;
-        height: 118px;
+
+
+      .client-card {
+
+        padding:
+          16px;
+
       }
-      .points-number { font-size: 37px; }
-      .points-total { font-size: 11px; }
-      .score-status { padding: 5px 8px; font-size: 7.5px; }
-      .objective-panel { margin-top: 16px; padding: 14px 15px; }
-      .objective-title { font-size: 10.5px; }
-      .objective-value { font-size: 15px; }
-      .progress-row { gap: 10px; }
+
+
+      .client-name {
+
+        font-size:
+          17px;
+
+      }
+
+
+      .points-card {
+
+        min-width:
+          125px;
+
+        min-height:
+          100px;
+
+        padding:
+          12px
+          8px;
+
+      }
+
+
+      .points-number {
+
+        font-size:
+          38px;
+
+      }
+
+
+      .points-total {
+
+        font-size:
+          14px;
+
+      }
+
+
+      .status-badge {
+
+        font-size:
+          10px;
+
+        padding:
+          6px
+          11px;
+
+      }
+
+
+      .progress-row {
+
+        gap:
+          10px;
+
+      }
+
+
       .circle-value {
-        flex: 0 0 62px;
-        width: 62px;
-        height: 62px;
-        font-size: 20px;
+
+        width:
+          62px;
+
+        height:
+          62px;
+
+        flex-basis:
+          62px;
+
+        font-size:
+          20px;
+
       }
-      .progress-area { height: 63px; padding: 8px 13px; gap: 8px; }
-      .progress-percent { min-width: 52px; font-size: 17px; }
-      .progress-track { height: 31px; }
-      .bottom-nav { height: 100px; padding: 9px 10px 10px; }
-      .nav-button { font-size: 12px; }
-      .nav-icon { width: 36px; height: 36px; font-size: 19px; }
+
+
+      .progress-area {
+
+        height:
+          63px;
+
+        padding:
+          8px
+          14px;
+
+        gap:
+          8px;
+
+      }
+
+
+      .progress-percent {
+
+        min-width:
+          55px;
+
+        font-size:
+          17px;
+
+      }
+
+
+      .progress-track {
+
+        height:
+          31px;
+
+      }
+
+
+      .bottom-nav {
+
+        height:
+          100px;
+
+        padding:
+          10px;
+
+      }
+
+
+      .nav-icon {
+
+        width:
+          36px;
+
+        height:
+          36px;
+
+        font-size:
+          20px;
+
+      }
+
+
+      .nav-button {
+
+        gap:
+          4px;
+
+        font-size:
+          12px;
+
+      }
+
     }
 
-    @media (max-width: 410px) {
-      .client-top { gap: 8px; }
-      .client-name { font-size: 16px; }
-      .client-number, .vendor { font-size: 12px; }
-      .points-circle {
-        flex: 0 0 105px;
-        width: 105px;
-        height: 105px;
+
+    @media
+    (max-width: 390px) {
+
+      .client-top {
+
+        gap:
+          10px;
+
       }
-      .points-number { font-size: 31px; }
-      .points-total { font-size: 9px; }
-      .score-status {
-        margin-top: 6px;
-        padding: 5px 6px;
-        font-size: 6.5px;
+
+
+      .points-card {
+
+        min-width:
+          110px;
+
       }
-      .objective-panel { gap: 9px; padding: 12px; }
-      .objective-title { font-size: 9.5px; }
-      .objective-value { font-size: 14px; }
-      .circle-value {
-        flex: 0 0 56px;
-        width: 56px;
-        height: 56px;
-        font-size: 18px;
+
+
+      .points-number {
+
+        font-size:
+          34px;
+
       }
-      .progress-area { height: 58px; padding: 7px 11px; }
-      .progress-percent { min-width: 47px; font-size: 15px; }
-      .progress-track { height: 28px; }
+
+
+      .objective-panel {
+
+        padding:
+          13px;
+
+        gap:
+          10px;
+
+      }
+
+
+      .objective-title {
+
+        font-size:
+          10px;
+
+      }
+
+
+      .objective-value {
+
+        font-size:
+          14px;
+
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
+
+
   <main class="app">
+
+
+    <!-- ==================================================
+         ENCABEZADO
+    =================================================== -->
+
     <section class="page-header">
-      <h1>Clientes de la Ruta</h1>
-      <p>Seleccioná un cliente para gestionar detalle</p>
+
+      <h1>
+        Clientes de la Ruta
+      </h1>
+
+      <p>
+        Seleccioná un cliente para gestionar detalle
+      </p>
+
     </section>
 
+
+
+    <!-- ==================================================
+         FILTROS
+    =================================================== -->
+
     <section class="filters">
+
       <input
         id="searchClient"
         class="search-input"
         type="text"
-        autocomplete="off"
         placeholder="Buscar cliente, número, ruta o vendedor"
       >
 
-      <select id="routeFilter" class="route-select">
-        <option value="">Todas las rutas</option>
-        <option value="3140">Ruta 3140</option>
-        <option value="3142">Ruta 3142</option>
-        <option value="3144">Ruta 3144</option>
+
+      <select
+        id="routeFilter"
+        class="route-select"
+      >
+
+        <option value="">
+          Todas las rutas
+        </option>
+
+        <option value="3140">
+          Ruta 3140
+        </option>
+
+        <option value="3142">
+          Ruta 3142
+        </option>
+
+        <option value="3144">
+          Ruta 3144
+        </option>
+
       </select>
+
     </section>
 
-    <!-- CLIENTE 1 -->
+
+
+    <!-- ==================================================
+         CLIENTE 1
+    =================================================== -->
+
     <article
       class="client-card"
       data-name="Ahumada Luis Santiago"
@@ -449,60 +1262,159 @@
       data-route="3144"
       data-vendor="Zehid Ricardo Miguel Antonio"
     >
+
+
       <div class="client-top">
+
+
         <div class="client-data">
-          <h2 class="client-name">Ahumada Luis Santiago</h2>
+
+          <h2 class="client-name">
+            Ahumada Luis Santiago
+          </h2>
+
 
           <div class="client-number">
-            Número: 3134394<br>
+
+            Número: 3134394
+
+            <br>
+
             Ruta: 3144
+
           </div>
+
 
           <div class="vendor">
-            <span class="vendor-icon">👤</span>
-            <span>Zehid, Ricardo Miguel Antonio</span>
+
+            👤
+
+            <span>
+              Zehid, Ricardo Miguel Antonio
+            </span>
+
           </div>
+
         </div>
 
-        <div class="points-circle">
-          <div class="points-content">
-            <span class="points-number">10</span>
-            <span class="points-total">/ 100 pts</span>
+
+
+        <div class="points-card">
+
+          <div class="points-line">
+
+            <span class="points-number">
+              10
+            </span>
+
+            <span class="points-total">
+              / 100 pts
+            </span>
+
           </div>
-          <div class="score-status">FUERA DE RANGO</div>
+
+
+          <div class="status-badge">
+            FUERA DE RANGO
+          </div>
+
         </div>
+
+
       </div>
+
+
+
+      <!-- NUEVO BLOQUE -->
 
       <div class="objective-panel">
-        <div class="objective-item">
-          <div class="objective-title">
-            <span class="objective-icon">🎯</span>
-            <span>Objetivo</span>
-          </div>
-          <div class="objective-value">159 Cajas</div>
-        </div>
+
 
         <div class="objective-item">
+
           <div class="objective-title">
-            <span class="objective-icon">📦</span>
-            <span>Avance</span>
+
+            🎯
+
+            <span>
+              Objetivo
+            </span>
+
           </div>
-          <div class="objective-value">22 Cajas</div>
+
+          <div class="objective-value">
+            159 Cajas
+          </div>
+
         </div>
+
+
+
+        <div class="objective-item">
+
+          <div class="objective-title">
+
+            📦
+
+            <span>
+              Avance
+            </span>
+
+          </div>
+
+          <div class="objective-value">
+            22 Cajas
+          </div>
+
+        </div>
+
+
       </div>
+
+
+
+      <!-- BARRA ORIGINAL -->
 
       <div class="progress-row">
-        <div class="circle-value">44</div>
-        <div class="progress-area">
-          <div class="progress-percent">10%</div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: 10%;"></div>
-          </div>
+
+
+        <div class="circle-value">
+          44
         </div>
+
+
+        <div class="progress-area">
+
+
+          <div class="progress-percent">
+            10%
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              style="width: 10%;"
+            ></div>
+
+          </div>
+
+
+        </div>
+
+
       </div>
+
+
     </article>
 
-    <!-- CLIENTE 2 -->
+
+
+    <!-- ==================================================
+         CLIENTE 2
+    =================================================== -->
+
     <article
       class="client-card"
       data-name="Albornoz Franco Gustavo"
@@ -510,60 +1422,165 @@
       data-route="3142"
       data-vendor="Zehid Ricardo Miguel Antonio"
     >
+
+
       <div class="client-top">
+
+
         <div class="client-data">
-          <h2 class="client-name">Albornoz Franco Gustavo</h2>
+
+
+          <h2 class="client-name">
+            Albornoz Franco Gustavo
+          </h2>
+
 
           <div class="client-number">
-            Número: 3161058<br>
+
+            Número: 3161058
+
+            <br>
+
             Ruta: 3142
+
           </div>
+
 
           <div class="vendor">
-            <span class="vendor-icon">👤</span>
-            <span>Zehid, Ricardo Miguel Antonio</span>
+
+            👤
+
+            <span>
+              Zehid, Ricardo Miguel Antonio
+            </span>
+
           </div>
+
+
         </div>
 
-        <div class="points-circle">
-          <div class="points-content">
-            <span class="points-number">5</span>
-            <span class="points-total">/ 100 pts</span>
+
+
+        <div class="points-card">
+
+
+          <div class="points-line">
+
+            <span class="points-number">
+              5
+            </span>
+
+            <span class="points-total">
+              / 100 pts
+            </span>
+
           </div>
-          <div class="score-status">FUERA DE RANGO</div>
+
+
+          <div class="status-badge">
+            FUERA DE RANGO
+          </div>
+
+
         </div>
+
+
       </div>
+
+
 
       <div class="objective-panel">
-        <div class="objective-item">
-          <div class="objective-title">
-            <span class="objective-icon">🎯</span>
-            <span>Objetivo</span>
-          </div>
-          <div class="objective-value">159 Cajas</div>
-        </div>
+
 
         <div class="objective-item">
+
+
           <div class="objective-title">
-            <span class="objective-icon">📦</span>
-            <span>Avance</span>
+
+            🎯
+
+            <span>
+              Objetivo
+            </span>
+
           </div>
-          <div class="objective-value">120 Cajas</div>
+
+
+          <div class="objective-value">
+            159 Cajas
+          </div>
+
+
         </div>
+
+
+
+        <div class="objective-item">
+
+
+          <div class="objective-title">
+
+            📦
+
+            <span>
+              Avance
+            </span>
+
+          </div>
+
+
+          <div class="objective-value">
+            120 Cajas
+          </div>
+
+
+        </div>
+
+
       </div>
+
+
 
       <div class="progress-row">
-        <div class="circle-value">42</div>
-        <div class="progress-area">
-          <div class="progress-percent">5%</div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: 5%;"></div>
-          </div>
+
+
+        <div class="circle-value">
+          42
         </div>
+
+
+        <div class="progress-area">
+
+
+          <div class="progress-percent">
+            5%
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              style="width: 5%;"
+            ></div>
+
+          </div>
+
+
+        </div>
+
+
       </div>
+
+
     </article>
 
-    <!-- CLIENTE 3 -->
+
+
+    <!-- ==================================================
+         CLIENTE 3 - EJEMPLO BUEN RESULTADO
+    =================================================== -->
+
     <article
       class="client-card"
       data-name="Alderete Rosario Isabel"
@@ -571,131 +1588,368 @@
       data-route="3140"
       data-vendor="Zehid Ricardo Miguel"
     >
+
+
       <div class="client-top">
+
+
         <div class="client-data">
-          <h2 class="client-name">Alderete Rosario Isabel</h2>
+
+
+          <h2 class="client-name">
+            Alderete Rosario Isabel
+          </h2>
+
 
           <div class="client-number">
-            Número: 3149882<br>
+
+            Número: 3149882
+
+            <br>
+
             Ruta: 3140
+
           </div>
+
 
           <div class="vendor">
-            <span class="vendor-icon">👤</span>
-            <span>Zehid, Ricardo Miguel</span>
+
+            👤
+
+            <span>
+              Zehid, Ricardo Miguel
+            </span>
+
           </div>
+
+
         </div>
 
-        <div class="points-circle good">
-          <div class="points-content">
-            <span class="points-number">97</span>
-            <span class="points-total">/ 100 pts</span>
+
+
+        <div class="points-card good">
+
+
+          <div class="points-line">
+
+            <span class="points-number">
+              97
+            </span>
+
+            <span class="points-total">
+              / 100 pts
+            </span>
+
           </div>
-          <div class="score-status">EXCELENTE</div>
+
+
+          <div class="status-badge">
+            EXCELENTE
+          </div>
+
+
         </div>
+
+
       </div>
+
+
 
       <div class="objective-panel">
-        <div class="objective-item">
-          <div class="objective-title">
-            <span class="objective-icon">🎯</span>
-            <span>Objetivo</span>
-          </div>
-          <div class="objective-value">159 Cajas</div>
-        </div>
+
 
         <div class="objective-item">
+
+
           <div class="objective-title">
-            <span class="objective-icon">📦</span>
-            <span>Avance</span>
+
+            🎯
+
+            <span>
+              Objetivo
+            </span>
+
           </div>
-          <div class="objective-value">343 Cajas</div>
+
+
+          <div class="objective-value">
+            159 Cajas
+          </div>
+
+
         </div>
+
+
+
+        <div class="objective-item">
+
+
+          <div class="objective-title">
+
+            📦
+
+            <span>
+              Avance
+            </span>
+
+          </div>
+
+
+          <div class="objective-value">
+            343 Cajas
+          </div>
+
+
+        </div>
+
+
       </div>
+
+
 
       <div class="progress-row">
-        <div class="circle-value">97</div>
-        <div class="progress-area good">
-          <div class="progress-percent">97%</div>
-          <div class="progress-track">
-            <div class="progress-fill" style="width: 97%;"></div>
-          </div>
+
+
+        <div class="circle-value">
+          97
         </div>
+
+
+        <div class="progress-area good">
+
+
+          <div class="progress-percent">
+            97%
+          </div>
+
+
+          <div class="progress-track">
+
+            <div
+              class="progress-fill"
+              style="width: 97%;"
+            ></div>
+
+          </div>
+
+
+        </div>
+
+
       </div>
+
+
     </article>
 
-    <div id="noResults" class="no-results">No se encontraron clientes.</div>
+
   </main>
 
+
+
+  <!-- ==================================================
+       NAVEGACION
+  =================================================== -->
+
   <nav class="bottom-nav">
-    <button class="nav-button">
-      <span class="nav-icon">🏠</span>
-      <span>Inicio</span>
-    </button>
+
 
     <button class="nav-button">
-      <span class="nav-icon">🛣️</span>
-      <span>Rutas</span>
+
+      <div class="nav-icon">
+        🏠
+      </div>
+
+      <span>
+        Inicio
+      </span>
+
     </button>
+
+
+
+    <button class="nav-button">
+
+      <div class="nav-icon">
+        🛣️
+      </div>
+
+      <span>
+        Rutas
+      </span>
+
+    </button>
+
+
 
     <button class="nav-button active">
-      <span class="nav-icon">👥</span>
-      <span>Clientes</span>
+
+      <div class="nav-icon">
+        👥
+      </div>
+
+      <span>
+        Clientes
+      </span>
+
     </button>
+
+
 
     <button class="nav-button">
-      <span class="nav-icon">🚨</span>
-      <span>Alertas</span>
+
+      <div class="nav-icon">
+        🚨
+      </div>
+
+      <span>
+        Alertas
+      </span>
+
     </button>
+
+
   </nav>
 
-  <script>
-    const searchClient = document.getElementById("searchClient");
-    const routeFilter = document.getElementById("routeFilter");
-    const clientCards = document.querySelectorAll(".client-card");
-    const noResults = document.getElementById("noResults");
 
-    function normalizarTexto(texto) {
-      return texto
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .trim();
-    }
+
+  <!-- ==================================================
+       JAVASCRIPT
+       BUSCADOR + FILTRO DE RUTA
+  =================================================== -->
+
+  <script>
+
+    const searchClient =
+      document.getElementById(
+        "searchClient"
+      );
+
+
+    const routeFilter =
+      document.getElementById(
+        "routeFilter"
+      );
+
+
+    const clientCards =
+      document.querySelectorAll(
+        ".client-card"
+      );
+
+
 
     function filterClients() {
-      const search = normalizarTexto(searchClient.value);
-      const route = routeFilter.value.trim();
-      let visibles = 0;
 
-      clientCards.forEach(card => {
-        const name = normalizarTexto(card.dataset.name || "");
-        const number = normalizarTexto(card.dataset.number || "");
-        const cardRoute = normalizarTexto(card.dataset.route || "");
-        const vendor = normalizarTexto(card.dataset.vendor || "");
 
-        const matchesSearch =
-          !search ||
-          name.includes(search) ||
-          number.includes(search) ||
-          cardRoute.includes(search) ||
-          vendor.includes(search);
+      const search =
+        searchClient
+          .value
+          .toLowerCase()
+          .trim();
 
-        const matchesRoute = !route || card.dataset.route === route;
 
-        if (matchesSearch && matchesRoute) {
-          card.style.display = "";
-          visibles++;
-        } else {
-          card.style.display = "none";
+      const route =
+        routeFilter
+          .value
+          .trim();
+
+
+
+      clientCards.forEach(
+        card => {
+
+
+          const name =
+            (
+              card.dataset.name ||
+              ""
+            )
+            .toLowerCase();
+
+
+          const number =
+            (
+              card.dataset.number ||
+              ""
+            )
+            .toLowerCase();
+
+
+          const cardRoute =
+            (
+              card.dataset.route ||
+              ""
+            )
+            .toLowerCase();
+
+
+          const vendor =
+            (
+              card.dataset.vendor ||
+              ""
+            )
+            .toLowerCase();
+
+
+
+          const matchesSearch =
+
+            !search ||
+
+            name.includes(search) ||
+
+            number.includes(search) ||
+
+            cardRoute.includes(search) ||
+
+            vendor.includes(search);
+
+
+
+          const matchesRoute =
+
+            !route ||
+
+            cardRoute === route;
+
+
+
+          if (
+            matchesSearch &&
+            matchesRoute
+          ) {
+
+            card.style.display =
+              "";
+
+          } else {
+
+            card.style.display =
+              "none";
+
+          }
+
+
         }
-      });
+      );
 
-      noResults.style.display = visibles === 0 ? "block" : "none";
     }
 
-    searchClient.addEventListener("input", filterClients);
-    routeFilter.addEventListener("change", filterClients);
+
+
+    searchClient.addEventListener(
+      "input",
+      filterClients
+    );
+
+
+    routeFilter.addEventListener(
+      "change",
+      filterClients
+    );
+
   </script>
+
+
 </body>
 </html>
