@@ -627,6 +627,114 @@
   box-shadow:0 6px 14px rgba(0,0,0,.12);
 }
 
+
+
+    /* ================= PANTALLA RUTAS - DISEÑO MÓVIL ================= */
+    body.routes-screen .hero-header{display:none}
+    body.routes-screen{background:#f7f8fa}
+    body.routes-screen #page-routes{padding:0 12px 18px}
+
+    .routes-mobile-head{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:18px 4px 14px;background:#fff;position:sticky;top:0;z-index:35;
+      margin:0 -12px 0;padding-left:18px;padding-right:18px;
+      border-bottom:1px solid #f0f0f0;
+    }
+    .routes-head-left{display:flex;align-items:center;gap:13px;min-width:0}
+    .routes-menu-btn,.routes-profile-btn{
+      border:none;background:#fff;display:grid;place-items:center;cursor:pointer;color:#111;
+    }
+    .routes-menu-btn{width:34px;height:34px;border-radius:10px;font-size:22px}
+    .routes-profile-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid #ff2d36;color:#e30613;font-size:20px}
+    .routes-greeting{min-width:0}
+    .routes-greeting h2{margin:0;font-size:17px;line-height:1.1;font-weight:900;color:#111}
+    .routes-greeting p{margin:4px 0 0;font-size:10px;color:#555;font-weight:600}
+
+    .routes-controls{
+      display:grid;grid-template-columns:minmax(0,1fr) 148px;gap:10px;margin-top:14px;
+    }
+    .route-control{
+      height:48px;background:#fff;border:1px solid #ededed;border-radius:14px;
+      box-shadow:0 4px 14px rgba(0,0,0,.05);display:flex;align-items:center;gap:9px;padding:0 12px;
+    }
+    .route-control .ico{font-size:17px;flex:0 0 auto;color:#e30613}
+    .route-control input,.route-control select{
+      border:none!important;box-shadow:none!important;background:transparent!important;padding:0!important;
+      height:auto!important;border-radius:0!important;font-size:12px!important;color:#444!important;min-width:0;
+    }
+    .route-control select{font-weight:700;cursor:pointer}
+
+    .routes-promo{
+      position:relative;margin-top:12px;min-height:150px;border-radius:18px;overflow:hidden;
+      background:linear-gradient(135deg,#fff 0%,#fff 58%,#fff3f3 100%);
+      border:1px solid #ededed;box-shadow:0 7px 20px rgba(0,0,0,.07);padding:16px 145px 14px 16px;
+    }
+    .routes-promo::after{
+      content:"";position:absolute;left:-18px;right:-18px;bottom:-29px;height:60px;
+      background:linear-gradient(180deg,#ff121c,#cf000b);border-radius:50% 50% 0 0/70% 70% 0 0;transform:rotate(-2deg)
+    }
+    .promo-title{position:relative;z-index:3;font-size:22px;line-height:.9;font-weight:950;color:#242424;letter-spacing:-.6px}
+    .promo-title span{display:block;color:#e30613}
+    .promo-copy{position:relative;z-index:3;margin-top:8px;font-size:10px;line-height:1.25;color:#4c4c4c;max-width:145px}
+    .promo-mini{position:relative;z-index:3;margin-top:12px;display:flex;gap:10px;font-size:7px;color:#444;text-align:center}
+    .promo-mini span{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:38px}
+    .promo-mini b{font-size:15px;color:#555}
+    .promo-visual{
+      position:absolute;right:-2px;top:0;width:155px;height:135px;z-index:2;
+      background:radial-gradient(circle at 52% 51%,rgba(227,6,19,.18) 0 54%,transparent 55%);
+    }
+    .promo-ring{position:absolute;right:19px;top:8px;width:118px;height:118px;border:8px solid #d5000d;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)}
+    .promo-bottle{
+      position:absolute;right:55px;top:24px;width:46px;height:102px;border-radius:13px 13px 17px 17px;
+      background:linear-gradient(90deg,#8d0006 0%,#ed0b16 46%,#8a0007 100%);box-shadow:0 6px 14px rgba(0,0,0,.22);z-index:3;
+    }
+    .promo-bottle::before{content:"";position:absolute;top:-15px;left:14px;width:18px;height:20px;border-radius:5px 5px 2px 2px;background:#d9d9d9;border:2px solid #aaa}
+    .promo-bottle img{position:absolute;left:4px;right:4px;top:40px;width:38px;filter:brightness(0) invert(1)}
+    .promo-pin{position:absolute;color:#e30613;font-size:18px;z-index:4}
+    .promo-pin.p1{right:18px;top:24px}.promo-pin.p2{right:10px;top:75px}.promo-pin.p3{right:125px;top:69px}
+
+    #routeResults.route-card-list{display:grid;gap:8px;margin-top:10px}
+    .route-modern-card{
+      min-height:76px;border-radius:14px;padding:11px 11px 11px 12px;color:#fff;display:flex;align-items:center;gap:11px;
+      box-shadow:0 6px 13px rgba(0,0,0,.10);cursor:pointer;transition:transform .12s ease,box-shadow .12s ease;border:none;
+    }
+    .route-modern-card:active{transform:scale(.985)}
+    .route-modern-icon{
+      width:48px;height:48px;flex:0 0 48px;border-radius:13px;background:rgba(255,255,255,.93);
+      display:grid;place-items:center;font-size:27px;color:var(--route-color,#e30613);
+    }
+    .route-modern-info{min-width:0;flex:1}
+    .route-modern-title{font-size:16px;line-height:1;font-weight:950;margin:0 0 5px}
+    .route-modern-vendor{font-size:9px;line-height:1.25;font-weight:650;opacity:.96;white-space:normal}
+    .route-modern-btn{
+      flex:0 0 auto;background:#fff;border:none;border-radius:11px;padding:10px 10px;color:var(--route-color,#e30613);
+      font-size:10px;font-weight:900;display:flex;align-items:center;gap:6px;white-space:nowrap;
+    }
+    .route-modern-btn b{font-size:16px;line-height:.7}
+    .route-c0{--route-color:#e60012;background:linear-gradient(100deg,#f20b17,#e50010)}
+    .route-c1{--route-color:#ff7900;background:linear-gradient(100deg,#ff8a0a,#ff7200)}
+    .route-c2{--route-color:#9941e8;background:linear-gradient(100deg,#a54ce8,#8c32e4)}
+    .route-c3{--route-color:#2688ee;background:linear-gradient(100deg,#3899f8,#2683e4)}
+    .route-c4{--route-color:#27ae68;background:linear-gradient(100deg,#46c87b,#26ad65)}
+    .route-c5{--route-color:#ff3868;background:linear-gradient(100deg,#ff5077,#fb2f61)}
+
+    /* Navegación inferior estilo de la referencia, conservando la funcionalidad */
+    .bottom-nav{
+      background:rgba(255,255,255,.97)!important;border:1px solid #ededed!important;border-radius:24px!important;
+      box-shadow:0 8px 26px rgba(0,0,0,.10)!important;padding:7px 8px!important;bottom:10px!important;
+    }
+    .nav-btn{color:#777!important;background:transparent!important;border-radius:14px!important;padding:8px 5px!important;font-size:10px!important;gap:3px!important}
+    .nav-btn .nicon{font-size:20px!important}
+    .nav-btn.active{color:#e30613!important;background:transparent!important}
+
+    @media(max-width:410px){
+      .routes-controls{grid-template-columns:minmax(0,1fr) 134px;gap:8px}
+      .route-control{height:45px;padding:0 10px}.route-control input,.route-control select{font-size:10px!important}
+      .routes-promo{min-height:138px;padding:14px 133px 12px 14px}.promo-title{font-size:20px}.promo-visual{width:143px;height:128px}
+      .route-modern-card{min-height:70px;padding:9px 9px 9px 10px}.route-modern-icon{width:44px;height:44px;flex-basis:44px;font-size:24px}
+      .route-modern-title{font-size:15px}.route-modern-btn{font-size:9px;padding:9px 9px}
+    }
+
 </style>
 </head>
 <body>
@@ -754,25 +862,50 @@
       </section>
 
       <section id="page-routes" class="page">
-        <div class="tool-header">
-          <h2 class="tool-title">Dashboard por ruta</h2>
-          <p class="tool-sub">Seleccioná una ruta para ver clientes, objetivo, vendido y alertas.</p>
-        </div>
-        <div class="panel">
-          <div class="search-box">
-            <div class="row-2">
-              <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
-              <select id="routeSort">
-                <option value="ruta" selected>Ordenar por ruta</option>
-                <option value="avance">Ordenar por avance</option>
-                <option value="objetivo">Ordenar por objetivo</option>
-                <option value="clientes">Ordenar por clientes</option>
-              </select>
+        <div class="routes-mobile-head">
+          <div class="routes-head-left">
+            <button class="routes-menu-btn" type="button" onclick="goTo('home')" aria-label="Ir a inicio">☰</button>
+            <div class="routes-greeting">
+              <h2 id="routeGreetingName">¡Hola!</h2>
+              <p>Gestión de Volumen PDV 2026</p>
             </div>
           </div>
-          <div id="routeResults" class="results"></div>
-          <div id="routeEmpty" class="empty" style="display:none;">No hay rutas para mostrar.</div>
+          <button class="routes-profile-btn" type="button" onclick="openPasswordModal()" aria-label="Perfil">♙</button>
         </div>
+
+        <div class="routes-controls">
+          <label class="route-control">
+            <span class="ico">⌕</span>
+            <input id="routeSearch" type="text" placeholder="Buscar ruta o vendedor">
+          </label>
+          <label class="route-control">
+            <span class="ico">≡</span>
+            <select id="routeSort">
+              <option value="ruta" selected>Ordenar por ruta</option>
+              <option value="avance">Por avance</option>
+              <option value="objetivo">Por objetivo</option>
+              <option value="clientes">Por clientes</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="routes-promo">
+          <div class="promo-title">MÁS VISIBILIDAD,<span>MÁS VENTAS</span></div>
+          <div class="promo-copy">Trabajamos juntos para seguir creciendo.</div>
+          <div class="promo-mini">
+            <span><b>◎</b>Enfocados</span>
+            <span><b>♙</b>Comprometidos</span>
+            <span><b>▥</b>Resultados</span>
+          </div>
+          <div class="promo-visual">
+            <div class="promo-ring"></div>
+            <div class="promo-bottle"><img src="https://zehid2010-lgtm.github.io/auditoria_volumen/logo.png" alt="Coca-Cola"></div>
+            <span class="promo-pin p1">●</span><span class="promo-pin p2">●</span><span class="promo-pin p3">●</span>
+          </div>
+        </div>
+
+        <div id="routeResults" class="route-card-list"></div>
+        <div id="routeEmpty" class="empty" style="display:none;">No hay rutas para mostrar.</div>
       </section>
 
       <section id="page-clients" class="page">
@@ -1345,6 +1478,7 @@
     function goTo(page){
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page-' + page).classList.add('active');
+      document.body.classList.toggle('routes-screen', page === 'routes');
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       const nav = document.getElementById('nav-' + page); if(nav) nav.classList.add('active');
       window.scrollTo({top:0, behavior:'smooth'}); if(page === 'alertas') renderAlerts();
@@ -1355,13 +1489,37 @@
     function renderRoutes(){
       const q = normalizeKey(document.getElementById('routeSearch').value), sort = document.getElementById('routeSort').value;
       let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
-      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo); else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients); else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento); else data.sort((a,b)=> { const ar = Number(a.ruta), br = Number(b.ruta); if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br; return String(a.ruta).localeCompare(String(b.ruta), 'es'); });
+
+      if(sort === 'objetivo') data.sort((a,b)=> b.objetivo - a.objetivo);
+      else if(sort === 'clientes') data.sort((a,b)=> b.clients - a.clients);
+      else if(sort === 'avance') data.sort((a,b)=> b.cumplimiento - a.cumplimiento);
+      else data.sort((a,b)=> {
+        const ar = Number(a.ruta), br = Number(b.ruta);
+        if(!Number.isNaN(ar) && !Number.isNaN(br)) return ar - br;
+        return String(a.ruta).localeCompare(String(b.ruta), 'es');
+      });
+
+      const greet = document.getElementById('routeGreetingName');
+      if(greet){
+        const full = currentUser?.nombre || 'Equipo';
+        const first = String(full).trim().split(/\s+/)[0] || 'Equipo';
+        greet.textContent = `¡Hola, ${first}!`;
+      }
+
       const box = document.getElementById('routeResults'), empty = document.getElementById('routeEmpty');
-      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none';
-      box.innerHTML = data.map(r => {
-        const puntosRuta = r.clients > 0 ? r.rows.reduce((a,c)=> a + c.totalPuntos, 0) / r.clients : 0, clientesCumplen40 = r.rows.filter(c => c.totalPuntos >= 40).length, progressClass = puntosRuta >= 40 ? 'green' : puntosRuta >= 30 ? 'yellow' : 'red';
-        return `<div class="item client-card" onclick="openRouteDetail('${escapeHtml(r.ruta)}')"><div class="client-head"><div><div class="item-title">Ruta ${escapeHtml(r.ruta)}</div><div class="item-meta">Vendedor: ${escapeHtml(r.vendedor || '-')}<br>🎯 Objetivo: ${formatNumber(r.objetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(r.real)} CAJAS FÍSICAS<br>✅ Cumplen: ${clientesCumplen40} de ${r.clients} clientes</div><div class="mini-progress ${progressClass}"><span style="width:${clamp((puntosRuta / 50) * 100,0,100)}%"></span></div></div><div class="badge ${getRoutePointsBadgeClass(puntosRuta)}">${Math.round(puntosRuta)} / 40 pts</div></div></div>`;
-      }).join('');
+      if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+
+      box.innerHTML = data.map((r,idx) => `
+        <div class="route-modern-card route-c${idx % 6}" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
+          <div class="route-modern-icon">⌘</div>
+          <div class="route-modern-info">
+            <div class="route-modern-title">Ruta ${escapeHtml(r.ruta)}</div>
+            <div class="route-modern-vendor">Vendedor: ${escapeHtml(r.vendedor || '-')}</div>
+          </div>
+          <button class="route-modern-btn" type="button" tabindex="-1">Ver ruta <b>›</b></button>
+        </div>
+      `).join('');
     }
 
     function openRouteDetail(ruta){
