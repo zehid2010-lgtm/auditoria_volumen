@@ -1,1707 +1,315 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Gestión Volumen PDV 2026</title>
-  <meta name="theme-color" content="#e30613">
-
+  <meta name="theme-color" content="#e30613" />
   <style>
     :root {
       --red: #e30613;
-      --red-light: #ff3b43;
       --red-soft: #fff1f2;
-
-      --green: #00ad78;
-      --green-light: #13c991;
-      --green-soft: #ebfff8;
-
-      --background: #f5f6f8;
-      --white: #ffffff;
-
-      --text: #161616;
-      --muted: #69707d;
-
-      --border: #e7e7e7;
-
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      --green: #10b981;
+      --green-soft: #ecfdf5;
+      --orange: #f59e0b;
+      --orange-soft: #fffbeb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --radius: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+    }
 
+    .app-container {
+      width: 100%;
+      max-width: 480px;
       min-height: 100vh;
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-      background:
-        linear-gradient(
-          180deg,
-          #fafafa 0%,
-          #f3f5f7 100%
-        );
-
-      color: var(--text);
+      padding: 20px 16px 100px;
+      position: relative;
     }
 
-    button,
-    input,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    /* =====================================================
-       CONTENEDOR PRINCIPAL
-    ===================================================== */
-
-    .app {
-      width: 100%;
-      max-width: 720px;
-
-      margin: 0 auto;
-
-      padding:
-        24px
-        16px
-        135px;
-    }
-
-    /* =====================================================
-       ENCABEZADO
-    ===================================================== */
-
-    .page-header {
-      margin-bottom: 18px;
-    }
-
-    .page-header h1 {
-      margin: 0;
-
-      font-size: 25px;
-      line-height: 1.15;
-
-      font-weight: 900;
-    }
-
-    .page-header p {
-      margin: 6px 0 0;
-
-      font-size: 14px;
-
-      color: var(--muted);
-    }
-
-    /* =====================================================
-       FILTROS
-    ===================================================== */
-
-    .filters {
-      display: grid;
-
-      grid-template-columns:
-        minmax(0, 1fr)
-        220px;
-
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
       gap: 12px;
-
-      padding: 18px;
-
-      margin-bottom: 18px;
-
-      background: #ffffff;
-
-      border-radius: 28px;
-
-      box-shadow:
-        0 15px 40px
-        rgba(0, 0, 0, 0.07);
+      margin-bottom: 24px;
     }
-
-    .search-input,
-    .route-select {
-      width: 100%;
-      height: 56px;
-
-      padding: 0 17px;
-
-      border:
-        1px solid
-        #dddddd;
-
-      border-radius: 18px;
-
-      background: white;
-
-      color: #262626;
-
-      outline: none;
-
-      font-size: 16px;
-    }
-
-    .search-input::placeholder {
-      color: #777;
-    }
-
-    .search-input:focus,
-    .route-select:focus {
-      border-color: var(--red);
-
-      box-shadow:
-        0 0 0 3px
-        rgba(227, 6, 19, 0.08);
-    }
-
-    /* =====================================================
-       TARJETAS
-    ===================================================== */
-
-    .client-card {
-      width: 100%;
-
-      padding: 22px;
-
-      margin-bottom: 16px;
-
-      background: #ffffff;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius: 24px;
-
-      box-shadow:
-        0 5px 18px
-        rgba(0, 0, 0, 0.035);
-    }
-
-    /* =====================================================
-       CABECERA DEL CLIENTE
-    ===================================================== */
-
-    .client-top {
-      display: flex;
-
-      align-items: flex-start;
-      justify-content: space-between;
-
-      gap: 18px;
-    }
-
-    .client-data {
-      flex: 1;
-
-      min-width: 0;
-    }
-
-    .client-name {
-      margin:
-        0
-        0
-        8px;
-
-      color: #171717;
-
-      font-size: 21px;
-      line-height: 1.2;
-
-      font-weight: 900;
-    }
-
-    .client-number {
-      color: var(--muted);
-
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .vendor {
-      display: flex;
-
-      align-items: center;
-
-      gap: 7px;
-
-      margin-top: 7px;
-
-      color: #35205d;
-
-      font-size: 14px;
-      line-height: 1.35;
-
-      font-weight: 750;
-    }
-
-    .vendor-icon {
-      flex-shrink: 0;
-    }
-
-    /* =====================================================
-       PUNTAJE CIRCULAR
-    ===================================================== */
-
-    .points-circle {
-      position: relative;
-
-      flex:
-        0 0
-        138px;
-
-      width: 138px;
-      height: 138px;
-
-      display: flex;
-
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      background:
-        linear-gradient(
-          145deg,
-          #fffafa,
-          #ffe7e9
-        );
-
-      border:
-        3px solid
-        #ffb8bd;
-
-      box-shadow:
-        0 10px 24px
-        rgba(227, 6, 19, 0.10);
-
-      text-align: center;
-    }
-
-    .points-circle::before {
-      content: "";
-
-      position: absolute;
-
-      inset: 7px;
-
-      border-radius: 50%;
-
-      border:
-        1px solid
-        rgba(227, 6, 19, 0.08);
-
-      pointer-events: none;
-    }
-
-    .points-content {
-      position: relative;
-
-      z-index: 2;
-
-      display: flex;
-
-      align-items: baseline;
-      justify-content: center;
-
-      gap: 4px;
-
-      color: #e51e29;
-
-      white-space: nowrap;
-    }
-
-    .points-number {
-      font-size: 45px;
-      line-height: 1;
-
-      font-weight: 950;
-    }
-
-    .points-total {
-      font-size: 13px;
-
-      font-weight: 900;
-    }
-
-    .score-status {
-      position: relative;
-
-      z-index: 2;
-
-      margin-top: 8px;
-
-      padding:
-        6px
-        11px;
-
-      border-radius: 999px;
-
-      background: var(--red);
-
-      color: white;
-
-      font-size: 9px;
-
-      line-height: 1;
-
-      font-weight: 900;
-
-      white-space: nowrap;
-    }
-
-    /* =====================================================
-       PUNTAJE BUENO
-    ===================================================== */
-
-    .points-circle.good {
-      background:
-        linear-gradient(
-          145deg,
-          #effff9,
-          #ddf8ef
-        );
-
-      border-color: #00ad78;
-
-      box-shadow:
-        0 10px 24px
-        rgba(0, 173, 120, 0.12);
-    }
-
-    .points-circle.good::before {
-      border-color:
-        rgba(0, 173, 120, 0.10);
-    }
-
-    .points-circle.good .points-content {
-      color: #009b6b;
-    }
-
-    .points-circle.good .score-status {
-      background: #00a875;
-    }
-
-    /* =====================================================
-       OBJETIVO Y AVANCE
-    ===================================================== */
-
-    .objective-panel {
+    .header-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: var(--red-soft);
+      color: var(--red);
       display: grid;
-
-      grid-template-columns:
-        1fr
-        1fr;
-
-      gap: 18px;
-
-      margin-top: 18px;
-
-      padding:
-        17px
-        20px;
-
-      border-radius: 18px;
-
-      background: #f5f7fa;
+      place-items: center;
+      font-size: 20px;
     }
+    .header h2 { margin: 0; font-size: 20px; font-weight: 800; }
+    .header p { margin: 2px 0 0; font-size: 13px; color: var(--text-muted); }
 
-    .objective-item {
-      min-width: 0;
+    /* Client Card */
+    .client-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      transition: transform 0.2s ease;
     }
+    .client-card:active { transform: scale(0.98); }
 
-    .objective-title {
+    .card-top {
       display: flex;
-
-      align-items: center;
-
-      gap: 7px;
-
-      color: #64748b;
-
-      font-size: 12px;
-
-      font-weight: 850;
-
-      text-transform: uppercase;
-
-      letter-spacing: 0.25px;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
     }
+    .client-name { font-size: 17px; font-weight: 800; margin: 0 0 4px; }
+    .client-id { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+    .client-vendor { font-size: 12px; color: #475467; font-weight: 600; }
 
-    .objective-icon {
-      font-size: 13px;
-    }
-
-    .objective-value {
-      margin-top: 7px;
-
-      color: #080808;
-
-      font-size: 17px;
-      line-height: 1.2;
-
-      font-weight: 900;
-    }
-
-    /* =====================================================
-       FILA DE BARRA
-    ===================================================== */
-
-    .progress-row {
-      display: flex;
-
-      align-items: center;
-
-      gap: 15px;
-
-      margin-top: 18px;
-    }
-
-    /* =====================================================
-       CÍRCULO IZQUIERDO
-    ===================================================== */
-
-    .circle-value {
-      flex:
-        0 0
-        72px;
-
+    /* Circular Score Badge */
+    .score-circle {
+      position: relative;
       width: 72px;
       height: 72px;
-
-      display: grid;
-
-      place-items: center;
-
-      border-radius: 50%;
-
-      border:
-        1px solid
-        #d7d7d7;
-
-      background:
-        linear-gradient(
-          145deg,
-          #ffffff,
-          #eeeeee
-        );
-
-      color: #111111;
-
-      font-size: 23px;
-
-      font-weight: 950;
-
-      box-shadow:
-        0 6px 16px
-        rgba(0, 0, 0, 0.06);
-    }
-
-    /* =====================================================
-       BARRA DE PROGRESO
-    ===================================================== */
-
-    .progress-area {
-      flex: 1;
-
-      min-width: 0;
-
-      height: 73px;
-
-      display: flex;
-
-      align-items: center;
-
-      gap: 13px;
-
-      padding:
-        10px
-        19px;
-
-      border-radius: 999px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #fb4147,
-          #ed242c
-        );
-
-      box-shadow:
-        0 10px 24px
-        rgba(227, 6, 19, 0.13);
-    }
-
-    .progress-percent {
       flex-shrink: 0;
-
-      min-width: 64px;
-
-      color: white;
-
-      font-size: 20px;
-
-      font-weight: 950;
     }
-
-    .progress-track {
-      position: relative;
-
-      flex: 1;
-
-      height: 37px;
-
-      overflow: hidden;
-
-      border-radius: 999px;
-
-      background:
-        rgba(133, 0, 5, 0.31);
-    }
-
-    .progress-fill {
+    .score-circle svg {
+      width: 100%;
       height: 100%;
-
-      min-width: 12px;
-
-      border-radius: 999px;
-
-      background:
-        rgba(255, 255, 255, 0.94);
-
-      transition:
-        width
-        0.35s
-        ease;
+      transform: rotate(-90deg);
     }
-
-    /* =====================================================
-       PROGRESO VERDE
-    ===================================================== */
-
-    .progress-area.good {
-      background:
-        linear-gradient(
-          90deg,
-          #0bc58a,
-          #009d70
-        );
-
-      box-shadow:
-        0 10px 24px
-        rgba(0, 157, 112, 0.14);
+    .score-circle circle {
+      fill: none;
+      stroke-width: 6;
+      stroke-linecap: round;
     }
-
-    .progress-area.good .progress-track {
-      background:
-        rgba(0, 77, 54, 0.27);
-    }
-
-    /* =====================================================
-       MENSAJE SIN RESULTADOS
-    ===================================================== */
-
-    .no-results {
-      display: none;
-
-      padding: 30px 20px;
-
-      text-align: center;
-
-      background: white;
-
-      border-radius: 20px;
-
-      color: var(--muted);
-
-      font-size: 14px;
-
-      font-weight: 700;
-    }
-
-    /* =====================================================
-       MENÚ INFERIOR
-    ===================================================== */
-
-    .bottom-nav {
-      position: fixed;
-
-      left: 50%;
-      bottom: 0;
-
-      transform:
-        translateX(-50%);
-
-      z-index: 100;
-
-      width:
-        calc(100% - 24px);
-
-      max-width: 680px;
-
-      height: 112px;
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 8px;
-
-      padding:
-        12px
-        16px
-        15px;
-
-      border:
-        1px solid
-        #e9e9e9;
-
-      border-radius:
-        32px
-        32px
-        0
-        0;
-
-      background:
-        rgba(255, 255, 255, 0.96);
-
-      backdrop-filter:
-        blur(20px);
-
-      -webkit-backdrop-filter:
-        blur(20px);
-
-      box-shadow:
-        0 -10px 40px
-        rgba(0, 0, 0, 0.08);
-    }
-
-    .nav-button {
-      border: none;
-
-      border-radius: 23px;
-
-      background: transparent;
-
-      color: #697386;
-
+    .bg-track { stroke: #f1f5f9; }
+    .score-circle .val {
+      position: absolute;
+      inset: 0;
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
       justify-content: center;
-
-      gap: 5px;
-
-      font-size: 13px;
-
-      font-weight: 850;
-
-      transition:
-        transform
-        0.15s
-        ease,
-        background
-        0.15s
-        ease;
+      font-weight: 900;
+      font-size: 18px;
     }
+    .score-circle .val small { font-size: 9px; opacity: 0.6; font-weight: 700; }
 
-    .nav-button:active {
-      transform: scale(0.97);
-    }
+    /* Specific Status Styles */
+    .status-ok { color: var(--green); }
+    .status-ok .progress-track { stroke: var(--green); }
+    .status-bad { color: var(--red); }
+    .status-bad .progress-track { stroke: var(--red); }
 
-    .nav-icon {
-      width: 39px;
-      height: 39px;
-
+    /* Progress & Metrics Section */
+    .metrics-grid {
       display: grid;
-
-      place-items: center;
-
-      border-radius: 13px;
-
-      background: #f7f8fa;
-
-      font-size: 21px;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 14px;
     }
+    .metric-item { display: flex; flex-direction: column; }
+    .metric-label { font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+    .metric-value { font-size: 13px; font-weight: 800; margin-top: 4px; }
 
-    .nav-button.active {
-      color: white;
-
-      background:
-        linear-gradient(
-          180deg,
-          #ff2d36,
-          #df0010
-        );
-
-      box-shadow:
-        0 10px 22px
-        rgba(227, 6, 19, 0.20);
+    /* Modern Linear Progress Bar */
+    .progress-section { margin-top: 16px; }
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
-
-    .nav-button.active .nav-icon {
-      background:
-        rgba(255, 255, 255, 0.15);
+    .progress-bar-wrap {
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
     }
-
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-
-    @media (max-width: 600px) {
-
-      .app {
-        padding:
-          16px
-          12px
-          118px;
-      }
-
-      .filters {
-        grid-template-columns: 1fr;
-
-        padding: 13px;
-
-        border-radius: 22px;
-      }
-
-      .search-input,
-      .route-select {
-        height: 52px;
-
-        font-size: 15px;
-      }
-
-      .client-card {
-        padding: 16px;
-
-        border-radius: 21px;
-      }
-
-      .client-top {
-        gap: 12px;
-      }
-
-      .client-name {
-        font-size: 18px;
-      }
-
-      .client-number,
-      .vendor {
-        font-size: 13px;
-      }
-
-      .points-circle {
-        flex:
-          0 0
-          118px;
-
-        width: 118px;
-        height: 118px;
-      }
-
-      .points-number {
-        font-size: 37px;
-      }
-
-      .points-total {
-        font-size: 11px;
-      }
-
-      .score-status {
-        padding:
-          5px
-          8px;
-
-        font-size: 7.5px;
-      }
-
-      .objective-panel {
-        margin-top: 16px;
-
-        padding:
-          14px
-          15px;
-      }
-
-      .objective-title {
-        font-size: 10.5px;
-      }
-
-      .objective-value {
-        font-size: 15px;
-      }
-
-      .progress-row {
-        gap: 10px;
-      }
-
-      .circle-value {
-        flex:
-          0 0
-          62px;
-
-        width: 62px;
-        height: 62px;
-
-        font-size: 20px;
-      }
-
-      .progress-area {
-        height: 63px;
-
-        padding:
-          8px
-          13px;
-
-        gap: 8px;
-      }
-
-      .progress-percent {
-        min-width: 52px;
-
-        font-size: 17px;
-      }
-
-      .progress-track {
-        height: 31px;
-      }
-
-      .bottom-nav {
-        height: 100px;
-
-        padding:
-          9px
-          10px
-          10px;
-      }
-
-      .nav-button {
-        font-size: 12px;
-      }
-
-      .nav-icon {
-        width: 36px;
-        height: 36px;
-
-        font-size: 19px;
-      }
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.4s ease;
     }
+    .fill-ok { background: linear-gradient(90deg, #34d399, #10b981); }
+    .fill-bad { background: linear-gradient(90deg, #f87171, #ef4444); }
 
-    @media (max-width: 410px) {
-
-      .client-top {
-        gap: 8px;
-      }
-
-      .client-name {
-        font-size: 16px;
-      }
-
-      .client-number,
-      .vendor {
-        font-size: 12px;
-      }
-
-      .points-circle {
-        flex:
-          0 0
-          105px;
-
-        width: 105px;
-        height: 105px;
-      }
-
-      .points-number {
-        font-size: 31px;
-      }
-
-      .points-total {
-        font-size: 9px;
-      }
-
-      .score-status {
-        margin-top: 6px;
-
-        padding:
-          5px
-          6px;
-
-        font-size: 6.5px;
-      }
-
-      .objective-panel {
-        gap: 9px;
-
-        padding: 12px;
-      }
-
-      .objective-title {
-        font-size: 9.5px;
-      }
-
-      .objective-value {
-        font-size: 14px;
-      }
-
-      .circle-value {
-        flex:
-          0 0
-          56px;
-
-        width: 56px;
-        height: 56px;
-
-        font-size: 18px;
-      }
-
-      .progress-area {
-        height: 58px;
-
-        padding:
-          7px
-          11px;
-      }
-
-      .progress-percent {
-        min-width: 47px;
-
-        font-size: 15px;
-      }
-
-      .progress-track {
-        height: 28px;
-      }
+    .status-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
     }
+    .tag-ok { background: var(--green-soft); color: var(--green); }
+    .tag-bad { background: var(--red-soft); color: var(--red); }
 
+    /* Bottom Navbar Modernized */
+    .bottom-nav {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 440px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .nav-item {
+      border: none;
+      background: transparent;
+      padding: 8px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 16px;
+      transition: 0.2s;
+    }
+    .nav-item.active {
+      background: var(--red);
+      color: #fff;
+    }
   </style>
 </head>
-
 <body>
 
-  <main class="app">
+<div class="app-container">
+  
+  <div class="header">
+    <div class="header-icon">👥</div>
+    <div>
+      <h2>Clientes de la Ruta</h2>
+      <p>Seleccioná un cliente para gestionar detalle</p>
+    </div>
+  </div>
 
-    <!-- ==================================================
-         ENCABEZADO
-    =================================================== -->
-
-    <section class="page-header">
-
-      <h1>
-        Clientes de la Ruta
-      </h1>
-
-      <p>
-        Seleccioná un cliente para gestionar detalle
-      </p>
-
-    </section>
-
-
-    <!-- ==================================================
-         BUSCADOR Y FILTRO
-    =================================================== -->
-
-    <section class="filters">
-
-      <input
-        id="searchClient"
-        class="search-input"
-        type="text"
-        autocomplete="off"
-        placeholder="Buscar cliente, número, ruta o vendedor"
-      >
-
-      <select
-        id="routeFilter"
-        class="route-select"
-      >
-
-        <option value="">
-          Todas las rutas
-        </option>
-
-        <option value="3140">
-          Ruta 3140
-        </option>
-
-        <option value="3142">
-          Ruta 3142
-        </option>
-
-        <option value="3144">
-          Ruta 3144
-        </option>
-
-      </select>
-
-    </section>
-
-
-    <!-- ==================================================
-         CLIENTE 1
-    =================================================== -->
-
-    <article
-      class="client-card"
-      data-name="Ahumada Luis Santiago"
-      data-number="3134394"
-      data-route="3144"
-      data-vendor="Zehid Ricardo Miguel Antonio"
-    >
-
-      <div class="client-top">
-
-        <div class="client-data">
-
-          <h2 class="client-name">
-            Ahumada Luis Santiago
-          </h2>
-
-          <div class="client-number">
-            Número: 3134394
-            <br>
-            Ruta: 3144
-          </div>
-
-          <div class="vendor">
-
-            <span class="vendor-icon">
-              👤
-            </span>
-
-            <span>
-              Zehid, Ricardo Miguel Antonio
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <!-- PUNTAJE CIRCULAR -->
-
-        <div class="points-circle">
-
-          <div class="points-content">
-
-            <span class="points-number">
-              10
-            </span>
-
-            <span class="points-total">
-              / 100 pts
-            </span>
-
-          </div>
-
-          <div class="score-status">
-            FUERA DE RANGO
-          </div>
-
-        </div>
-
+  <!-- Cliente 1 (Excelente) -->
+  <div class="client-card">
+    <div class="card-top">
+      <div>
+        <h3 class="client-name">Alderete Rosario Isabel</h3>
+        <div class="client-id">Código: #3149882 · Ruta 3140</div>
+        <div class="client-vendor">👤 Zehid, Ricardo Miguel</div>
       </div>
-
-
-      <!-- OBJETIVO / AVANCE -->
-
-      <div class="objective-panel">
-
-        <div class="objective-item">
-
-          <div class="objective-title">
-
-            <span class="objective-icon">
-              🎯
-            </span>
-
-            <span>
-              Objetivo
-            </span>
-
-          </div>
-
-          <div class="objective-value">
-            159 Cajas
-          </div>
-
-        </div>
-
-
-        <div class="objective-item">
-
-          <div class="objective-title">
-
-            <span class="objective-icon">
-              📦
-            </span>
-
-            <span>
-              Avance
-            </span>
-
-          </div>
-
-          <div class="objective-value">
-            22 Cajas
-          </div>
-
-        </div>
-
+      <div class="score-circle status-ok">
+        <svg viewBox="0 0 36 36">
+          <path class="bg-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <path class="progress-track" stroke-dasharray="97, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+        </svg>
+        <div class="val">97<small>/100</small></div>
       </div>
-
-
-      <!-- CÍRCULO + BARRA -->
-
-      <div class="progress-row">
-
-        <div class="circle-value">
-          44
-        </div>
-
-        <div class="progress-area">
-
-          <div class="progress-percent">
-            10%
-          </div>
-
-          <div class="progress-track">
-
-            <div
-              class="progress-fill"
-              style="width: 10%;"
-            ></div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- ==================================================
-         CLIENTE 2
-    =================================================== -->
-
-    <article
-      class="client-card"
-      data-name="Albornoz Franco Gustavo"
-      data-number="3161058"
-      data-route="3142"
-      data-vendor="Zehid Ricardo Miguel Antonio"
-    >
-
-      <div class="client-top">
-
-        <div class="client-data">
-
-          <h2 class="client-name">
-            Albornoz Franco Gustavo
-          </h2>
-
-          <div class="client-number">
-            Número: 3161058
-            <br>
-            Ruta: 3142
-          </div>
-
-          <div class="vendor">
-
-            <span class="vendor-icon">
-              👤
-            </span>
-
-            <span>
-              Zehid, Ricardo Miguel Antonio
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <div class="points-circle">
-
-          <div class="points-content">
-
-            <span class="points-number">
-              5
-            </span>
-
-            <span class="points-total">
-              / 100 pts
-            </span>
-
-          </div>
-
-          <div class="score-status">
-            FUERA DE RANGO
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="objective-panel">
-
-        <div class="objective-item">
-
-          <div class="objective-title">
-
-            <span class="objective-icon">
-              🎯
-            </span>
-
-            <span>
-              Objetivo
-            </span>
-
-          </div>
-
-          <div class="objective-value">
-            159 Cajas
-          </div>
-
-        </div>
-
-
-        <div class="objective-item">
-
-          <div class="objective-title">
-
-            <span class="objective-icon">
-              📦
-            </span>
-
-            <span>
-              Avance
-            </span>
-
-          </div>
-
-          <div class="objective-value">
-            120 Cajas
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="progress-row">
-
-        <div class="circle-value">
-          42
-        </div>
-
-        <div class="progress-area">
-
-          <div class="progress-percent">
-            5%
-          </div>
-
-          <div class="progress-track">
-
-            <div
-              class="progress-fill"
-              style="width: 5%;"
-            ></div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- ==================================================
-         CLIENTE 3
-    =================================================== -->
-
-    <article
-      class="client-card"
-      data-name="Alderete Rosario Isabel"
-      data-number="3149882"
-      data-route="3140"
-      data-vendor="Zehid Ricardo Miguel"
-    >
-
-      <div class="client-top">
-
-        <div class="client-data">
-
-          <h2 class="client-name">
-            Alderete Rosario Isabel
-          </h2>
-
-          <div class="client-number">
-            Número: 3149882
-            <br>
-            Ruta: 3140
-          </div>
-
-          <div class="vendor">
-
-            <span class="vendor-icon">
-              👤
-            </span>
-
-            <span>
-              Zehid, Ricardo Miguel
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <!-- PUNTAJE CIRCULAR VERDE -->
-
-        <div class="points-circle good">
-
-          <div class="points-content">
-
-            <span class="points-number">
-              97
-            </span>
-
-            <span class="points-total">
-              / 100 pts
-            </span>
-
-          </div>
-
-          <div class="score-status">
-            EXCELENTE
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="objective-panel">
-
-        <div class="objective-item">
-
-          <div class="objective-title">
-
-            <span class="objective-icon">
-              🎯
-            </span>
-
-            <span>
-              Objetivo
-            </span>
-
-          </div>
-
-          <div class="objective-value">
-            159 Cajas
-          </div>
-
-        </div>
-
-
-        <div class="objective-item">
-
-          <div class="objective-title">
-
-            <span class="objective-icon">
-              📦
-            </span>
-
-            <span>
-              Avance
-            </span>
-
-          </div>
-
-          <div class="objective-value">
-            343 Cajas
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <div class="progress-row">
-
-        <div class="circle-value">
-          97
-        </div>
-
-        <div class="progress-area good">
-
-          <div class="progress-percent">
-            97%
-          </div>
-
-          <div class="progress-track">
-
-            <div
-              class="progress-fill"
-              style="width: 97%;"
-            ></div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </article>
-
-
-    <!-- SIN RESULTADOS -->
-
-    <div
-      id="noResults"
-      class="no-results"
-    >
-      No se encontraron clientes.
     </div>
 
-  </main>
-
-
-  <!-- ==================================================
-       NAVEGACIÓN INFERIOR
-  =================================================== -->
-
-  <nav class="bottom-nav">
-
-    <button class="nav-button">
-
-      <span class="nav-icon">
-        🏠
-      </span>
-
-      <span>
-        Inicio
-      </span>
-
-    </button>
-
-
-    <button class="nav-button">
-
-      <span class="nav-icon">
-        🛣️
-      </span>
-
-      <span>
-        Rutas
-      </span>
-
-    </button>
-
-
-    <button class="nav-button active">
-
-      <span class="nav-icon">
-        👥
-      </span>
-
-      <span>
-        Clientes
-      </span>
-
-    </button>
-
-
-    <button class="nav-button">
-
-      <span class="nav-icon">
-        🚨
-      </span>
-
-      <span>
-        Alertas
-      </span>
-
-    </button>
-
-  </nav>
-
-
-  <!-- ==================================================
-       JAVASCRIPT
-  =================================================== -->
-
-  <script>
-
-    const searchClient =
-      document.getElementById(
-        "searchClient"
-      );
-
-    const routeFilter =
-      document.getElementById(
-        "routeFilter"
-      );
-
-    const clientCards =
-      document.querySelectorAll(
-        ".client-card"
-      );
-
-    const noResults =
-      document.getElementById(
-        "noResults"
-      );
-
-
-    function normalizarTexto(texto) {
-
-      return texto
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(
-          /[\u0300-\u036f]/g,
-          ""
-        )
-        .trim();
-
-    }
-
-
-    function filterClients() {
-
-      const search =
-        normalizarTexto(
-          searchClient.value
-        );
-
-      const route =
-        routeFilter.value.trim();
-
-      let visibles = 0;
-
-
-      clientCards.forEach(card => {
-
-        const name =
-          normalizarTexto(
-            card.dataset.name || ""
-          );
-
-        const number =
-          normalizarTexto(
-            card.dataset.number || ""
-          );
-
-        const cardRoute =
-          normalizarTexto(
-            card.dataset.route || ""
-          );
-
-        const vendor =
-          normalizarTexto(
-            card.dataset.vendor || ""
-          );
-
-
-        const matchesSearch =
-
-          !search ||
-
-          name.includes(search) ||
-
-          number.includes(search) ||
-
-          cardRoute.includes(search) ||
-
-          vendor.includes(search);
-
-
-        const matchesRoute =
-
-          !route ||
-
-          card.dataset.route === route;
-
-
-        if (
-          matchesSearch &&
-          matchesRoute
-        ) {
-
-          card.style.display =
-            "";
-
-          visibles++;
-
-        } else {
-
-          card.style.display =
-            "none";
-
-        }
-
-      });
-
-
-      if (visibles === 0) {
-
-        noResults.style.display =
-          "block";
-
-      } else {
-
-        noResults.style.display =
-          "none";
-
-      }
-
-    }
-
-
-    searchClient.addEventListener(
-      "input",
-      filterClients
-    );
-
-
-    routeFilter.addEventListener(
-      "change",
-      filterClients
-    );
-
-  </script>
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <span class="metric-label">🎯 Objetivo</span>
+        <span class="metric-value">159 Cajas</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-label">📦 Avance</span>
+        <span class="metric-value">343 Cajas</span>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-header">
+        <span>Cumplimiento</span>
+        <span class="status-ok">97%</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill fill-ok" style="width: 97%;"></div>
+      </div>
+    </div>
+
+    <span class="status-tag tag-ok">EXCELENTE</span>
+  </div>
+
+  <!-- Cliente 2 (Fuera de Rango) -->
+  <div class="client-card">
+    <div class="card-top">
+      <div>
+        <h3 class="client-name">Bauza Gaya Bartolome</h3>
+        <div class="client-id">Código: #3196443 · Ruta 3140</div>
+        <div class="client-vendor">👤 Zehid, Ricardo Miguel</div>
+      </div>
+      <div class="score-circle status-bad">
+        <svg viewBox="0 0 36 36">
+          <path class="bg-track" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <path class="progress-track" stroke-dasharray="57, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+        </svg>
+        <div class="val">57<small>/100</small></div>
+      </div>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-item">
+        <span class="metric-label">🎯 Objetivo</span>
+        <span class="metric-value">159 Cajas</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-label">📦 Avance</span>
+        <span class="metric-value">137 Cajas</span>
+      </div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-header">
+        <span>Cumplimiento</span>
+        <span class="status-bad">57%</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill fill-bad" style="width: 57%;"></div>
+      </div>
+    </div>
+
+    <span class="status-tag tag-bad">FUERA DE RANGO</span>
+  </div>
+
+</div>
+
+<!-- Bottom Nav Grid -->
+<nav class="bottom-nav">
+  <button class="nav-item">🏠<span>Inicio</span></button>
+  <button class="nav-item">🗺️<span>Rutas</span></button>
+  <button class="nav-item active">👥<span>Clientes</span></button>
+  <button class="nav-item">🔔<span>Alertas</span></button>
+</nav>
 
 </body>
 </html>
