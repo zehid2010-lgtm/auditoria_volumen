@@ -731,25 +731,18 @@
 
 
 
-    /* ================= CLIENTES - TARJETAS POR COLOR DE RUTA ================= */
-    .route-theme-0{--client-route:#f20b17;--client-route-dark:#d60010;--client-soft:#fff0f1;--client-border:#ffb8bd}
-    .route-theme-1{--client-route:#ff8108;--client-route-dark:#ed6b00;--client-soft:#fff4e8;--client-border:#ffc27f}
-    .route-theme-2{--client-route:#9b3ce9;--client-route-dark:#7f27d2;--client-soft:#f7edff;--client-border:#d9afff}
-    .route-theme-3{--client-route:#3293ee;--client-route-dark:#1978d6;--client-soft:#edf6ff;--client-border:#a9d5ff}
-    .route-theme-4{--client-route:#35ba70;--client-route-dark:#219a58;--client-soft:#edfbf3;--client-border:#9be0b8}
-    .route-theme-5{--client-route:#ff416f;--client-route-dark:#e72a59;--client-soft:#fff0f4;--client-border:#ffacc1}
+    /* ================= CLIENTES - DISEÑO LIMPIO + SEMÁFORO ================= */
+    /* El color de la ruta NO se aplica a las tarjetas de clientes. */
 
     /* Semáforo de cumplimiento de VOLUMEN (avance / objetivo) */
     .volume-status-green{--volume-status:#16a34a;--volume-status-dark:#0f8a3d;--volume-status-soft:#ecfdf3;--volume-status-border:#86efac}
-    .volume-status-yellow{--volume-status:#eab308;--volume-status-dark:#ca8a04;--volume-status-soft:#fffbea;--volume-status-border:#fde68a}
     .volume-status-orange{--volume-status:#f97316;--volume-status-dark:#ea580c;--volume-status-soft:#fff7ed;--volume-status-border:#fdba74}
+    .volume-status-yellow{--volume-status:#eab308;--volume-status-dark:#ca8a04;--volume-status-soft:#fffbea;--volume-status-border:#fde68a}
     .volume-status-red{--volume-status:#e30613;--volume-status-dark:#c4000d;--volume-status-soft:#fff1f2;--volume-status-border:#fda4af}
 
     .client-volume-card{
       background:#fff;
-      border:1px solid #e8e8e8;
-      border-top:5px solid var(--client-route);
-      border-left:6px solid var(--volume-status);
+      border:1px solid #e7e7e7;
       border-radius:24px;
       padding:20px;
       box-shadow:0 8px 22px rgba(0,0,0,.055);
@@ -763,29 +756,34 @@
     .client-volume-name{font-size:20px;line-height:1.15;font-weight:950;color:#181818;margin:0 0 9px}
     .client-volume-meta{font-size:14px;line-height:1.55;color:#667085}
     .client-volume-vendor{margin-top:7px;display:flex;align-items:flex-start;gap:7px;color:#34205e;font-size:14px;line-height:1.35;font-weight:800}
-    .client-volume-vendor .vendor-person{color:var(--client-route);font-size:15px;line-height:1}
+    .client-volume-vendor .vendor-person{color:#47258a;font-size:15px;line-height:1}
 
+    /* Puntaje: color semántico por puntos, sin depender de la ruta */
     .client-route-score{
       width:134px;height:134px;flex:0 0 134px;border-radius:50%;
-      border:3px solid var(--client-border);background:var(--client-soft);
+      border:3px solid #ffc0c4;background:#fff1f2;
       display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-      color:var(--client-route);box-shadow:0 8px 20px rgba(0,0,0,.045);
+      color:#e30613;box-shadow:0 8px 20px rgba(0,0,0,.045);
     }
+    .client-route-score.score-excelente{border-color:#86efac;background:#ecfdf3;color:#16a34a}
+    .client-route-score.score-medio{border-color:#fdba74;background:#fff7ed;color:#f97316}
+    .client-route-score.score-bajo{border-color:#fde68a;background:#fffbea;color:#ca8a04}
+    .client-route-score.score-fuera{border-color:#ffc0c4;background:#fff1f2;color:#e30613}
+
     .client-route-score-line{display:flex;align-items:baseline;justify-content:center;gap:4px;white-space:nowrap;line-height:1}
     .client-route-score-points{font-size:43px;font-weight:950;letter-spacing:-1.3px}
     .client-route-score-max{font-size:13px;font-weight:950}
     .client-route-score-status{
-      margin-top:9px;padding:6px 11px;border-radius:999px;background:var(--client-route);
-      color:#fff;font-size:8px;line-height:1;font-weight:950;text-transform:uppercase;white-space:nowrap;
+      margin-top:9px;padding:6px 11px;border-radius:999px;background:currentColor;
+      font-size:8px;line-height:1;font-weight:950;text-transform:uppercase;white-space:nowrap;
     }
+    .client-route-score-status span{color:#fff}
 
+    /* Objetivo / avance vuelve al gris neutro del diseño anterior */
     .client-oa-panel{
-      margin-top:17px;background:linear-gradient(180deg,#f7f8fa,var(--volume-status-soft));border:1px solid var(--volume-status-border);border-radius:18px;padding:15px 20px;
+      margin-top:17px;background:#f5f7fa;border:none;border-radius:18px;padding:17px 20px;
       display:grid;grid-template-columns:1fr 1fr;gap:18px;
     }
-    .volume-status-line{grid-column:1 / -1;display:flex;align-items:center;justify-content:flex-end;margin-top:-2px}
-    .volume-status-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;background:var(--volume-status);color:#fff;font-size:9px;line-height:1;font-weight:950;text-transform:uppercase;white-space:nowrap}
-
     .client-oa-label{display:flex;align-items:center;gap:7px;color:#62738c;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2px}
     .client-oa-icon{font-size:13px}
     .client-oa-value{margin-top:7px;font-size:17px;line-height:1.2;font-weight:950;color:#060606}
@@ -803,26 +801,26 @@
       box-shadow:0 9px 22px rgba(0,0,0,.11);
     }
     .client-route-pct{min-width:65px;font-size:20px;font-weight:950;line-height:1}
-    .client-route-track{position:relative;flex:1;height:36px;border-radius:999px;background:rgba(0,0,0,.17);overflow:hidden}
-    .client-route-fill{height:100%;min-width:12px;border-radius:999px;background:rgba(255,255,255,.94)}
+    .client-route-track{position:relative;flex:1;height:36px;border-radius:999px;background:rgba(0,0,0,.14);overflow:hidden}
+    .client-route-fill{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,.94);border-radius:999px}
 
-    @media(max-width:450px){
-      .client-volume-card{padding:16px;border-radius:21px}
+    @media(max-width:410px){
+      .client-volume-card{padding:16px}
       .client-volume-top{gap:10px}
       .client-volume-name{font-size:17px}
       .client-volume-meta,.client-volume-vendor{font-size:12px}
-      .client-route-score{width:110px;height:110px;flex-basis:110px}
-      .client-route-score-points{font-size:32px}
+      .client-route-score{width:112px;height:112px;flex-basis:112px}
+      .client-route-score-points{font-size:31px}
       .client-route-score-max{font-size:10px}
-      .client-route-score-status{font-size:6.5px;padding:5px 7px;margin-top:6px}
-      .client-oa-panel{padding:13px 14px;gap:10px}
+      .client-route-score-status{padding:5px 7px;font-size:7px}
+      .client-oa-panel{padding:14px 15px;gap:10px}
       .client-oa-label{font-size:10px}
-      .client-oa-value{font-size:14px}
-      .client-route-progress{gap:9px}
-      .client-route-number{width:58px;height:58px;flex-basis:58px;font-size:19px}
-      .client-route-bar{height:58px;padding:8px 12px;gap:8px}
-      .client-route-pct{min-width:49px;font-size:16px}
-      .client-route-track{height:29px}
+      .client-oa-value{font-size:15px}
+      .client-route-progress{gap:10px}
+      .client-route-number{width:62px;height:62px;flex-basis:62px;font-size:20px}
+      .client-route-bar{height:63px;padding:8px 14px;gap:8px}
+      .client-route-pct{min-width:54px;font-size:17px}
+      .client-route-track{height:31px}
     }
 
 </style>
@@ -1639,18 +1637,18 @@
 
     function getVolumeStatusClass(pct){
       const p = Number(pct || 0);
-      if(p >= 100) return 'volume-status-green';
-      if(p >= 80) return 'volume-status-yellow';
-      if(p >= 60) return 'volume-status-orange';
+      if(p >= 80) return 'volume-status-green';
+      if(p >= 70) return 'volume-status-orange';
+      if(p >= 60) return 'volume-status-yellow';
       return 'volume-status-red';
     }
 
     function getVolumeStatusText(pct){
       const p = Number(pct || 0);
-      if(p >= 100) return 'Objetivo cumplido';
-      if(p >= 80) return 'Cerca del objetivo';
-      if(p >= 60) return 'Atención';
-      return 'Bajo avance';
+      if(p >= 80) return 'Verde';
+      if(p >= 70) return 'Naranja';
+      if(p >= 60) return 'Amarillo';
+      return 'Rojo';
     }
 
     function renderClientVolumeCard(c, backMode='clients'){
@@ -1662,7 +1660,7 @@
       const volumeStatusText = getVolumeStatusText(volumePctRaw);
       const routeNum = String(c.ruta || '').slice(-2).padStart(2,'0');
       return `
-        <div class="client-volume-card ${getRouteThemeClass(c.ruta)} ${volumeStatusClass}" onclick="openClientDetail('${escapeHtml(c.key)}','${backMode}')">
+        <div class="client-volume-card ${volumeStatusClass}" onclick="openClientDetail('${escapeHtml(c.key)}','${backMode}')">
           <div class="client-volume-top">
             <div class="client-volume-data">
               <div class="client-volume-name">${escapeHtml(c.cliente)}</div>
@@ -1673,12 +1671,12 @@
               <div class="client-volume-vendor"><span class="vendor-person">♟</span><span>${escapeHtml(c.vendedor || '-')}</span></div>
             </div>
 
-            <div class="client-route-score">
+            <div class="client-route-score score-${getClientScoreBadgeClass(score.total)}">
               <div class="client-route-score-line">
                 <span class="client-route-score-points">${formatNumber(score.total)}</span>
                 <span class="client-route-score-max">/ ${score.max} pts</span>
               </div>
-              <div class="client-route-score-status">${getClientScoreStatus(score.total)}</div>
+              <div class="client-route-score-status"><span>${getClientScoreStatus(score.total)}</span></div>
             </div>
           </div>
 
@@ -1691,7 +1689,6 @@
               <div class="client-oa-label"><span class="client-oa-icon">📦</span><span>Avance</span></div>
               <div class="client-oa-value">${formatNumber(c.totalReal)} Cajas</div>
             </div>
-            <div class="volume-status-line"><span class="volume-status-chip">${volumeStatusText}</span></div>
           </div>
 
           <div class="client-route-progress">
