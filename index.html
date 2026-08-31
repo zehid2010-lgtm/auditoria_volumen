@@ -729,6 +729,92 @@
       .route-modern-title{font-size:15px}.route-modern-btn{font-size:9px;padding:9px 9px}
     }
 
+
+
+    /* ================= CLIENTES - TARJETAS POR COLOR DE RUTA ================= */
+    .route-theme-0{--client-route:#f20b17;--client-route-dark:#d60010;--client-soft:#fff0f1;--client-border:#ffb8bd}
+    .route-theme-1{--client-route:#ff8108;--client-route-dark:#ed6b00;--client-soft:#fff4e8;--client-border:#ffc27f}
+    .route-theme-2{--client-route:#9b3ce9;--client-route-dark:#7f27d2;--client-soft:#f7edff;--client-border:#d9afff}
+    .route-theme-3{--client-route:#3293ee;--client-route-dark:#1978d6;--client-soft:#edf6ff;--client-border:#a9d5ff}
+    .route-theme-4{--client-route:#35ba70;--client-route-dark:#219a58;--client-soft:#edfbf3;--client-border:#9be0b8}
+    .route-theme-5{--client-route:#ff416f;--client-route-dark:#e72a59;--client-soft:#fff0f4;--client-border:#ffacc1}
+
+    .client-volume-card{
+      background:#fff;
+      border:1px solid #e8e8e8;
+      border-top:5px solid var(--client-route);
+      border-radius:24px;
+      padding:20px;
+      box-shadow:0 8px 22px rgba(0,0,0,.055);
+      cursor:pointer;
+      overflow:hidden;
+      transition:transform .12s ease, box-shadow .12s ease;
+    }
+    .client-volume-card:active{transform:scale(.992)}
+    .client-volume-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+    .client-volume-data{min-width:0;flex:1}
+    .client-volume-name{font-size:20px;line-height:1.15;font-weight:950;color:#181818;margin:0 0 9px}
+    .client-volume-meta{font-size:14px;line-height:1.55;color:#667085}
+    .client-volume-vendor{margin-top:7px;display:flex;align-items:flex-start;gap:7px;color:#34205e;font-size:14px;line-height:1.35;font-weight:800}
+    .client-volume-vendor .vendor-person{color:var(--client-route);font-size:15px;line-height:1}
+
+    .client-route-score{
+      width:134px;height:134px;flex:0 0 134px;border-radius:50%;
+      border:3px solid var(--client-border);background:var(--client-soft);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+      color:var(--client-route);box-shadow:0 8px 20px rgba(0,0,0,.045);
+    }
+    .client-route-score-line{display:flex;align-items:baseline;justify-content:center;gap:4px;white-space:nowrap;line-height:1}
+    .client-route-score-points{font-size:43px;font-weight:950;letter-spacing:-1.3px}
+    .client-route-score-max{font-size:13px;font-weight:950}
+    .client-route-score-status{
+      margin-top:9px;padding:6px 11px;border-radius:999px;background:var(--client-route);
+      color:#fff;font-size:8px;line-height:1;font-weight:950;text-transform:uppercase;white-space:nowrap;
+    }
+
+    .client-oa-panel{
+      margin-top:17px;background:#f4f6f9;border-radius:18px;padding:15px 20px;
+      display:grid;grid-template-columns:1fr 1fr;gap:18px;
+    }
+    .client-oa-label{display:flex;align-items:center;gap:7px;color:#62738c;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2px}
+    .client-oa-icon{font-size:13px}
+    .client-oa-value{margin-top:7px;font-size:17px;line-height:1.2;font-weight:950;color:#060606}
+
+    .client-route-progress{display:flex;align-items:center;gap:15px;margin-top:18px}
+    .client-route-number{
+      width:72px;height:72px;flex:0 0 72px;border-radius:50%;display:grid;place-items:center;
+      background:linear-gradient(145deg,#fff,#eeeeee);border:1px solid #d7d7d7;color:#111;
+      font-size:23px;font-weight:950;box-shadow:0 6px 15px rgba(0,0,0,.06);
+    }
+    .client-route-bar{
+      flex:1;min-width:0;height:72px;border-radius:999px;padding:10px 20px;
+      display:flex;align-items:center;gap:14px;color:#fff;
+      background:linear-gradient(90deg,var(--client-route),var(--client-route-dark));
+      box-shadow:0 9px 22px rgba(0,0,0,.11);
+    }
+    .client-route-pct{min-width:65px;font-size:20px;font-weight:950;line-height:1}
+    .client-route-track{position:relative;flex:1;height:36px;border-radius:999px;background:rgba(0,0,0,.17);overflow:hidden}
+    .client-route-fill{height:100%;min-width:12px;border-radius:999px;background:rgba(255,255,255,.94)}
+
+    @media(max-width:450px){
+      .client-volume-card{padding:16px;border-radius:21px}
+      .client-volume-top{gap:10px}
+      .client-volume-name{font-size:17px}
+      .client-volume-meta,.client-volume-vendor{font-size:12px}
+      .client-route-score{width:110px;height:110px;flex-basis:110px}
+      .client-route-score-points{font-size:32px}
+      .client-route-score-max{font-size:10px}
+      .client-route-score-status{font-size:6.5px;padding:5px 7px;margin-top:6px}
+      .client-oa-panel{padding:13px 14px;gap:10px}
+      .client-oa-label{font-size:10px}
+      .client-oa-value{font-size:14px}
+      .client-route-progress{gap:9px}
+      .client-route-number{width:58px;height:58px;flex-basis:58px;font-size:19px}
+      .client-route-bar{height:58px;padding:8px 12px;gap:8px}
+      .client-route-pct{min-width:49px;font-size:16px}
+      .client-route-track{height:29px}
+    }
+
 </style>
 </head>
 <body>
@@ -1469,6 +1555,18 @@
     function goToRoutes(){ goTo('routes'); document.getElementById('nav-routes').classList.add('active'); renderRoutes(); }
     function goToClients(){ goTo('clients'); document.getElementById('nav-clients').classList.add('active'); renderClients(); }
 
+    function getRouteThemeIndex(route){
+      const digits = String(route || '').replace(/\D/g,'');
+      const suffix = digits.slice(-2);
+      const fixed = { '16':0, '17':1, '40':2, '41':3, '42':4, '43':5, '44':0, '45':1 };
+      if(Object.prototype.hasOwnProperty.call(fixed, suffix)) return fixed[suffix];
+      const n = Number(suffix);
+      return Number.isFinite(n) ? Math.abs(n) % 6 : 0;
+    }
+
+    function getRouteThemeClass(route){ return `route-theme-${getRouteThemeIndex(route)}`; }
+    function getRouteCardClass(route){ return `route-c${getRouteThemeIndex(route)}`; }
+
     function renderRoutes(){
       const q = normalizeKey(document.getElementById('routeSearch').value), sort = document.getElementById('routeSort').value;
       let data = state.routes.filter(r => !q || [r.ruta, r.vendedor].some(v => normalizeKey(v).includes(q)));
@@ -1494,7 +1592,7 @@
       empty.style.display = 'none';
 
       box.innerHTML = data.map((r,idx) => `
-        <div class="route-modern-card route-c${idx % 6}" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
+        <div class="route-modern-card ${getRouteCardClass(r.ruta)}" onclick="openRouteDetail('${escapeHtml(r.ruta)}')">
           <div class="route-modern-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="6" cy="6" r="2.5" stroke="currentColor" stroke-width="2"/>
@@ -1519,11 +1617,55 @@
       document.getElementById('routeDetailTitle').textContent = `Ruta ${route.ruta}`;
       document.getElementById('routeDetailSub').textContent = `Vendedor: ${route.vendedor || '-'} · Seguimiento ejecutivo de volumen`;
       document.getElementById('routeDetailMeta').innerHTML = `<b>Ruta:</b> ${escapeHtml(route.ruta)}<br><b>Vendedor:</b> ${escapeHtml(route.vendedor || '-')}<br><b>Semáforo:</b> ${route.semaforoText}`;
-      document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => {
-        const score = getClientMonthlyScore(c);
-        return `<div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','route')"><div class="client-score-layout"><div class="client-score-info"><div class="item-title">${escapeHtml(c.cliente)}</div><div class="item-meta">Número: ${escapeHtml(c.numero || '-')}<br>Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS</div><div class="score-progress-wrap"><div class="score-progress-rank">${String(c.ruta || '').slice(-2).padStart(2,'0')}</div><div class="score-progress-bar ${getClientScoreProgressClass(score.total)}"><div class="pct-label">${getClientScorePercent(score.total, score.max)}%</div><div class="score-progress-track"><div class="score-progress-fill" style="width:${clamp((score.total / score.max) * 100,0,100)}%"></div></div></div></div></div><div class="client-score-box ${getClientScoreBadgeClass(score.total)}"><div class="client-score-line"><span class="client-score-points">${formatNumber(score.total)}</span><span class="client-score-max">/ ${score.max} pts</span></div><div class="client-score-status">${getClientScoreStatus(score.total)}</div></div></div></div>`;
-      }).join('');
+      document.getElementById('routeClients').innerHTML = route.rows.slice().sort((a,b)=> String(a.cliente).localeCompare(String(b.cliente), 'es')).map(c => renderClientVolumeCard(c, 'route')).join('');
       goTo('route-detail');
+    }
+
+    function renderClientVolumeCard(c, backMode='clients'){
+      const score = getClientMonthlyScore(c);
+      const pct = getClientScorePercent(score.total, score.max);
+      const routeNum = String(c.ruta || '').slice(-2).padStart(2,'0');
+      return `
+        <div class="client-volume-card ${getRouteThemeClass(c.ruta)}" onclick="openClientDetail('${escapeHtml(c.key)}','${backMode}')">
+          <div class="client-volume-top">
+            <div class="client-volume-data">
+              <div class="client-volume-name">${escapeHtml(c.cliente)}</div>
+              <div class="client-volume-meta">
+                Número: ${escapeHtml(c.numero || '-')}<br>
+                Ruta: ${escapeHtml(c.ruta || '-')}
+              </div>
+              <div class="client-volume-vendor"><span class="vendor-person">♟</span><span>${escapeHtml(c.vendedor || '-')}</span></div>
+            </div>
+
+            <div class="client-route-score">
+              <div class="client-route-score-line">
+                <span class="client-route-score-points">${formatNumber(score.total)}</span>
+                <span class="client-route-score-max">/ ${score.max} pts</span>
+              </div>
+              <div class="client-route-score-status">${getClientScoreStatus(score.total)}</div>
+            </div>
+          </div>
+
+          <div class="client-oa-panel">
+            <div>
+              <div class="client-oa-label"><span class="client-oa-icon">🎯</span><span>Objetivo</span></div>
+              <div class="client-oa-value">${formatNumber(c.totalObjetivo)} Cajas</div>
+            </div>
+            <div>
+              <div class="client-oa-label"><span class="client-oa-icon">📦</span><span>Avance</span></div>
+              <div class="client-oa-value">${formatNumber(c.totalReal)} Cajas</div>
+            </div>
+          </div>
+
+          <div class="client-route-progress">
+            <div class="client-route-number">${routeNum}</div>
+            <div class="client-route-bar">
+              <div class="client-route-pct">${pct}%</div>
+              <div class="client-route-track"><div class="client-route-fill" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function renderClients(){
@@ -1531,10 +1673,7 @@
       const data = state.clients.filter(c => { const matchesText = !q || [c.numero, c.cliente, c.ruta, c.vendedor].some(v => normalizeKey(v).includes(q)); const matchesRoute = !routeFilter || String(c.ruta) === String(routeFilter); return matchesText && matchesRoute; });
       const box = document.getElementById('clientResults'), empty = document.getElementById('clientEmpty');
       if(!data.length){ box.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none';
-      box.innerHTML = data.map(c => {
-        const score = getClientMonthlyScore(c);
-        return `<div class="item client-card" onclick="openClientDetail('${escapeHtml(c.key)}','clients')"><div class="client-score-layout"><div class="client-score-info"><div class="item-title">${escapeHtml(c.cliente)}</div><div class="item-meta">Número: ${escapeHtml(c.numero || '-')}<br>Ruta: ${escapeHtml(c.ruta || '-')} · Vendedor: ${escapeHtml(c.vendedor || '-')}<br>🎯 Objetivo: ${formatNumber(c.totalObjetivo)} CAJAS FÍSICAS · 📦 Avance: ${formatNumber(c.totalReal)} CAJAS FÍSICAS</div><div class="score-progress-wrap"><div class="score-progress-rank">${String(c.ruta || '').slice(-2).padStart(2,'0')}</div><div class="score-progress-bar ${getClientScoreProgressClass(score.total)}"><div class="pct-label">${getClientScorePercent(score.total, score.max)}%</div><div class="score-progress-track"><div class="score-progress-fill" style="width:${clamp((score.total / score.max) * 100,0,100)}%"></div></div></div></div></div><div class="client-score-box ${getClientScoreBadgeClass(score.total)}"><div class="client-score-line"><span class="client-score-points">${formatNumber(score.total)}</span><span class="client-score-max">/ ${score.max} pts</span></div><div class="client-score-status">${getClientScoreStatus(score.total)}</div></div></div></div>`;
-      }).join('');
+      box.innerHTML = data.map(c => renderClientVolumeCard(c, 'clients')).join('');
     }
 
     function openClientDetail(key, backMode='clients'){
