@@ -739,10 +739,17 @@
     .route-theme-4{--client-route:#35ba70;--client-route-dark:#219a58;--client-soft:#edfbf3;--client-border:#9be0b8}
     .route-theme-5{--client-route:#ff416f;--client-route-dark:#e72a59;--client-soft:#fff0f4;--client-border:#ffacc1}
 
+    /* Semáforo de cumplimiento de VOLUMEN (avance / objetivo) */
+    .volume-status-green{--volume-status:#16a34a;--volume-status-dark:#0f8a3d;--volume-status-soft:#ecfdf3;--volume-status-border:#86efac}
+    .volume-status-yellow{--volume-status:#eab308;--volume-status-dark:#ca8a04;--volume-status-soft:#fffbea;--volume-status-border:#fde68a}
+    .volume-status-orange{--volume-status:#f97316;--volume-status-dark:#ea580c;--volume-status-soft:#fff7ed;--volume-status-border:#fdba74}
+    .volume-status-red{--volume-status:#e30613;--volume-status-dark:#c4000d;--volume-status-soft:#fff1f2;--volume-status-border:#fda4af}
+
     .client-volume-card{
       background:#fff;
       border:1px solid #e8e8e8;
       border-top:5px solid var(--client-route);
+      border-left:6px solid var(--volume-status);
       border-radius:24px;
       padding:20px;
       box-shadow:0 8px 22px rgba(0,0,0,.055);
@@ -773,9 +780,12 @@
     }
 
     .client-oa-panel{
-      margin-top:17px;background:#f4f6f9;border-radius:18px;padding:15px 20px;
+      margin-top:17px;background:linear-gradient(180deg,#f7f8fa,var(--volume-status-soft));border:1px solid var(--volume-status-border);border-radius:18px;padding:15px 20px;
       display:grid;grid-template-columns:1fr 1fr;gap:18px;
     }
+    .volume-status-line{grid-column:1 / -1;display:flex;align-items:center;justify-content:flex-end;margin-top:-2px}
+    .volume-status-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;background:var(--volume-status);color:#fff;font-size:9px;line-height:1;font-weight:950;text-transform:uppercase;white-space:nowrap}
+
     .client-oa-label{display:flex;align-items:center;gap:7px;color:#62738c;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.2px}
     .client-oa-icon{font-size:13px}
     .client-oa-value{margin-top:7px;font-size:17px;line-height:1.2;font-weight:950;color:#060606}
@@ -789,7 +799,7 @@
     .client-route-bar{
       flex:1;min-width:0;height:72px;border-radius:999px;padding:10px 20px;
       display:flex;align-items:center;gap:14px;color:#fff;
-      background:linear-gradient(90deg,var(--client-route),var(--client-route-dark));
+      background:linear-gradient(90deg,var(--volume-status),var(--volume-status-dark));
       box-shadow:0 9px 22px rgba(0,0,0,.11);
     }
     .client-route-pct{min-width:65px;font-size:20px;font-weight:950;line-height:1}
@@ -1621,12 +1631,38 @@
       goTo('route-detail');
     }
 
+    function getVolumeProgressPct(c){
+      const objetivo = Number(c?.totalObjetivo || 0);
+      const avance = Number(c?.totalReal || 0);
+      return objetivo > 0 ? (avance / objetivo) * 100 : 0;
+    }
+
+    function getVolumeStatusClass(pct){
+      const p = Number(pct || 0);
+      if(p >= 100) return 'volume-status-green';
+      if(p >= 80) return 'volume-status-yellow';
+      if(p >= 60) return 'volume-status-orange';
+      return 'volume-status-red';
+    }
+
+    function getVolumeStatusText(pct){
+      const p = Number(pct || 0);
+      if(p >= 100) return 'Objetivo cumplido';
+      if(p >= 80) return 'Cerca del objetivo';
+      if(p >= 60) return 'Atención';
+      return 'Bajo avance';
+    }
+
     function renderClientVolumeCard(c, backMode='clients'){
       const score = getClientMonthlyScore(c);
-      const pct = getClientScorePercent(score.total, score.max);
+      const volumePctRaw = getVolumeProgressPct(c);
+      const volumePct = Math.round(volumePctRaw);
+      const volumeFill = clamp(volumePctRaw,0,100);
+      const volumeStatusClass = getVolumeStatusClass(volumePctRaw);
+      const volumeStatusText = getVolumeStatusText(volumePctRaw);
       const routeNum = String(c.ruta || '').slice(-2).padStart(2,'0');
       return `
-        <div class="client-volume-card ${getRouteThemeClass(c.ruta)}" onclick="openClientDetail('${escapeHtml(c.key)}','${backMode}')">
+        <div class="client-volume-card ${getRouteThemeClass(c.ruta)} ${volumeStatusClass}" onclick="openClientDetail('${escapeHtml(c.key)}','${backMode}')">
           <div class="client-volume-top">
             <div class="client-volume-data">
               <div class="client-volume-name">${escapeHtml(c.cliente)}</div>
@@ -1655,13 +1691,14 @@
               <div class="client-oa-label"><span class="client-oa-icon">📦</span><span>Avance</span></div>
               <div class="client-oa-value">${formatNumber(c.totalReal)} Cajas</div>
             </div>
+            <div class="volume-status-line"><span class="volume-status-chip">${volumeStatusText}</span></div>
           </div>
 
           <div class="client-route-progress">
             <div class="client-route-number">${routeNum}</div>
             <div class="client-route-bar">
-              <div class="client-route-pct">${pct}%</div>
-              <div class="client-route-track"><div class="client-route-fill" style="width:${pct}%"></div></div>
+              <div class="client-route-pct">${volumePct}%</div>
+              <div class="client-route-track"><div class="client-route-fill" style="width:${volumeFill}%"></div></div>
             </div>
           </div>
         </div>
