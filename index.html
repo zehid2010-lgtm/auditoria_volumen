@@ -1789,6 +1789,11 @@
       referencesUrl.searchParams.set('cliente', referencesCode);
       referencesUrl.searchParams.set('origen', 'volumen');
       references.href = referencesUrl.href;
+      references.onclick = () => {
+        const fichaUrl = new URL(location.href);
+        fichaUrl.searchParams.set('cliente', referencesCode);
+        history.replaceState(history.state, '', fichaUrl);
+      };
       document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente';
       document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
       document.getElementById('clientDetailMeta').innerHTML = `<b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br><b>Número:</b> ${escapeHtml(client.numero || '-')}<br><b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br><b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br><b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br><b>Teléfono:</b> ${escapeHtml(client.telefono || '-')}<br><b>Semáforo general:</b> ${client.semaforoText}`;
