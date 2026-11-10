@@ -1085,10 +1085,11 @@
           <button class="back-btn" onclick="backFromClientDetail()">Volver atrás</button>
           <h2 class="tool-title" id="clientDetailTitle" style="margin-top:14px;">Cliente</h2>
           <p class="tool-sub" id="clientDetailSub">Detalle por categoría.</p>
-          <details id="clientReferences" style="margin-top:14px;">
-            <summary class="back-btn" style="cursor:pointer;">Referencias</summary>
-            <iframe id="clientReferencesFrame" title="Referencias del cliente" style="width:100%;height:75vh;border:0;margin-top:12px;"></iframe>
-          </details>
+          <a id="clientReferences" style="box-sizing:border-box;display:flex;align-items:center;gap:12px;margin-top:14px;padding:14px;border:1px solid #e90012;border-radius:16px;background:#fff;color:#161616;text-decoration:none;">
+            <span aria-hidden="true" style="background:#ffe7e8;border-radius:10px;padding:9px;font-size:22px;">📋</span>
+            <span style="flex:1;"><strong>Ver referencias</strong><br><small>Compradas y pendientes del cliente</small></span>
+            <span aria-hidden="true" style="color:#e90012;font-size:24px;">→</span>
+          </a>
         </div>
 
         <div class="panel">
@@ -1782,21 +1783,12 @@
     function openClientDetail(key, backMode='clients'){
       state.selectedClientKey = key; state.clientBackMode = backMode; const client = state.clients.find(c => c.key === key); if(!client) return;
       const references = document.getElementById('clientReferences');
-      const referencesFrame = document.getElementById('clientReferencesFrame');
       const referencesCode = cleanNumberKey(client.numero);
-      references.hidden = !referencesCode;
-      if (references.dataset.client !== referencesCode) {
-        references.open = false;
-        referencesFrame.removeAttribute('src');
-        references.dataset.client = referencesCode;
-      }
-      references.ontoggle = () => {
-        if (references.open && referencesCode && !referencesFrame.hasAttribute('src')) {
-          const url = new URL('https://zehid2010-lgtm.github.io/app-Referencias2026/');
-          url.searchParams.set('cliente', referencesCode);
-          referencesFrame.src = url.href;
-        }
-      };
+      references.style.display = referencesCode ? 'flex' : 'none';
+      const referencesUrl = new URL('../app-Referencias2026/', location.href);
+      referencesUrl.searchParams.set('cliente', referencesCode);
+      referencesUrl.searchParams.set('origen', 'volumen');
+      references.href = referencesUrl.href;
       document.getElementById('clientDetailTitle').textContent = client.cliente || 'Cliente';
       document.getElementById('clientDetailSub').textContent = `Número ${client.numero || '-'} · Ruta ${client.ruta || '-'} · ${client.vendedor || '-'}`;
       document.getElementById('clientDetailMeta').innerHTML = `<b>Cliente:</b> ${escapeHtml(client.cliente || '-')}<br><b>Número:</b> ${escapeHtml(client.numero || '-')}<br><b>Ruta:</b> ${escapeHtml(client.ruta || '-')}<br><b>Vendedor:</b> ${escapeHtml(client.vendedor || '-')}<br><b>Repositor:</b> ${escapeHtml(client.repositor || '-')}<br><b>Teléfono:</b> ${escapeHtml(client.telefono || '-')}<br><b>Semáforo general:</b> ${client.semaforoText}`;
@@ -1878,7 +1870,11 @@
 
     bind();
     initLogin();
-    loadData();
+    loadData().then(() => {
+      const clientCode = new URLSearchParams(location.search).get('cliente');
+      const client = currentUser && clientCode && state.clients.find(c => cleanNumberKey(c.numero) === clientCode);
+      if (client) openClientDetail(client.key);
+    });
   </script>
 </body>
 </html>
