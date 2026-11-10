@@ -1445,7 +1445,7 @@
     function getHistCell(row, ...possibleKeys){ return getCell(row, ...possibleKeys); }
     function normalizeMonthText(value){ return String(value || '').trim().replace(/\s+/g,' '); }
     function isMayoValue(value){ const v = normalizeKey(value); return v.includes('MAYO') || v === '05' || v === '5' || v.includes('2026 05') || v.includes('05 2026'); }
-    function getMesActualApp(){ return 'Septiembre 2026'; }
+    function getMesActualApp(){ return 'Noviembre 2026'; }
     function getHistoricoMonth(row){ return normalizeMonthText(getHistCell(row,'MES','Mes','mes','PERIODO','Periodo','MES_CIERRE','Cierre')); }
 
     function getImperdonableAutoservicios(row){
