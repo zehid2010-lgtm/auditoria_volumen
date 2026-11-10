@@ -1795,6 +1795,7 @@
       const referencesUrl = new URL('../app-Referencias2026/', location.href);
       referencesUrl.searchParams.set('cliente', referencesCode);
       referencesUrl.searchParams.set('origen', 'volumen');
+      referencesUrl.searchParams.set('v', '6edad847');
       references.href = referencesUrl.href;
       references.onclick = () => {
         const fichaUrl = new URL(location.href);
