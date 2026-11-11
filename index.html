@@ -1159,28 +1159,24 @@
 
     /* ================= LOGIN PRIVADO POR VENDEDOR ================= */
     const USERS = [
-      { user:'admin', pass:'coca2026', rutas:['*'], nombre:'Administrador' },
-      { user:'cristian', pass:'1616', rutas:['16'], nombre:'Cristian Avellaneda' },
-      { user:'aldo', pass:'1717', rutas:['17'], nombre:'Robledo Aldo' },
-      { user:'pablo', pass:'4040', rutas:['40'], nombre:'Pablo Ibarra' },
-      { user:'javier', pass:'4141', rutas:['41'], nombre:'Javier Artaza' },
-      { user:'mauro', pass:'4242', rutas:['42'], nombre:'Mauro Presti' },
-      { user:'diego', pass:'4343', rutas:['43'], nombre:'Diego Zarate' },
-      { user:'carlos', pass:'4444', rutas:['44'], nombre:'Carlos Salas' },
-      { user:'adrian', pass:'4545', rutas:['45'], nombre:'Adrian Villalba' }
+      {"user":"admin","nombre":"Administrador","rutas":["*"],"pass":"94L4V90D0nqrMj"},
+      {"user":"mauro","nombre":"Mauro Presti","rutas":["40"],"pass":"koQ8OvAjXbBwyG"},
+      {"user":"pablo","nombre":"Pablo Ibarra","rutas":["41"],"pass":"ozdojRO6V8tRB6"},
+      {"user":"adrian","nombre":"Adrián Villalba","rutas":["42"],"pass":"1luFpahUWuyqsw"},
+      {"user":"diego","nombre":"Diego Zárate","rutas":["43"],"pass":"gt6TuFhwjYlgZ6"}
     ];
 
     let currentUser = null;
 
     function getPasswordOverrides(){
-      try{ return JSON.parse(localStorage.getItem('app_password_overrides') || '{}'); }
+      try{ return JSON.parse(localStorage.getItem('app_password_overrides_volumen_nov2026') || '{}'); }
       catch(e){ return {}; }
     }
 
     function setPasswordOverride(user, pass){
       const overrides = getPasswordOverrides();
       overrides[user] = pass;
-      localStorage.setItem('app_password_overrides', JSON.stringify(overrides));
+      localStorage.setItem('app_password_overrides_volumen_nov2026', JSON.stringify(overrides));
     }
 
     function getEffectivePass(userObj){
@@ -1199,7 +1195,7 @@
       }
 
       currentUser = { ...foundUser, pass:getEffectivePass(foundUser) };
-      localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
+      localStorage.setItem('app_login_user_volumen_nov2026', JSON.stringify({ user: currentUser.user }));
       startPrivateApp();
     }
 
@@ -1220,7 +1216,7 @@
     }
 
     function initLogin(){
-      const saved = localStorage.getItem('app_login_user');
+      const saved = localStorage.getItem('app_login_user_volumen_nov2026');
       if(!saved) return;
       try{
         const savedObj = JSON.parse(saved);
@@ -1229,10 +1225,10 @@
           currentUser = { ...baseUser, pass:getEffectivePass(baseUser) };
           startPrivateApp();
         }else{
-          localStorage.removeItem('app_login_user');
+          localStorage.removeItem('app_login_user_volumen_nov2026');
         }
       }catch(e){
-        localStorage.removeItem('app_login_user');
+        localStorage.removeItem('app_login_user_volumen_nov2026');
       }
     }
 
@@ -1258,7 +1254,7 @@
     }
 
     function logoutApp(){
-      localStorage.removeItem('app_login_user');
+      localStorage.removeItem('app_login_user_volumen_nov2026');
       location.reload();
     }
 
@@ -1286,7 +1282,7 @@
 
       setPasswordOverride(currentUser.user, newPass);
       currentUser.pass = newPass;
-      localStorage.setItem('app_login_user', JSON.stringify({ user: currentUser.user }));
+      localStorage.setItem('app_login_user_volumen_nov2026', JSON.stringify({ user: currentUser.user }));
       alert('Contraseña actualizada correctamente en este dispositivo');
       closePasswordModal();
     }
