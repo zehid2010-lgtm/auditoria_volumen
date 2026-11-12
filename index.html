@@ -886,6 +886,8 @@
     }
 
 </style>
+  <link rel="preconnect" href="https://docs.google.com">
+  <link rel="preconnect" href="https://docs.googleusercontent.com">
 </head>
 <body>
 
@@ -1791,7 +1793,7 @@
       const referencesUrl = new URL('../app-Referencias2026/', location.href);
       referencesUrl.searchParams.set('cliente', referencesCode);
       referencesUrl.searchParams.set('origen', 'volumen');
-      referencesUrl.searchParams.set('v', '20261112-ficha');
+      referencesUrl.searchParams.set('v', '20261112-carga');
       references.href = referencesUrl.href;
       references.onclick = () => {
         try {
@@ -1800,7 +1802,9 @@
             user: currentUser.user,
             numero: referencesCode,
             ruta: normalizeRoutePermission(client.ruta),
-            cliente: client.cliente
+            cliente: client.cliente,
+            vendedor: client.vendedor,
+            telefono: client.telefono
           }));
         } catch {
           // Referencias puede consultar su padrón si el navegador bloquea el almacenamiento.
