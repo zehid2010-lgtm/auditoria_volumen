@@ -1791,11 +1791,12 @@
       const referencesUrl = new URL('../app-Referencias2026/', location.href);
       referencesUrl.searchParams.set('cliente', referencesCode);
       referencesUrl.searchParams.set('origen', 'volumen');
-      referencesUrl.searchParams.set('v', '20261112-padron');
+      referencesUrl.searchParams.set('v', '20261112-ficha');
       references.href = referencesUrl.href;
       references.onclick = () => {
         try {
-          sessionStorage.setItem('volumen_referencia_cliente', JSON.stringify({
+          localStorage.setItem('volumen_referencia_cliente:' + currentUser.user, JSON.stringify({
+            enviadoEn: Date.now(),
             user: currentUser.user,
             numero: referencesCode,
             ruta: normalizeRoutePermission(client.ruta),
