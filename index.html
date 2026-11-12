@@ -1791,9 +1791,19 @@
       const referencesUrl = new URL('../app-Referencias2026/', location.href);
       referencesUrl.searchParams.set('cliente', referencesCode);
       referencesUrl.searchParams.set('origen', 'volumen');
-      referencesUrl.searchParams.set('v', '2622c2de');
+      referencesUrl.searchParams.set('v', '20261112-padron');
       references.href = referencesUrl.href;
       references.onclick = () => {
+        try {
+          sessionStorage.setItem('volumen_referencia_cliente', JSON.stringify({
+            user: currentUser.user,
+            numero: referencesCode,
+            ruta: normalizeRoutePermission(client.ruta),
+            cliente: client.cliente
+          }));
+        } catch {
+          // Referencias puede consultar su padrón si el navegador bloquea el almacenamiento.
+        }
         const fichaUrl = new URL(location.href);
         fichaUrl.searchParams.set('cliente', referencesCode);
         history.replaceState(history.state, '', fichaUrl);
